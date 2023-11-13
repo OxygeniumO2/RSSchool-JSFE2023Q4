@@ -2,5 +2,6 @@
 @import url(../../fonts/fonts.css);
 @import url(../../css/common-styles/default.css);
 @import url(../common-styles/common-header/common-header-style.css);
-
+@import url(../main-page-css/enjoy-section.css);
+@import url(../main-page-css/favorite-section.css);
 @import url(../common-styles/common-footer/common-footer-style.css);

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coffee House</title>
+
+  <link rel="apple-touch-icon" sizes="180x180" href="./img/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="./img/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./img/favicon/favicon-16x16.png">
+  <link rel="manifest" href="./img/favicon/site.webmanifest">
+
+  <link rel="preload" href="./fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="./fonts/Inter-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="./fonts/Inter-SemiBoldItalic.woff2" as="font" type="font/woff2" crossorigin>
+
+  <link rel="stylesheet" href="./css/main-page-css/main-page-style.css">
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="header__wrapper">
+        <div class="header__logo">
+          <a href="./main-page/index.html" style="pointer-events: none;">
+            <img src="./img/logo.svg" alt="Coffee House Logo">
+          </a>
+        </div>
+        <div class="header__nav__wrapper">
+          <nav class="header__nav">
+            <ul class="header__nav__list">
+              <li>
+                <a class="global-link" href="#">Favorite coffee</a>
+              </li>
+              <li><a class="global-link" href="#">About</a>
+              </li>
+              <li><a class="global-link" href="#">Mobile app</a>
+              </li>
+              <li><a class="global-link" href="">Contact us</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <div class="header__menu-link__wrapper">
+          <a class="header__menu-link global-link" href="#"><span>Menu</span>
+            <img src="./img/coffee-cup.svg" alt="coffee menu">
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <section class="enjoy__section">
+      <div class="container">
+        <div class="enjoy__section__wrapper">
+          <h1 class="enjoy__section__title"><span class="section__title_accent">Enjoy</span> premium coffee at our
+            charming cafe</h1>
+          <p class="enjoy__section__description">With its inviting atmosphere and delicious coffee options, the Coffee
+            House Resource is a popular
+            destination for coffee lovers and those seeking a warm and inviting space to enjoy their favorite beverage.
+          </p>
+          <a class="link-looks-like-button" href="#">
+            <div class="link-looks-like-button__wrapper">
+              <span>Menu</span>
+              <img class="coffee__cup-img" src="./img/coffee-cup.svg" alt="coffee menu">
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+    <section class="favorite__section">
+      <div class="container">
+        <h2 class="favorite__section__title section__title-common">Choose your <span
+            class="section__title_accent">favorite</span> coffee</h2>
+        <div class="favorite__slider__container">
+          <div class="favorite__slides">
+            <div class="favorite__slide-1 favorite__slide">
+              <img src="./img/favorite-img/coffee-slider-1.png" alt="Smores Frappuccino">
+              <h4 class="favorite__slide__title">S’mores Frappuccino</h4>
+              <p class="favorite__slide__description">This new drink takes an espresso and mixes it with brown sugar and
+                cinnamon before being topped with oat milk.</p>
+              <p class="favorite__slide__price">$5.50</p>
+            </div>
+            <div class="favorite__slide-2 favorite__slide">
+              <img src="./img/favorite-img/coffee-slider-2.png" alt="Caramel Macchiato">
+              <h4 class="favorite__slide__title">Caramel Macchiato</h4>
+              <p class="favorite__slide__description">Fragrant and unique classic espresso with rich caramel-peanut
+                syrup, with cream under whipped thick foam.</p>
+              <p class="favorite__slide__price">$5.00</p>
+            </div>
+            <div class="favorite__slide-3 favorite__slide">
+              <img src="./img/favorite-img/coffee-slider-3.png" alt="Ice coffee">
+              <h4 class="favorite__slide__title">Ice coffee</h4>
+              <p class="favorite__slide__description">A popular summer drink that tones and invigorates. Prepared from
+                coffee, milk and ice.</p>
+              <p class="favorite__slide__price">$4.50</p>
+            </div>
+          </div>
+          <div class="favorite__slider__arrow favorite__slider__arrow_left">
+            <svg class="favorite__slider__arrow-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+              viewBox="0 0 24 24">
+              <path d="M18.5 12H6M6 12L12 6M6 12L12 18" stroke="#403F3D" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </div>
+          <div class="favorite__slider__arrow favorite__slider__arrow_right">
+            <svg class="favorite__slider__arrow-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+              viewBox="0 0 24 24">
+              <path d="M18.5 12H6M6 12L12 6M6 12L12 18" stroke="#403F3D" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </div>
+          <div class="favorite__slider__lines__container">
+            <div class="favorite__slider__line _active"></div>
+            <div class="favorite__slider__line"></div>
+            <div class="favorite__slider__line"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+
+</html>
