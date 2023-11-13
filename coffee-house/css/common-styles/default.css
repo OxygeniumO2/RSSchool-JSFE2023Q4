@@ -70,9 +70,9 @@ body {
 }
 
 .container {
-  max-width: 1394px;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 0 16px;
+  padding: 0 40px;
 }
 
 .global-link::before {
@@ -98,6 +98,12 @@ body {
 .section__title-common {
   font-size: 3.75rem;
   font-weight: 600;
-  line-height: 125%;
+  line-height: 1.25;
   margin-bottom: 40px;
+}
+
+.header__menu-link__menupage::before {
+  width: 100%;
+  transform: translateX(-50%) scaleX(1);
+  opacity: 1;
 }

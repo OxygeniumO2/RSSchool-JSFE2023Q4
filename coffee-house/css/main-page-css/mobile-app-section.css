@@ -1,0 +1,78 @@
+.mobile-app__section {
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+
+.mobile-app__title {
+  margin-bottom: 0;
+}
+
+.mobile-app__section__wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mobile-app__section__wrapper-leftcolumn {
+  max-width: 630px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.mobile-app__description {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.mobile-app__links__wrapper {
+  display: flex;
+  gap: 20px;
+}
+
+.mobile-app__link-webstore {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border-dark-color);
+  border-radius: 100px;
+  padding: 14px 20px;
+  min-width: 200px;
+  gap: 8px;
+  transition: all 0.5s ease;
+}
+
+.mobile-app__link-a-wrapper-rightcolumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-app__link-a-text_small,
+.mobile-app__link-a-text_large {
+  font-weight: 600;
+}
+
+.mobile-app__link-a-text_small {
+  font-size: 0.625rem;
+  line-height: 1.4;
+}
+
+.mobile-app__link-a-text_large {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.mobile-app__link-webstore:hover {
+  background-color: var(--background-container-color);
+  border-color: transparent;
+  color: var(--text-light-color);
+}
+
+.mobile-app__link-webstore svg,
+.mobile-app__link-webstore svg path {
+  transition: all 0.5s ease;
+}
+
+.mobile-app__link-webstore:hover svg path {
+  stroke: transparent;
+  fill: var(--text-light-color);
+}
