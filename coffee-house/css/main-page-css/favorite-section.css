@@ -1,0 +1,104 @@
+.favorite__section__title {
+  text-align: center;
+  margin-bottom: 11px;
+}
+
+.favorite__slider__container {
+  position: relative;
+  overflow: hidden;
+}
+
+.favorite__slides {
+  display: flex;
+  justify-content: space-between;
+  transition: all 0.3s ease-in-out;
+}
+
+.favorite__slide {
+  width: 100%;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.favorite__slide img {
+  margin: 0 auto;
+  scale: 0.9;
+}
+
+.favorite__slide__title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 125%;
+  margin-bottom: 15px;
+}
+
+.favorite__slide__description {
+  font-size: 1rem;
+  line-height: 150%;
+  max-width: 480px;
+  margin: 0 auto;
+  margin-bottom: 18px;
+}
+
+.favorite__slide__price {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-dark-color);
+  margin-bottom: 41px;
+}
+
+.favorite__slider__arrow {
+  position: absolute;
+  top: 44.9%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 100px;
+  border: 1px solid var(--border-dark-color);
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+.favorite__slider__arrow:hover {
+  background-color: var(--background-container-color);
+}
+
+.favorite__slider__arrow svg {
+  transition: all 0.3s ease;
+}
+
+.favorite__slider__arrow:hover svg {
+  filter: brightness(0) saturate(100%) invert(78%) sepia(9%) saturate(308%)
+    hue-rotate(346deg) brightness(114%) contrast(84%);
+}
+
+.favorite__slider__arrow_left {
+  left: 5px;
+}
+
+.favorite__slider__arrow_right {
+  right: 5px;
+}
+
+.favorite__slider__arrow_right svg {
+  transform: rotate(-180deg);
+}
+
+.favorite__slider__lines__container {
+  display: flex;
+  justify-content: center;
+  column-gap: 12px;
+}
+
+.favorite__slider__line {
+  width: 40px;
+  height: 4px;
+  background-color: var(--border-light-color);
+  border-radius: 100px;
+}
+
+.favorite__slider__line._active {
+  background-color: var(--border-dark-color);
+}

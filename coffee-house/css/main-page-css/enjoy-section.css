@@ -1,0 +1,74 @@
+.enjoy__section {
+  padding-bottom: 100px;
+}
+
+.enjoy__section__wrapper {
+  background-image: url(../../img/enjoy-img/img-hero.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
+  border-radius: 40px;
+  padding: 100px;
+}
+
+.enjoy__section__title {
+  max-width: 530px;
+  font-size: 4.5rem;
+  font-weight: 600;
+  line-height: 105%;
+  color: var(--text-light-color);
+  margin-bottom: 40px;
+}
+
+.section__title_accent {
+  color: var(--text-accent-color);
+  font-style: italic;
+}
+
+.enjoy__section__description {
+  max-width: 530px;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 150%;
+  color: var(--text-light-color);
+  margin-bottom: 41px;
+}
+
+.coffee__cup-img {
+  position: absolute;
+  right: -15px;
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+
+.link-looks-like-button__wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.link-looks-like-button {
+  display: inline-block;
+  border-radius: 100px;
+  min-width: 200px;
+  text-align: center;
+  padding: 20px 78px;
+  background-color: var(--text-light-color);
+  color: var(--text-dark-color);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 150%;
+  transition: all 0.3s ease;
+}
+
+.link-looks-like-button:hover .coffee__cup-img {
+  opacity: 1;
+}
+
+.link-looks-like-button span {
+  transition: all 0.5s ease;
+}
+
+.link-looks-like-button:hover span {
+  transform: translateX(-14px);
+}
