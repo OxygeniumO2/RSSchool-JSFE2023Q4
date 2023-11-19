@@ -26,7 +26,7 @@
 
 .favorite__slide img {
   margin: 0 auto;
-  scale: 0.9;
+  transform: scale(0.9);
 }
 
 .favorite__slide__title {

@@ -8,7 +8,6 @@
 
 .resourse-about__img__wrapper {
   display: flex;
-  flex-wrap: wrap;
   gap: 40px;
 }
 
@@ -36,11 +35,12 @@
 
 .resourse-about__img-card img {
   transition: all 0.3s ease;
-  max-width: unset;
   max-height: unset;
+  height: auto;
   border-radius: 20px;
+  transform: scale(1.1);
 }
 
 .resourse-about__img-card:hover img {
-  scale: 0.91;
+  transform: scale(1);
 }

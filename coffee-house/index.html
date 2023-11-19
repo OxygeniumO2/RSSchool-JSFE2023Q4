@@ -31,19 +31,19 @@
           <nav class="header__nav">
             <ul class="header__nav__list">
               <li>
-                <a class="global-link" href="#">Favorite coffee</a>
+                <a class="header__menu__link global-link" data-goto=".favorite__section" href="#">Favorite coffee</a>
               </li>
-              <li><a class="global-link" href="#">About</a>
+              <li><a class="header__menu__link global-link" data-goto=".resource-about__section" href="#">About</a>
               </li>
-              <li><a class="global-link" href="#">Mobile app</a>
+              <li><a class="header__menu__link global-link" data-goto=".mobile-app__section" href="#">Mobile app</a>
               </li>
-              <li><a class="global-link" href="">Contact us</a>
+              <li><a class="header__menu__link global-link" data-goto=".footer" href="#">Contact us</a>
               </li>
             </ul>
           </nav>
         </div>
         <div class="header__menu-link__wrapper">
-          <a class="header__menu-link global-link" href="./menu.html"><span>Menu</span>
+          <a class="header__menu-link global-link header__menu-link__mainpage" href="./menu.html"><span>Menu</span>
             <img src="./img/coffee-cup.svg" alt="coffee menu">
           </a>
         </div>
@@ -243,7 +243,7 @@
         <div class="footer__wrapper-rightcolumn">
           <h3 class="footer__contact__title">Contact us</h3>
           <div class="footer__contacts__wrapper">
-            <a class="footer__contacts-link global-link" href="https://maps.google.com/maps?q=New+York">
+            <a class="footer__contacts-link global-link" href="https://maps.google.com/maps?q=New+York" target="_blank">
               <img src="./img/footer-svg/point-map.svg" alt="point-map-ico">
               <span class="footer__contacts-link-description">8558 Green Rd.,&ensp;LA</span>
             </a>
@@ -260,6 +260,8 @@
       </div>
     </div>
   </footer>
+
+  <script src="./js/main-page.js"></script>
 </body>
 
 </html>
