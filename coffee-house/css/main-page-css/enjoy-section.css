@@ -16,11 +16,6 @@
   margin-bottom: 40px;
 }
 
-.section__title_accent {
-  color: var(--text-accent-color);
-  font-style: italic;
-}
-
 .enjoy__section__description {
   max-width: 530px;
   font-size: 1rem;

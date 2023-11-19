@@ -1,0 +1,121 @@
+.menu__slider__section {
+  padding-bottom: 95px;
+}
+
+.menu__slider__description {
+  max-width: 800px;
+  margin: 0 auto;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.menu__slider__buttons-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 38px;
+}
+
+.menu__slider__label {
+  position: relative;
+  border-radius: 100px;
+  border: 1px solid var(--border-light-color);
+  padding: 8px 16px 8px 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.menu__slider__label:hover {
+  background-color: var(--background-container-color);
+  color: var(--text-light-color);
+  border-color: transparent;
+}
+
+.menu__slider__label:hover .menu__slider__label-emoji {
+  background-color: var(--background-body-color);
+}
+
+.menu__slider__label input {
+  display: none;
+}
+
+.menu__slider__label-emoji {
+  display: inline-block;
+  font-family: "emojiOs", sans-serif;
+  margin-right: 2px;
+  border-radius: 100px;
+  background-color: var(--border-light-color);
+  padding: 3px 6px;
+  transition: all 0.3s ease;
+}
+
+.menu__slider__label._active {
+  background-color: var(--background-container-color);
+  color: var(--text-light-color);
+  border-color: transparent;
+  pointer-events: none;
+}
+
+.menu__slider__label._active .menu__slider__label-emoji {
+  background-color: var(--background-body-color);
+}
+
+.menu__slider__wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.menu__slider__card {
+  display: flex;
+  flex-direction: column;
+  max-width: 310px;
+  overflow: hidden;
+  border-radius: 40px;
+  border: 1px solid var(--border-light-color);
+  cursor: pointer;
+}
+
+.menu__slider__card:hover .menu__slider__card-img-container img {
+  transform: scale(1);
+}
+
+.menu__slider__card-img-container {
+  overflow: hidden;
+  border-radius: 40px;
+}
+
+.menu__slider__card-img-container img {
+  border-radius: 40px;
+  transition: all 0.5s ease;
+  transform: scale(1.1);
+}
+
+.menu__slider__card-desc-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 12px;
+  padding: 22px 20px 20px 20px;
+}
+
+.menu__slider__card__title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.menu__slider__card__description {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.menu__slider__card__price {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.25;
+  margin: auto 0 0 0;
+}

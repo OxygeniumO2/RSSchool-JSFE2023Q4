@@ -21,3 +21,9 @@
   font-display: swap;
   src: local(""), url("./Inter-SemiBoldItalic.woff2"), format("woff2");
 }
+
+@font-face {
+  font-family: "emojiOs";
+  font-display: swap;
+  src: local(""), url("./NotoColorEmoji.ttf") format("truetype");
+}

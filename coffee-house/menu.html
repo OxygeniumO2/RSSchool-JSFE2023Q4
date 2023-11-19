@@ -14,8 +14,9 @@
   <link rel="preload" href="./fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="./fonts/Inter-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="./fonts/Inter-SemiBoldItalic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="./fonts/NotoColorEmoji.ttf" as="font" crossorigin>
 
-  <link rel="stylesheet" href="./css/main-page-css/main-page-style.css">
+  <link rel="stylesheet" href="./css/menu-page-css/menu-page-style.css">
 </head>
 
 <body>
@@ -31,13 +32,13 @@
           <nav class="header__nav">
             <ul class="header__nav__list">
               <li>
-                <a class="global-link" href="#">Favorite coffee</a>
+                <a class="header__menu__link global-link" href="#">Favorite coffee</a>
               </li>
-              <li><a class="global-link" href="#">About</a>
+              <li><a class="header__menu__link global-link" href="#">About</a>
               </li>
-              <li><a class="global-link" href="#">Mobile app</a>
+              <li><a class="header__menu__link global-link" href="#">Mobile app</a>
               </li>
-              <li><a class="global-link" href="">Contact us</a>
+              <li><a class="header__menu__link global-link" href="#" data-goto=".footer">Contact us</a>
               </li>
             </ul>
           </nav>
@@ -52,7 +53,118 @@
     </div>
   </header>
   <main>
+    <section class="menu__slider__section">
+      <div class="container">
+        <h1 class="menu__slider__description section__title-common">Behind each of our cups hides an <span
+            class="section__title_accent">amazing
+            surprise</span></h1>
+        <div class="menu__slider__buttons-wrapper">
+          <label class="menu__slider__label _active">
+            <input type="radio" name="menu" value="coffee">
+            <span class="menu__slider__label-emoji">☕</span>
+            <span>Coffee</span>
+          </label>
+          <label class="menu__slider__label">
+            <input type="radio" name="menu" value="tea">
+            <span class="menu__slider__label-emoji">🫖</span>
+            <span>Tea</span>
+          </label>
+          <label class="menu__slider__label">
+            <input type="radio" name="menu" value="dessert">
+            <span class="menu__slider__label-emoji">🍰</span>
+            <span>Dessert</span>
+          </label>
+        </div>
 
+        <div class="menu__slider__wrapper">
+          <div class="menu__slider__card">
+            <div class="menu__slider__card-img-container">
+              <img src="./img/menu-page/coffee-img/coffee-1.jpg" alt="Irish coffee">
+            </div>
+            <div class="menu__slider__card-desc-wrapper">
+              <h2 class="menu__slider__card__title">Irish coffee</h2>
+              <p class="menu__slider__card__description">Fragrant black coffee with Jameson Irish whiskey and whipped
+                milk
+              </p>
+              <p class="menu__slider__card__price">$7.00</p>
+            </div>
+          </div>
+          <div class="menu__slider__card">
+            <div class="menu__slider__card-img-container">
+              <img src="./img/menu-page/coffee-img/coffee-2.jpg" alt="Kahlua coffee">
+            </div>
+            <div class="menu__slider__card-desc-wrapper">
+              <h2 class="menu__slider__card__title">Kahlua coffee</h2>
+              <p class="menu__slider__card__description">Classic coffee with milk and Kahlua liqueur under a cap of
+                frothed milk</p>
+              <p class="menu__slider__card__price">$7.00</p>
+            </div>
+          </div>
+          <div class="menu__slider__card">
+            <div class="menu__slider__card-img-container">
+              <img src="./img/menu-page/coffee-img/coffee-3.jpg" alt="Honey raf">
+            </div>
+            <div class="menu__slider__card-desc-wrapper">
+              <h2 class="menu__slider__card__title">Honey raf</h2>
+              <p class="menu__slider__card__description">Espresso with frothed milk, cream and aromatic honey</p>
+              <p class="menu__slider__card__price">$5.50</p>
+            </div>
+          </div>
+          <div class="menu__slider__card">
+            <div class="menu__slider__card-img-container">
+              <img src="./img/menu-page/coffee-img/coffee-4.jpg" alt="Ice cappuccino">
+            </div>
+            <div class="menu__slider__card-desc-wrapper">
+              <h2 class="menu__slider__card__title">Ice cappuccino</h2>
+              <p class="menu__slider__card__description">Cappuccino with soft thick foam in summer version with ice</p>
+              <p class="menu__slider__card__price">$5.00</p>
+            </div>
+          </div>
+          <div class="menu__slider__card">
+            <div class="menu__slider__card-img-container">
+              <img src="./img/menu-page/coffee-img/coffee-5.jpg" alt="Espresso">
+            </div>
+            <div class="menu__slider__card-desc-wrapper">
+              <h2 class="menu__slider__card__title">Espresso</h2>
+              <p class="menu__slider__card__description">Classic black coffee</p>
+              <p class="menu__slider__card__price">$4.50</p>
+            </div>
+          </div>
+          <div class="menu__slider__card">
+            <div class="menu__slider__card-img-container">
+              <img src="./img/menu-page/coffee-img/coffee-6.jpg" alt="Latte">
+            </div>
+            <div class="menu__slider__card-desc-wrapper">
+              <h2 class="menu__slider__card__title">Latte</h2>
+              <p class="menu__slider__card__description">Espresso coffee with the addition of steamed milk and dense
+                milk
+                foam</p>
+              <p class="menu__slider__card__price">$5.50</p>
+            </div>
+          </div>
+          <div class="menu__slider__card">
+            <div class="menu__slider__card-img-container">
+              <img src="./img/menu-page/coffee-img/coffee-7.jpg" alt="Latte macchiato">
+            </div>
+            <div class="menu__slider__card-desc-wrapper">
+              <h2 class="menu__slider__card__title">Latte macchiato</h2>
+              <p class="menu__slider__card__description">Espresso with frothed milk and chocolate</p>
+              <p class="menu__slider__card__price">$5.50</p>
+            </div>
+          </div>
+          <div class="menu__slider__card">
+            <div class="menu__slider__card-img-container">
+              <img src="./img/menu-page/coffee-img/coffee-8.jpg" alt="Coffee with cognac">
+            </div>
+            <div class="menu__slider__card-desc-wrapper">
+              <h2 class="menu__slider__card__title">Coffee with cognac</h2>
+              <p class="menu__slider__card__description">Fragrant black coffee with cognac and whipped cream</p>
+              <p class="menu__slider__card__price">$6.50</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
   <footer class="footer">
     <div class="container">
@@ -91,7 +203,7 @@
         <div class="footer__wrapper-rightcolumn">
           <h3 class="footer__contact__title">Contact us</h3>
           <div class="footer__contacts__wrapper">
-            <a class="footer__contacts-link global-link" href="https://maps.google.com/maps?q=New+York">
+            <a class="footer__contacts-link global-link" href="https://maps.google.com/maps?q=New+York" target="_blank">
               <img src="./img/footer-svg/point-map.svg" alt="point-map-ico">
               <span class="footer__contacts-link-description">8558 Green Rd.,&ensp;LA</span>
             </a>
@@ -108,6 +220,7 @@
       </div>
     </div>
   </footer>
+  <script src="./js/menu-page.js"></script>
 </body>
 
 </html>
