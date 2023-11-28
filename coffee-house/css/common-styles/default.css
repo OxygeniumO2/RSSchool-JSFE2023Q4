@@ -69,10 +69,15 @@ body {
   font-weight: 400;
 }
 
+.body._active {
+  overflow: hidden;
+}
+
 .container {
   max-width: 1440px;
   margin: 0 auto;
   padding: 0 40px;
+  position: relative;
 }
 
 .global-link::before {
@@ -109,6 +114,14 @@ body {
 .section__title_accent {
   color: var(--text-accent-color);
   font-style: italic;
+}
+
+.header__menu-link__menupage {
+  cursor: unset;
+}
+
+.header__logo-link {
+  cursor: unset;
 }
 
 .header__menu-link__menupage::before {
