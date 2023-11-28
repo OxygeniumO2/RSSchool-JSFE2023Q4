@@ -6,6 +6,8 @@
   background-color: var(--background-container-color);
   border-radius: 40px;
   display: flex;
+  flex-wrap: wrap;
+  row-gap: 104px;
   column-gap: 100px;
   align-items: center;
   padding: 100px;
@@ -35,18 +37,20 @@
   transition: all 0.5s ease;
 }
 
-.footer__socialmedia-link:hover {
-  background-color: var(--text-light-color);
-  border-color: transparent;
+@media (any-hover: hover) {
+  .footer__socialmedia-link:hover {
+    background-color: var(--text-light-color);
+    border-color: transparent;
+  }
+
+  .footer__socialmedia-link:hover svg path {
+    stroke: var(--text-dark-color);
+  }
 }
 
 .footer__socialmedia-link svg path,
 .footer__socialmedia-link svg {
   transition: all 0.5s ease;
-}
-
-.footer__socialmedia-link:hover svg path {
-  stroke: var(--text-dark-color);
 }
 
 .footer__contact__title {
@@ -79,4 +83,17 @@
 .footer__contacts-link-description {
   font-weight: 600;
   line-height: 1.5;
+}
+
+@media screen and (max-width: 1024px) {
+  .footer__wrapper {
+    padding: 100px 60px 104px 60px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .footer__wrapper {
+    padding: 60px 16px 64px 16px;
+    row-gap: 44px;
+  }
 }
