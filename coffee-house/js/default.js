@@ -7,7 +7,6 @@ const body = document.querySelector('.body');
 function smoothScrolling(item) {
   const link = item.target;
   if (link.classList.contains('header__menu__link') || (link.classList.contains('header__menu-link__menupage'))) {
-    console.log(link)
     const gotoBlock = document.querySelector(link.dataset.goto);
     const gotoBlockValue = gotoBlock.getBoundingClientRect().top + scrollY;
     window.scrollTo({

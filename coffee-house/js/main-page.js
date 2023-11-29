@@ -22,14 +22,18 @@ const sliderLine = document.querySelector('.favorite__slides');
 const sliderArrowLeft = document.querySelector('.favorite__slider__arrow_left');
 const sliderArrowRight = document.querySelector('.favorite__slider__arrow_right');
 const slides = document.querySelectorAll('.favorite__slide');
+const sliderLines = document.querySelectorAll('.favorite__slider__line');
 
 let sliderCount = 0;
 let slideWidth = slides[0].offsetWidth;
 let start;
 let change;
+let slideInterval;
+let dragging = false;
 
 sliderLine.addEventListener('dragstart', (event) => {
   start = event.clientX;
+
 });
 
 sliderLine.addEventListener('dragover', (event) => {
@@ -38,20 +42,54 @@ sliderLine.addEventListener('dragover', (event) => {
   change = start - touch;
 });
 
-sliderLine.addEventListener('dragend', slideSwipe);
+sliderLine.addEventListener('dragend', (event) => {
+  dragging = false;
+  if (change > 0) {
+    nextSlide();
+    clearInterval(slideInterval);
+  } else {
+    prevSlide();
+    clearInterval(slideInterval);
+  }
+});
 
+// sliderLine.addEventListener('mouseenter', () => {
+//   if (!dragging) {
+//     clearInterval(slideInterval);
+//   }
+// });
 
+// sliderLine.addEventListener('mouseleave', () => {
+//   if (!dragging) {
+//     startSlideInterval();
+//   }
+// });
 
-setTimeout(function increaseCounter() {
-    sliderCount += 1;
-    if (sliderCount >= slides.length) {
-      sliderCount = 0;
-    }
-    rollSlider();
-    setTimeout(increaseCounter, 3000);
-  }, 3000);
+sliderLine.addEventListener('mousedown', () => {
+  dragging = true;
+  clearInterval(slideInterval);
+});
 
-function slideSwipe() {
+sliderLine.addEventListener('mouseup', () => {
+  dragging = false;
+  startSlideInterval();
+});
+
+sliderLine.addEventListener('touchstart', (event) => {
+  dragging = true;
+  start = event.touches[0].clientX;
+  clearInterval(slideInterval);
+});
+
+sliderLine.addEventListener('touchmove', (event) => {
+  event.preventDefault();
+  let touch = event.touches[0];
+  change = start - touch.clientX;
+});
+
+sliderLine.addEventListener('touchend', () => {
+  dragging = false;
+  startSlideInterval();
   if (change > 0) {
     sliderCount += 1;
     if (sliderCount >= slides.length) {
@@ -66,23 +104,32 @@ function slideSwipe() {
     }
     rollSlider();
   }
-};
-
-sliderLine.addEventListener('touchstart', (event) => {
-  start = event.touches[0].clientX;
 });
 
-sliderLine.addEventListener('touchmove', (event) => {
-  event.preventDefault();
-  let touch = event.touches[0];
-  change = start - touch.clientX;
+sliderLine.addEventListener('touchcancel', () => {
+  startSlideInterval();
 });
 
+function startSlideInterval() {
+  slideInterval = setInterval(() => {
+    nextSlide();
+  }, 4000);
+}
 
-sliderLine.addEventListener('touchend', slideSwipe);
+startSlideInterval();
 
 function rollSlider() {
+  clearInterval(slideInterval);
   sliderLine.style.transform = `translateX(${(-sliderCount * slideWidth)}px)`;
+   sliderLines.forEach((item, index) => {
+     if (index === sliderCount) {
+      item.classList.add('_active');
+     }
+    else {
+     item.classList.remove('_active');
+     }
+   })
+   startSlideInterval();
 };
 
 function nextSlide() {
@@ -101,7 +148,20 @@ function prevSlide() {
   rollSlider();
 };
 
-sliderArrowLeft.addEventListener('click', prevSlide);
-sliderArrowRight.addEventListener('click', nextSlide);
+sliderArrowLeft.addEventListener('click', () => {
+  clearInterval(slideInterval);
+
+  prevSlide();
+
+});
+
+sliderArrowRight.addEventListener('click', () => {
+  clearInterval(slideInterval);
+
+  nextSlide();
+
+});
 
 // SLIDER END
+
+
