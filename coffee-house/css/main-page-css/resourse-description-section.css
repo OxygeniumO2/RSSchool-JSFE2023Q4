@@ -30,7 +30,7 @@
 
 .resourse-about__img-card-2,
 .resourse-about__img-card-3 {
-  max-height: 431px;
+  max-height: 33.3%;
 }
 
 .resourse-about__img-card img {
@@ -41,6 +41,33 @@
   transform: scale(1.1);
 }
 
-.resourse-about__img-card:hover img {
-  transform: scale(1);
+@media (any-hover: hover) {
+  .resourse-about__img-card:hover img {
+    transform: scale(1);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .resourse-about__img-card-3,
+  .resourse-about__img-card-2 {
+    display: none;
+  }
+  .resourse-about__img__wrapper {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .resourse-about__img-card {
+    max-width: unset;
+  }
+
+  .resourse-about__img-card img {
+    transform: scale(1.05);
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .resourse-about__img-card img {
+    transform: scale(1);
+  }
 }
