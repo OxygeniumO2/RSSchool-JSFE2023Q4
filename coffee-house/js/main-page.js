@@ -111,6 +111,11 @@ sliderLine.addEventListener('touchcancel', () => {
 });
 
 function startSlideInterval() {
+  if (sliderCount === 0) {
+    const sss = document.querySelectorAll('.favorite__slider__line');
+    sss[0].classList.add('_active');
+  }
+
   slideInterval = setInterval(() => {
     nextSlide();
   }, 4000);

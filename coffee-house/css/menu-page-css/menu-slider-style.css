@@ -79,6 +79,12 @@
   pointer-events: none;
 }
 
+.menu__slider__modal__label-adittives._active-with-events {
+  background-color: var(--background-container-color);
+  color: var(--text-light-color);
+  border-color: transparent;
+}
+
 .menu__slider__label._active .menu__slider__label-emoji {
   background-color: var(--background-body-color);
 }
@@ -161,6 +167,7 @@
 .menu__slider__modal._active {
   opacity: 1;
   z-index: 20;
+  transform: translate(-51%, -50%);
   transition: opacity 0.5s ease, box-shadow 0.5s ease, z-index 0s;
 }
 

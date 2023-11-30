@@ -12,9 +12,16 @@ burgerMenuContainer.addEventListener('click', burgerMenu);
 const menuSlider = document.querySelector('.menu__slider__wrapper');
 const modal = document.querySelector('.menu__slider__modal');
 
+const body = document.querySelector('.body');
+
 const modalCloseBtn = document.querySelector('.menu__slider__modal__btn');
 modalCloseBtn.addEventListener('click', () => {
   modal.classList.remove('_active');
+  const bodyWidthBefore = body.clientWidth;
+  body.classList.remove('_active');
+  if (bodyWidthBefore > body.clientWidth) {
+    body.style.paddingRight = 0;
+  }
   const sizeButtons = modal.querySelectorAll('.menu__slider__modal__label');
   sizeButtons.forEach((item, index) => {
     if (index != 0) {
@@ -30,60 +37,154 @@ menuSlider.addEventListener('click', showModal)
 
 function showModal(event) {
   const card = (event.target.closest('.menu__slider__card'));
-  modal.classList.add('_active');
-
-  const cardTitle = card.querySelector('.menu__slider__card__title').textContent;
-  const cardDesc = card.querySelector('.menu__slider__card__description').textContent;
-  const cardPrice = card.querySelector('.menu__slider__card__price').textContent;
-  const cardImg = card.querySelector('.menu__slider__card-img').src;
-
-  const modalTitle = modal.querySelector('.menu__slider__modal__title');
-  const modalDesc = modal.querySelector('.menu__slider__modal__description');
-  const modalPrice = modal.querySelector('.menu__slider__modal__card__price');
-  const modalImg = modal.querySelector('.menu__slider__modal__img');
-
-  modalTitle.textContent = cardTitle;
-  modalDesc.textContent = cardDesc;
-  modalPrice.textContent = cardPrice;
-  modalImg.src = cardImg;
-
-  let currentItem;
-
-  menuItems.forEach((item) => {
-    if (item.name === modalTitle.textContent) {
-      currentItem = item;
-      const sizeMetric = modal.querySelectorAll('.menu__slider__modal__label-right-price-metric');
-      sizeMetric[0].textContent = currentItem.sizes.s.size;
-      sizeMetric[1].textContent = currentItem.sizes.m.size;
-      sizeMetric[2].textContent = currentItem.sizes.l.size;
+  if (card) {
+    modal.classList.add('_active');
+    const bodyWidthBefore = body.clientWidth;
+    body.classList.add('_active');
+    if (bodyWidthBefore < body.clientWidth) {
+      body.style.paddingRight = `${body.clientWidth - bodyWidthBefore}px`;
     }
-  })
 
-  const sizeButtons = modal.querySelector('.menu__slider__modal__buttons-wrapper-size');
+    const cardTitle = card.querySelector('.menu__slider__card__title').textContent;
+    const cardDesc = card.querySelector('.menu__slider__card__description').textContent;
+    const cardPrice = card.querySelector('.menu__slider__card__price').textContent;
+    const cardImg = card.querySelector('.menu__slider__card-img').src;
 
-  sizeButtons.addEventListener('click', (event) => {
-    if (event.target.closest('.menu__slider__modal__label')) {
-      const allButtons = sizeButtons.querySelectorAll('.menu__slider__modal__label');
-      allButtons.forEach((btn) => {
-        if (btn.classList.contains('_active')) {
-          btn.classList.remove('_active');
-        }
+    const modalTitle = modal.querySelector('.menu__slider__modal__title');
+    const modalDesc = modal.querySelector('.menu__slider__modal__description');
+    const modalPrice = modal.querySelector('.menu__slider__modal__card__price');
+    const modalImg = modal.querySelector('.menu__slider__modal__img');
+
+    modalTitle.textContent = cardTitle;
+    modalDesc.textContent = cardDesc;
+    modalPrice.textContent = cardPrice;
+    modalImg.src = cardImg;
+
+    let currentItem;
+
+    menuItems.forEach((item) => {
+      if (item.name === modalTitle.textContent) {
+        currentItem = item;
+        const sizeMetric = modal.querySelectorAll('.menu__slider__modal__label-right-price-metric');
+        sizeMetric[0].textContent = currentItem.sizes.s.size;
+        sizeMetric[1].textContent = currentItem.sizes.m.size;
+        sizeMetric[2].textContent = currentItem.sizes.l.size;
+      }
+    })
+
+    const additivesButtonsInput = document.querySelectorAll('.menu__slider__modal__label input');
+    additivesButtonsInput.forEach((input) => {
+      input.addEventListener('click', event => {
+        event.stopPropagation();
       })
-      const btn = event.target.closest('.menu__slider__modal__label');
-      if (!btn.classList.contains('_active')) {
-        btn.classList.add('_active');
-      }
-      const sizeSymb = btn.querySelector('.menu__slider__modal__label-left').textContent.toLowerCase();
+    })
 
-      for (let key in currentItem.sizes) {
-        if (key === sizeSymb) {
-           const totalPrice = +cardPrice.slice(1) + +currentItem.sizes[key]['add-price'];
-           console.log(totalPrice)
-           modalPrice.textContent = `$${totalPrice.toFixed(2)}`;
-        }
+    // sizeButtons.addEventListener('click', (event) => {
+    //   if (event.target.closest('.menu__slider__modal__label')) {
+    //     const allButtons = sizeButtons.querySelectorAll('.menu__slider__modal__label');
+    //     allButtons.forEach((btn) => {
+    //       if (btn.classList.contains('_active')) {
+    //         btn.classList.remove('_active');
+    //       }
+    //     })
+    //     const btn = event.target.closest('.menu__slider__modal__label');
+    //     if (!btn.classList.contains('_active')) {
+    //       btn.classList.add('_active');
+    //     }
+    //     const sizeSymb = btn.querySelector('.menu__slider__modal__label-left').textContent.toLowerCase();
+    //     for (let key in currentItem.sizes) {
+    //       if (key === sizeSymb) {
+    //         console.log(currentItem)
+    //          const totalPrice = +modalPrice.textContent.slice(1) + +currentItem.sizes[key]['add-price'];
+    //          modalPrice.textContent = `$${totalPrice.toFixed(2)}`;
+    //       }
+    //     }
+    //   }
+    // })
+
+    // const additivesButtons = modal.querySelector('.menu__slider__modal__buttons-wrapper-additives');
+    // additivesButtons.addEventListener('click', (event) => {
+    //   if (event.target.closest('.menu__slider__modal__label')) {
+    //     const btn = event.target.closest('.menu__slider__modal__label');
+    //     btn.classList.toggle('_active-with-events');
+
+
+    //       const additiveName = btn.querySelector('.menu__slider__modal__label-right').textContent;
+    //       currentItem.additives.forEach(item => {
+    //         if (btn.classList.contains('_active-with-events')) {
+    //           if (item.name === additiveName) {
+    //             console.log(modalPrice.textContent)
+    //             const totalPrice = +modalPrice.textContent.slice(1) + +item['add-price'];
+    //             modalPrice.textContent = `$${totalPrice.toFixed(2)}`;
+    //           }
+    //         }
+    //         else {
+    //           if (item.name === additiveName) {
+    //             console.log(modalPrice.textContent)
+    //             const totalPrice = +modalPrice.textContent.slice(1) - +item['add-price'];
+    //             modalPrice.textContent = `$${totalPrice.toFixed(2)}`;
+    //           }
+    //         }
+    //       })
+
+    //   }
+    // })
+
+    const sizeButtons = modal.querySelector('.menu__slider__modal__buttons-wrapper-size');
+    const additivesButtons = modal.querySelector('.menu__slider__modal__buttons-wrapper-additives');
+
+    sizeButtons.addEventListener('click', (event) => {
+      if (event.target.closest('.menu__slider__modal__label')) {
+        const allButtons = sizeButtons.querySelectorAll('.menu__slider__modal__label');
+        allButtons.forEach((btn) => {
+          btn.classList.remove('_active');
+        });
+
+        const btn = event.target.closest('.menu__slider__modal__label');
+        btn.classList.add('_active');
+
+        const sizeSymb = btn.querySelector('.menu__slider__modal__label-left').textContent.toLowerCase();
+        let totalPrice = +cardPrice.slice(1) + +currentItem.sizes[sizeSymb]['add-price'];
+
+        const activeAdditives = modal.querySelectorAll('.menu__slider__modal__label._active-with-events');
+        activeAdditives.forEach((additive) => {
+          const additiveName = additive.querySelector('.menu__slider__modal__label-right').textContent;
+          currentItem.additives.forEach((item) => {
+            if (item.name === additiveName) {
+              totalPrice += +item['add-price'];
+            }
+          });
+        });
+
+        modalPrice.textContent = `$${totalPrice.toFixed(2)}`;
       }
-    }
-  })
+    });
+
+    additivesButtons.addEventListener('click', (event) => {
+      if (event.target.closest('.menu__slider__modal__label')) {
+        const btn = event.target.closest('.menu__slider__modal__label');
+        btn.classList.toggle('_active-with-events');
+
+        const sizeButton = sizeButtons.querySelector('.menu__slider__modal__label._active');
+        const sizeSymb = sizeButton.querySelector('.menu__slider__modal__label-left').textContent.toLowerCase();
+        const cardPrice = card.querySelector('.menu__slider__card__price').textContent;
+        let totalPrice = +cardPrice.slice(1) + +currentItem.sizes[sizeSymb]['add-price'];
+
+        const activeAdditives = modal.querySelectorAll('.menu__slider__modal__label._active-with-events');
+        activeAdditives.forEach((additive) => {
+          const activeAdditiveName = additive.querySelector('.menu__slider__modal__label-right').textContent;
+          currentItem.additives.forEach((item) => {
+            if (item.name === activeAdditiveName) {
+              totalPrice += +item['add-price'];
+            }
+          });
+        });
+
+        modalPrice.textContent = `$${totalPrice.toFixed(2)}`;
+      }
+    });
+
+  }
 
 }
 
