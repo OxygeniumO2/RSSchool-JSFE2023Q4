@@ -15,29 +15,38 @@ const modal = document.querySelector('.menu__slider__modal');
 const body = document.querySelector('.body');
 
 const modalCloseBtn = document.querySelector('.menu__slider__modal__btn');
-modalCloseBtn.addEventListener('click', () => {
-  modal.classList.remove('_active');
-  const bodyWidthBefore = body.clientWidth;
-  body.classList.remove('_active');
-  if (bodyWidthBefore > body.clientWidth) {
-    body.style.paddingRight = 0;
-  }
-  const sizeButtons = modal.querySelectorAll('.menu__slider__modal__label');
-  sizeButtons.forEach((item, index) => {
-    if (index != 0) {
-      item.classList.remove('_active')
-    }
-    else {
-      item.classList.add('_active');
-    }
+
+const additivesButtonsInput = document.querySelectorAll('.menu__slider__modal__label input');
+additivesButtonsInput.forEach((input) => {
+  input.addEventListener('click', event => {
+    event.stopPropagation();
   })
 })
 
-menuSlider.addEventListener('click', showModal)
+menuSlider.addEventListener('click', showModal);
+
 
 function showModal(event) {
   const card = (event.target.closest('.menu__slider__card'));
   if (card) {
+
+    const cards = document.querySelectorAll('.menu__slider__card');
+
+    const sizeButtons = modal.querySelector('.menu__slider__modal__buttons-wrapper-size');
+    const additivesButtons = modal.querySelector('.menu__slider__modal__buttons-wrapper-additives');
+
+    let returned = false;
+    cards.forEach(card => {
+      if (card.classList.contains('_active')) {
+        modal.classList.remove('_active');
+        card.classList.remove('_active');
+        body.classList.remove('_active');
+        returned = true;
+      }
+    })
+    if (returned) return;
+
+    card.classList.add('_active');
     modal.classList.add('_active');
     const bodyWidthBefore = body.clientWidth;
     body.classList.add('_active');
@@ -72,68 +81,7 @@ function showModal(event) {
       }
     })
 
-    const additivesButtonsInput = document.querySelectorAll('.menu__slider__modal__label input');
-    additivesButtonsInput.forEach((input) => {
-      input.addEventListener('click', event => {
-        event.stopPropagation();
-      })
-    })
-
-    // sizeButtons.addEventListener('click', (event) => {
-    //   if (event.target.closest('.menu__slider__modal__label')) {
-    //     const allButtons = sizeButtons.querySelectorAll('.menu__slider__modal__label');
-    //     allButtons.forEach((btn) => {
-    //       if (btn.classList.contains('_active')) {
-    //         btn.classList.remove('_active');
-    //       }
-    //     })
-    //     const btn = event.target.closest('.menu__slider__modal__label');
-    //     if (!btn.classList.contains('_active')) {
-    //       btn.classList.add('_active');
-    //     }
-    //     const sizeSymb = btn.querySelector('.menu__slider__modal__label-left').textContent.toLowerCase();
-    //     for (let key in currentItem.sizes) {
-    //       if (key === sizeSymb) {
-    //         console.log(currentItem)
-    //          const totalPrice = +modalPrice.textContent.slice(1) + +currentItem.sizes[key]['add-price'];
-    //          modalPrice.textContent = `$${totalPrice.toFixed(2)}`;
-    //       }
-    //     }
-    //   }
-    // })
-
-    // const additivesButtons = modal.querySelector('.menu__slider__modal__buttons-wrapper-additives');
-    // additivesButtons.addEventListener('click', (event) => {
-    //   if (event.target.closest('.menu__slider__modal__label')) {
-    //     const btn = event.target.closest('.menu__slider__modal__label');
-    //     btn.classList.toggle('_active-with-events');
-
-
-    //       const additiveName = btn.querySelector('.menu__slider__modal__label-right').textContent;
-    //       currentItem.additives.forEach(item => {
-    //         if (btn.classList.contains('_active-with-events')) {
-    //           if (item.name === additiveName) {
-    //             console.log(modalPrice.textContent)
-    //             const totalPrice = +modalPrice.textContent.slice(1) + +item['add-price'];
-    //             modalPrice.textContent = `$${totalPrice.toFixed(2)}`;
-    //           }
-    //         }
-    //         else {
-    //           if (item.name === additiveName) {
-    //             console.log(modalPrice.textContent)
-    //             const totalPrice = +modalPrice.textContent.slice(1) - +item['add-price'];
-    //             modalPrice.textContent = `$${totalPrice.toFixed(2)}`;
-    //           }
-    //         }
-    //       })
-
-    //   }
-    // })
-
-    const sizeButtons = modal.querySelector('.menu__slider__modal__buttons-wrapper-size');
-    const additivesButtons = modal.querySelector('.menu__slider__modal__buttons-wrapper-additives');
-
-    sizeButtons.addEventListener('click', (event) => {
+    function sizeButton(event) {
       if (event.target.closest('.menu__slider__modal__label')) {
         const allButtons = sizeButtons.querySelectorAll('.menu__slider__modal__label');
         allButtons.forEach((btn) => {
@@ -158,9 +106,9 @@ function showModal(event) {
 
         modalPrice.textContent = `$${totalPrice.toFixed(2)}`;
       }
-    });
+    }
 
-    additivesButtons.addEventListener('click', (event) => {
+    function additivesButton(event) {
       if (event.target.closest('.menu__slider__modal__label')) {
         const btn = event.target.closest('.menu__slider__modal__label');
         btn.classList.toggle('_active-with-events');
@@ -169,7 +117,7 @@ function showModal(event) {
         const sizeSymb = sizeButton.querySelector('.menu__slider__modal__label-left').textContent.toLowerCase();
         const cardPrice = card.querySelector('.menu__slider__card__price').textContent;
         let totalPrice = +cardPrice.slice(1) + +currentItem.sizes[sizeSymb]['add-price'];
-
+        console.log(btn)
         const activeAdditives = modal.querySelectorAll('.menu__slider__modal__label._active-with-events');
         activeAdditives.forEach((additive) => {
           const activeAdditiveName = additive.querySelector('.menu__slider__modal__label-right').textContent;
@@ -182,9 +130,62 @@ function showModal(event) {
 
         modalPrice.textContent = `$${totalPrice.toFixed(2)}`;
       }
-    });
+    }
+
+    sizeButtons.addEventListener('click', sizeButton);
+    additivesButtons.addEventListener('click', additivesButton);
+
+
+
+    modalCloseBtn.addEventListener('click', () => {
+      card.classList.remove('_active');
+      modal.classList.remove('_active');
+      const bodyWidthBefore = body.clientWidth;
+      body.classList.remove('_active');
+      if (bodyWidthBefore > body.clientWidth) {
+        body.style.paddingRight = 0;
+      }
+      removeGoddamitListener(sizeButton, additivesButton);
+
+    })
+    document.addEventListener('click', (event) => {
+      if (!event.target.closest('.menu__slider__modal') && (!event.target.closest('.menu__slider__card'))) {
+        card.classList.remove('_active');
+        modal.classList.remove('_active');
+        const bodyWidthBefore = body.clientWidth;
+        body.classList.remove('_active');
+        if (bodyWidthBefore > body.clientWidth) {
+        body.style.paddingRight = 0;
+      }
+      removeGoddamitListener(sizeButton, additivesButton);
+      }
+    })
 
   }
-
 }
 
+
+
+
+
+function removeGoddamitListener(sizeButton, additivesButton) {
+  const sizeButtonsAll = modal.querySelectorAll('.menu__slider__modal__label-size');
+  const additivesButtonsAll = modal.querySelectorAll('.menu__slider__modal__label-adittives');
+  const sizeButtons = modal.querySelector('.menu__slider__modal__buttons-wrapper-size');
+  const additivesButtons = modal.querySelector('.menu__slider__modal__buttons-wrapper-additives');
+
+  sizeButtons.removeEventListener('click', sizeButton);
+  additivesButtons.removeEventListener('click', additivesButton);
+
+  sizeButtonsAll.forEach((item, index) => {
+    if (index != 0) {
+      item.classList.remove('_active')
+    }
+    else {
+      item.classList.add('_active');
+    }
+  })
+  additivesButtonsAll.forEach(item => {
+    item.classList.remove('_active-with-events');
+  })
+}

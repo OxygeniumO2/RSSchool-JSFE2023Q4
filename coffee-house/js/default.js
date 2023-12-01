@@ -23,7 +23,7 @@ function smoothScrolling(item) {
 function burgerMenu() {
   burgerMenuContainer.classList.toggle('_active');
   burgerNavigationWrapper.classList.toggle('_active');
-  body.classList.toggle('_active');
+  body.classList.toggle('_active-hidden');
 }
 
 export { smoothScrolling, burgerMenu };
