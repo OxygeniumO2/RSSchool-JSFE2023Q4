@@ -35,13 +35,21 @@ function showModal(event) {
     const sizeButtons = modal.querySelector('.menu__slider__modal__buttons-wrapper-size');
     const additivesButtons = modal.querySelector('.menu__slider__modal__buttons-wrapper-additives');
 
+    sizeButtons.addEventListener('click', sizeButton);
+    additivesButtons.addEventListener('click', additivesButton);
+
     let returned = false;
     cards.forEach(card => {
       if (card.classList.contains('_active')) {
         modal.classList.remove('_active');
         card.classList.remove('_active');
+        const bodyWidthBefore = body.clientWidth;
         body.classList.remove('_active');
+      if (bodyWidthBefore > body.clientWidth) {
+        body.style.paddingRight = 0;
+      }
         returned = true;
+        removeGoddamitListener(sizeButton, additivesButton);
       }
     })
     if (returned) return;
@@ -86,10 +94,14 @@ function showModal(event) {
         const allButtons = sizeButtons.querySelectorAll('.menu__slider__modal__label');
         allButtons.forEach((btn) => {
           btn.classList.remove('_active');
+          const btnLeftText = btn.querySelector('.menu__slider__modal__label-left');
+          btnLeftText.classList.remove('_active');
         });
 
         const btn = event.target.closest('.menu__slider__modal__label');
         btn.classList.add('_active');
+        const btnLeftText = btn.querySelector('.menu__slider__modal__label-left');
+        btnLeftText.classList.add('_active');
 
         const sizeSymb = btn.querySelector('.menu__slider__modal__label-left').textContent.toLowerCase();
         let totalPrice = +cardPrice.slice(1) + +currentItem.sizes[sizeSymb]['add-price'];
@@ -109,10 +121,12 @@ function showModal(event) {
     }
 
     function additivesButton(event) {
+      event.stopImmediatePropagation()
       if (event.target.closest('.menu__slider__modal__label')) {
         const btn = event.target.closest('.menu__slider__modal__label');
         btn.classList.toggle('_active-with-events');
-
+        const btnLeftText = btn.querySelector('.menu__slider__modal__label-left');
+        btnLeftText.classList.toggle('_active');
         const sizeButton = sizeButtons.querySelector('.menu__slider__modal__label._active');
         const sizeSymb = sizeButton.querySelector('.menu__slider__modal__label-left').textContent.toLowerCase();
         const cardPrice = card.querySelector('.menu__slider__card__price').textContent;
@@ -132,8 +146,7 @@ function showModal(event) {
       }
     }
 
-    sizeButtons.addEventListener('click', sizeButton);
-    additivesButtons.addEventListener('click', additivesButton);
+
 
 
 
@@ -145,6 +158,19 @@ function showModal(event) {
       if (bodyWidthBefore > body.clientWidth) {
         body.style.paddingRight = 0;
       }
+      const btnLeftText = document.querySelectorAll('.menu__slider__modal__label-left-size');
+      const btnALeftdditives = document.querySelectorAll('.menu__slider__modal__label-left-additives');
+      btnALeftdditives.forEach(item => {
+        item.classList.remove('_active');
+      })
+      btnLeftText.forEach((item, index) => {
+        if (index != 0) {
+          item.classList.remove('_active');
+        }
+        else {
+          item.classList.add('_active');
+        }
+      })
       removeGoddamitListener(sizeButton, additivesButton);
 
     })
@@ -157,6 +183,19 @@ function showModal(event) {
         if (bodyWidthBefore > body.clientWidth) {
         body.style.paddingRight = 0;
       }
+      const btnLeftText = document.querySelectorAll('.menu__slider__modal__label-left-size');
+      const btnALeftdditives = document.querySelectorAll('.menu__slider__modal__label-left-additives');
+      btnALeftdditives.forEach(item => {
+        item.classList.remove('_active');
+      })
+      btnLeftText.forEach((item, index) => {
+        if (index != 0) {
+          item.classList.remove('_active');
+        }
+        else {
+          item.classList.add('_active');
+        }
+      })
       removeGoddamitListener(sizeButton, additivesButton);
       }
     })

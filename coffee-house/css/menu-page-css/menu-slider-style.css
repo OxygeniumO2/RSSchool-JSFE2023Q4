@@ -226,6 +226,10 @@
   transition: all 0.3s ease;
 }
 
+.menu__slider__modal__label-left._active {
+  background-color: var(--background-body-color);
+}
+
 .menu__slider__modal__label-left-additives {
   padding: 3px 11px;
 }
