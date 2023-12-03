@@ -308,3 +308,42 @@ document.addEventListener('DOMContentLoaded', () => {
     })
   }
 });
+
+let isTabletWidth = false;
+
+let resizeTimer;
+
+window.addEventListener('resize', () => {
+
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+
+    const allButtons = document.querySelectorAll('.menu__slider__label-btn');
+
+    if (window.innerWidth <= 768 && !isTabletWidth) {
+      allCards.forEach((item, index) => {
+        if (index >= 4) {
+        item.classList.add('_hidden');
+      }
+    })
+    loadMoreBtn.classList.remove('_hidden');
+    if (allButtons[1].classList.contains('_active')) {
+      loadMoreBtn.classList.add('_hidden');
+    }
+    isTabletWidth = true;
+  }
+  else if (window.innerWidth > 768) {
+    allCards.forEach(item => {
+      item.classList.remove('_hidden');
+    })
+    if (allButtons[1].classList.contains('_active')) {
+      allCards.forEach((item, index) => {
+        if (index >= 4) {
+          item.classList.add('_hidden');
+        }
+      })
+    }
+    isTabletWidth = false;
+  }
+  }, 200)
+});

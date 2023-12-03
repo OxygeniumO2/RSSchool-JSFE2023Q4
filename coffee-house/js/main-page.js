@@ -8,14 +8,22 @@ const burgerMenuContainer = document.querySelector('.burger-menu__container');
 headerWrapper.addEventListener('click', smoothScrolling);
 burgerMenuContainer.addEventListener('click', burgerMenu);
 
+let resizeTimer;
+
 // SLIDER START
 
 window.addEventListener('resize', () => {
-  slideWidth = slides[0].offsetWidth;;
+
+  clearTimeout(resizeTimer);
+
+  resizeTimer = setTimeout(() => {
+    slideWidth = slides[0].offsetWidth;
   if (window.innerWidth > 1024) {
     sliderCount = 0;
   }
   rollSlider();
+  }, 100)
+
 });
 
 const sliderLine = document.querySelector('.favorite__slides');
