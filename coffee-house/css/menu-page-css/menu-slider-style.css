@@ -128,10 +128,6 @@
 }
 
 @media screen and (max-width: 1024px) {
-  .menu__slider__card_5 {
-    display: none;
-  }
-
   .menu__slider__card {
     min-height: 506px;
   }
@@ -142,6 +138,12 @@
 
   .menu__slider__wrapper {
     margin-bottom: 40px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .menu__slider__card_5 {
+    display: none;
   }
 
   .menu__slider-reroll-button__wrapper {
