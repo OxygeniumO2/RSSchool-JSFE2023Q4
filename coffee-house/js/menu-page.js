@@ -16,7 +16,7 @@ const body = document.querySelector('.body');
 
 const modalCloseBtn = document.querySelector('.menu__slider__modal__btn');
 
-const additivesButtonsInput = document.querySelectorAll('.menu__slider__modal__label input');
+const additivesButtonsInput = document.querySelectorAll('.menu__slider__label input');
 additivesButtonsInput.forEach((input) => {
   input.addEventListener('click', event => {
     event.stopPropagation();
@@ -24,7 +24,6 @@ additivesButtonsInput.forEach((input) => {
 })
 
 menuSlider.addEventListener('click', showModal);
-
 
 function showModal(event) {
   const card = (event.target.closest('.menu__slider__card'));
@@ -83,9 +82,13 @@ function showModal(event) {
       if (item.name === modalTitle.textContent) {
         currentItem = item;
         const sizeMetric = modal.querySelectorAll('.menu__slider__modal__label-right-price-metric');
+        const additiveName = modal.querySelectorAll('.menu__slider__modal__label-right-additives');
         sizeMetric[0].textContent = currentItem.sizes.s.size;
         sizeMetric[1].textContent = currentItem.sizes.m.size;
         sizeMetric[2].textContent = currentItem.sizes.l.size;
+        additiveName.forEach((item, index) => {
+          item.textContent = currentItem.additives[index].name;
+        })
       }
     })
 
@@ -131,7 +134,6 @@ function showModal(event) {
         const sizeSymb = sizeButton.querySelector('.menu__slider__modal__label-left').textContent.toLowerCase();
         const cardPrice = card.querySelector('.menu__slider__card__price').textContent;
         let totalPrice = +cardPrice.slice(1) + +currentItem.sizes[sizeSymb]['add-price'];
-        console.log(btn)
         const activeAdditives = modal.querySelectorAll('.menu__slider__modal__label._active-with-events');
         activeAdditives.forEach((additive) => {
           const activeAdditiveName = additive.querySelector('.menu__slider__modal__label-right').textContent;
@@ -145,10 +147,6 @@ function showModal(event) {
         modalPrice.textContent = `$${totalPrice.toFixed(2)}`;
       }
     }
-
-
-
-
 
     modalCloseBtn.addEventListener('click', () => {
       card.classList.remove('_active');
@@ -203,10 +201,6 @@ function showModal(event) {
   }
 }
 
-
-
-
-
 function removeGoddamitListener(sizeButton, additivesButton) {
   const sizeButtonsAll = modal.querySelectorAll('.menu__slider__modal__label-size');
   const additivesButtonsAll = modal.querySelectorAll('.menu__slider__modal__label-adittives');
@@ -228,3 +222,89 @@ function removeGoddamitListener(sizeButton, additivesButton) {
     item.classList.remove('_active-with-events');
   })
 }
+
+const menuSliderButtonWrapper = document.querySelector('.menu__slider__buttons-wrapper');
+const loadMoreBtn = document.querySelector('.menu__slider-reroll-button__wrapper');
+
+menuSliderButtonWrapper.addEventListener('click', buildCards);
+
+function buildCards(event) {
+  const card = event.target.closest('.menu__slider__label');
+  if (card) {
+    const cardName = card.querySelector('span').textContent;
+    const allButtons = document.querySelectorAll('.menu__slider__label-btn');
+    allButtons.forEach(item => {
+      item.classList.remove('_active');
+    })
+    card.classList.add('_active');
+    buildCardsByName(cardName);
+  }
+}
+
+function addInfoToCard(card, index, currentItems) {
+  card.classList.remove('_hidden');
+  const cardImg = card.querySelector('.menu__slider__card-img');
+  cardImg.src = currentItems[index].path;
+
+  const cardTitle = card.querySelector('.menu__slider__card__title');
+  cardTitle.textContent = currentItems[index].name;
+
+  const cardDesc = card.querySelector('.menu__slider__card__description');
+  cardDesc.textContent = currentItems[index].description;
+
+  const cardPrice = card.querySelector('.menu__slider__card__price');
+  cardPrice.textContent = `$${currentItems[index].price}`;
+}
+
+function buildCardsByName(cardName) {
+  const allCards = document.querySelectorAll('.menu__slider__card');
+  const currentItems = menuItems.filter(item => {
+    return item.category === cardName.toLowerCase();
+  })
+  allCards.forEach((card, index) => {
+    if (currentItems[index] && currentItems[index].path !== undefined) {
+      if (window.innerWidth > 768) {
+        addInfoToCard(card, index, currentItems);
+      }
+      else {
+        addInfoToCard(card, index, currentItems);
+        if (index >= 4) {
+          card.classList.add('_hidden');
+          loadMoreBtn.classList.remove('_hidden');
+        }
+        if (!currentItems[index - 1]) {
+          loadMoreBtn.classList.add('_hidden');
+        }
+      }
+    }
+    else {
+      card.classList.add('_hidden');
+    }
+  })
+}
+
+
+loadMoreBtn.addEventListener('click', loadMore);
+
+function loadMore(event) {
+  const btn = event.target.closest('img');
+  if (btn) {
+    const allCards = document.querySelectorAll('.menu__slider__card');
+    allCards.forEach(item => {
+      item.classList.remove('_hidden');
+    });
+    loadMoreBtn.classList.add('_hidden');
+  }
+}
+
+const allCards = document.querySelectorAll('.menu__slider__card');
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (window.innerWidth <= 768) {
+    allCards.forEach((card, index) => {
+      if(index >= 4) {
+        card.classList.add('_hidden');
+      }
+    })
+  }
+});
