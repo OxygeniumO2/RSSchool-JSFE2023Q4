@@ -17,6 +17,7 @@ function smoothScrolling(item) {
     burgerMenuContainer.classList.remove('_active');
     burgerNavigationWrapper.classList.remove('_active');
     body.classList.remove('_active');
+    body.classList.remove('_active-hidden');
   }
 };
 

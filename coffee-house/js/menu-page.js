@@ -15,6 +15,7 @@ const modal = document.querySelector('.menu__slider__modal');
 const body = document.querySelector('.body');
 
 const modalCloseBtn = document.querySelector('.menu__slider__modal__btn');
+const screenBlockElem = document.querySelector('.shadow');
 
 const additivesButtonsInput = document.querySelectorAll('.menu__slider__label input');
 additivesButtonsInput.forEach((input) => {
@@ -31,27 +32,11 @@ function showModal(event) {
 
     const cards = document.querySelectorAll('.menu__slider__card');
 
+    screenBlockElem.classList.add('_active');
+
     const sizeButtons = modal.querySelector('.menu__slider__modal__buttons-wrapper-size');
     const additivesButtons = modal.querySelector('.menu__slider__modal__buttons-wrapper-additives');
 
-    sizeButtons.addEventListener('click', sizeButton);
-    additivesButtons.addEventListener('click', additivesButton);
-
-    let returned = false;
-    cards.forEach(card => {
-      if (card.classList.contains('_active')) {
-        modal.classList.remove('_active');
-        card.classList.remove('_active');
-        const bodyWidthBefore = body.clientWidth;
-        body.classList.remove('_active');
-      if (bodyWidthBefore > body.clientWidth) {
-        body.style.paddingRight = 0;
-      }
-        returned = true;
-        removeGoddamitListener(sizeButton, additivesButton);
-      }
-    })
-    if (returned) return;
 
     card.classList.add('_active');
     modal.classList.add('_active');
@@ -148,7 +133,16 @@ function showModal(event) {
       }
     }
 
-    modalCloseBtn.addEventListener('click', () => {
+
+    sizeButtons.addEventListener('click', sizeButton);
+    additivesButtons.addEventListener('click', additivesButton);
+
+    modalCloseBtn.addEventListener('click', closeModalByButton);
+    screenBlockElem.addEventListener('click', closeModalByOutside);
+
+
+    function closeModalByOutside() {
+      screenBlockElem.classList.remove('_active');
       card.classList.remove('_active');
       modal.classList.remove('_active');
       const bodyWidthBefore = body.clientWidth;
@@ -170,15 +164,18 @@ function showModal(event) {
         }
       })
       removeGoddamitListener(sizeButton, additivesButton);
+      modalCloseBtn.removeEventListener('click', closeModalByButton);
+      screenBlockElem.removeEventListener('click', closeModalByOutside)
+    };
 
-    })
-    document.addEventListener('click', (event) => {
-      if (!event.target.closest('.menu__slider__modal') && (!event.target.closest('.menu__slider__card'))) {
-        card.classList.remove('_active');
-        modal.classList.remove('_active');
-        const bodyWidthBefore = body.clientWidth;
-        body.classList.remove('_active');
-        if (bodyWidthBefore > body.clientWidth) {
+
+    function closeModalByButton() {
+      screenBlockElem.classList.remove('_active');
+      card.classList.remove('_active');
+      modal.classList.remove('_active');
+      const bodyWidthBefore = body.clientWidth;
+      body.classList.remove('_active');
+      if (bodyWidthBefore > body.clientWidth) {
         body.style.paddingRight = 0;
       }
       const btnLeftText = document.querySelectorAll('.menu__slider__modal__label-left-size');
@@ -195,8 +192,9 @@ function showModal(event) {
         }
       })
       removeGoddamitListener(sizeButton, additivesButton);
-      }
-    })
+      modalCloseBtn.removeEventListener('click', closeModalByButton);
+      screenBlockElem.removeEventListener('click', closeModalByOutside);
+    }
 
   }
 }
