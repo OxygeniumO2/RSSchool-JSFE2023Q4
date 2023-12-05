@@ -127,10 +127,6 @@
 }
 
 @media screen and (max-width: 1024px) {
-  .favorite__section {
-    padding-top: 200px;
-  }
-
   .favorite__slider__container {
     width: 78%;
   }
