@@ -10,8 +10,6 @@ burgerMenuContainer.addEventListener('click', burgerMenu);
 
 let resizeTimer;
 
-// SLIDER START
-
 window.addEventListener('resize', () => {
 
   clearTimeout(resizeTimer);
@@ -38,50 +36,6 @@ let start;
 let change;
 let slideInterval;
 let dragging = false;
-
-sliderLine.addEventListener('dragstart', (event) => {
-  start = event.clientX;
-
-});
-
-sliderLine.addEventListener('dragover', (event) => {
-  event.preventDefault();
-  let touch = event.clientX;
-  change = start - touch;
-});
-
-sliderLine.addEventListener('dragend', (event) => {
-  dragging = false;
-  if (change > 0) {
-    nextSlide();
-    clearInterval(slideInterval);
-  } else {
-    prevSlide();
-    clearInterval(slideInterval);
-  }
-});
-
-// sliderLine.addEventListener('mouseenter', () => {
-//   if (!dragging) {
-//     clearInterval(slideInterval);
-//   }
-// });
-
-// sliderLine.addEventListener('mouseleave', () => {
-//   if (!dragging) {
-//     startSlideInterval();
-//   }
-// });
-
-sliderLine.addEventListener('mousedown', () => {
-  dragging = true;
-  clearInterval(slideInterval);
-});
-
-sliderLine.addEventListener('mouseup', () => {
-  dragging = false;
-  startSlideInterval();
-});
 
 sliderLine.addEventListener('touchstart', (event) => {
   dragging = true;
@@ -126,7 +80,7 @@ function startSlideInterval() {
 
   slideInterval = setInterval(() => {
     nextSlide();
-  }, 4000);
+  }, 5000);
 }
 
 startSlideInterval();
@@ -174,7 +128,5 @@ sliderArrowRight.addEventListener('click', () => {
   nextSlide();
 
 });
-
-// SLIDER END
 
 
