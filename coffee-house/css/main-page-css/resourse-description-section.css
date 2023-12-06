@@ -8,6 +8,7 @@
 
 .resourse-about__img__wrapper {
   display: flex;
+  max-height: 1060px;
   gap: 40px;
 }
 
@@ -30,7 +31,7 @@
 
 .resourse-about__img-card-2,
 .resourse-about__img-card-3 {
-  max-height: 33.3%;
+  max-height: 40.3%;
 }
 
 .resourse-about__img-card img {
@@ -55,6 +56,7 @@
   .resourse-about__img__wrapper {
     flex-wrap: wrap;
     justify-content: center;
+    max-height: unset;
   }
 
   .resourse-about__img-card {
