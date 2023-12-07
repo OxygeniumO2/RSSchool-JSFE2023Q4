@@ -25,6 +25,10 @@ function burgerMenu() {
   burgerMenuContainer.classList.toggle('_active');
   burgerNavigationWrapper.classList.toggle('_active');
   body.classList.toggle('_active-hidden');
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
 }
 
 export { smoothScrolling, burgerMenu };
