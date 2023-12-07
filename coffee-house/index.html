@@ -18,34 +18,36 @@
   <link rel="stylesheet" href="./css/main-page-css/main-page-style.css">
 </head>
 
-<body>
+<body class="body">
   <header class="header">
     <div class="container">
       <div class="header__wrapper">
         <div class="header__logo">
-          <a href="./main-page/index.html" style="pointer-events: none;">
+          <a class="header__logo-link" href="./main-page/index.html" style="pointer-events: none;" data-goto=".header">
             <img src="./img/logo.svg" alt="Coffee House Logo">
           </a>
         </div>
-        <div class="header__nav__wrapper">
-          <nav class="header__nav">
-            <ul class="header__nav__list">
-              <li>
-                <a class="header__menu__link global-link" data-goto=".favorite__section" href="#">Favorite coffee</a>
-              </li>
-              <li><a class="header__menu__link global-link" data-goto=".resource-about__section" href="#">About</a>
-              </li>
-              <li><a class="header__menu__link global-link" data-goto=".mobile-app__section" href="#">Mobile app</a>
-              </li>
-              <li><a class="header__menu__link global-link" data-goto=".footer" href="#">Contact us</a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-        <div class="header__menu-link__wrapper">
-          <a class="header__menu-link global-link header__menu-link__mainpage" href="./menu.html"><span>Menu</span>
-            <img src="./img/coffee-cup.svg" alt="coffee menu">
-          </a>
+        <div class="burger__navigation__wrapper">
+          <div class="header__nav__wrapper">
+            <nav class="header__nav">
+              <ul class="header__nav__list">
+                <li>
+                  <a class="header__menu__link global-link" data-goto=".favorite__section" href="#">Favorite coffee</a>
+                </li>
+                <li><a class="header__menu__link global-link" data-goto=".resource-about__section" href="#">About</a>
+                </li>
+                <li><a class="header__menu__link global-link" data-goto=".mobile-app__section" href="#">Mobile app</a>
+                </li>
+                <li><a class="header__menu__link global-link" data-goto=".footer" href="#">Contact us</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+          <div class="header__menu-link__wrapper">
+            <a class="header__menu-link global-link header__menu-link__mainpage" href="./menu.html"><span>Menu</span>
+              <img src="./img/coffee-cup.svg" alt="coffee menu">
+            </a>
+          </div>
         </div>
         <div class="burger-menu__container">
           <div class="burger__menu__line burger__menu__line_1"></div>
@@ -70,6 +72,7 @@
               <img class="coffee__cup-img" src="./img/coffee-cup.svg" alt="coffee menu">
             </div>
           </a>
+          <video class="enjoy__section__video" src="./video/video(720p).mp4" autoplay loop muted playsinline></video>
         </div>
       </div>
     </section>
@@ -101,25 +104,24 @@
               <p class="favorite__slide__price">$4.50</p>
             </div>
           </div>
-          <div class="favorite__slider__arrow favorite__slider__arrow_left">
-            <svg class="favorite__slider__arrow-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-              viewBox="0 0 24 24">
-              <path d="M18.5 12H6M6 12L12 6M6 12L12 18" stroke="#403F3D" stroke-linecap="round"
-                stroke-linejoin="round" />
-            </svg>
-          </div>
-          <div class="favorite__slider__arrow favorite__slider__arrow_right">
-            <svg class="favorite__slider__arrow-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-              viewBox="0 0 24 24">
-              <path d="M18.5 12H6M6 12L12 6M6 12L12 18" stroke="#403F3D" stroke-linecap="round"
-                stroke-linejoin="round" />
-            </svg>
-          </div>
+
           <div class="favorite__slider__lines__container">
-            <div class="favorite__slider__line _active"></div>
+            <div class="favorite__slider__line"></div>
             <div class="favorite__slider__line"></div>
             <div class="favorite__slider__line"></div>
           </div>
+        </div>
+        <div class="favorite__slider__arrow favorite__slider__arrow_left">
+          <svg class="favorite__slider__arrow-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+            viewBox="0 0 24 24">
+            <path d="M18.5 12H6M6 12L12 6M6 12L12 18" stroke="#403F3D" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </div>
+        <div class="favorite__slider__arrow favorite__slider__arrow_right">
+          <svg class="favorite__slider__arrow-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+            viewBox="0 0 24 24">
+            <path d="M18.5 12H6M6 12L12 6M6 12L12 18" stroke="#403F3D" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
         </div>
       </div>
     </section>

@@ -18,7 +18,8 @@
   <link rel="stylesheet" href="./css/menu-page-css/menu-page-style.css">
 </head>
 
-<body>
+<body class="body">
+  <div class="shadow"></div>
   <header class="header">
     <div class="container">
       <div class="header__wrapper">
@@ -27,27 +28,29 @@
             <img src="./img/logo.svg" alt="Coffee House Logo">
           </a>
         </div>
-        <div class="header__nav__wrapper">
-          <nav class="header__nav">
-            <ul class="header__nav__list">
-              <li>
-                <a class="header__menu__link global-link" href="./index.html#favoriteSection">Favorite
-                  coffee</a>
-              </li>
-              <li><a class="header__menu__link global-link" href="./index.html#aboutSection">About</a>
-              </li>
-              <li><a class="header__menu__link global-link" href="./index.html#mobile-appSection">Mobile app</a>
-              </li>
-              <li><a class="header__menu__link global-link" href="#" data-goto=".footer">Contact us</a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-        <div class="header__menu-link__wrapper">
-          <a class="header__menu-link global-link header__menu-link__menupage" href="./menu.html"
-            style="pointer-events: none;"><span>Menu</span>
-            <img src="./img/coffee-cup.svg" alt="coffee menu">
-          </a>
+        <div class="burger__navigation__wrapper">
+          <div class="header__nav__wrapper">
+            <nav class="header__nav">
+              <ul class="header__nav__list">
+                <li>
+                  <a class="header__menu__link global-link" href="./index.html#favoriteSection">Favorite
+                    coffee</a>
+                </li>
+                <li><a class="header__menu__link global-link" href="./index.html#aboutSection">About</a>
+                </li>
+                <li><a class="header__menu__link global-link" href="./index.html#mobile-appSection">Mobile app</a>
+                </li>
+                <li><a class="header__menu__link global-link" href="#" data-goto=".footer">Contact us</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+          <div class="header__menu-link__wrapper">
+            <a class="header__menu-link global-link header__menu-link__menupage" href="#"
+              data-goto=".header"><span>Menu</span>
+              <img src="./img/coffee-cup.svg" alt="coffee menu">
+            </a>
+          </div>
         </div>
         <div class="burger-menu__container">
           <div class="burger__menu__line burger__menu__line_1"></div>
@@ -63,17 +66,17 @@
             class="section__title_accent">amazing
             surprise</span></h1>
         <div class="menu__slider__buttons-wrapper">
-          <label class="menu__slider__label _active">
+          <label class="menu__slider__label menu__slider__label-btn _active">
             <input type="radio" name="menu" value="coffee">
             <img src="./img/menu-page/emoji-svg/coffee.svg" alt="coffee" class="menu__slider__label-emoji">
             <span>Coffee</span>
           </label>
-          <label class="menu__slider__label">
+          <label class="menu__slider__label menu__slider__label-btn">
             <input type="radio" name="menu" value="tea">
             <img src="./img/menu-page/emoji-svg/tea.svg" alt="tea" class="menu__slider__label-emoji">
             <span>Tea</span>
           </label>
-          <label class="menu__slider__label">
+          <label class="menu__slider__label menu__slider__label-btn">
             <input type="radio" name="menu" value="dessert">
             <img src="./img/menu-page/emoji-svg/dessert.svg" alt="dessert" class="menu__slider__label-emoji">
             <span>Dessert</span>
@@ -83,7 +86,7 @@
         <div class="menu__slider__wrapper">
           <div class="menu__slider__card">
             <div class="menu__slider__card-img-container">
-              <img src="./img/menu-page/coffee-img/coffee-1.jpg" alt="Irish coffee">
+              <img class="menu__slider__card-img" src="./img/menu-page/coffee-img/coffee-1.jpg" alt="Irish coffee">
             </div>
             <div class="menu__slider__card-desc-wrapper">
               <h2 class="menu__slider__card__title">Irish coffee</h2>
@@ -95,7 +98,7 @@
           </div>
           <div class="menu__slider__card">
             <div class="menu__slider__card-img-container">
-              <img src="./img/menu-page/coffee-img/coffee-2.jpg" alt="Kahlua coffee">
+              <img class="menu__slider__card-img" src="./img/menu-page/coffee-img/coffee-2.jpg" alt="Kahlua coffee">
             </div>
             <div class="menu__slider__card-desc-wrapper">
               <h2 class="menu__slider__card__title">Kahlua coffee</h2>
@@ -106,7 +109,7 @@
           </div>
           <div class="menu__slider__card">
             <div class="menu__slider__card-img-container">
-              <img src="./img/menu-page/coffee-img/coffee-3.jpg" alt="Honey raf">
+              <img class="menu__slider__card-img" src="./img/menu-page/coffee-img/coffee-3.jpg" alt="Honey raf">
             </div>
             <div class="menu__slider__card-desc-wrapper">
               <h2 class="menu__slider__card__title">Honey raf</h2>
@@ -116,7 +119,7 @@
           </div>
           <div class="menu__slider__card">
             <div class="menu__slider__card-img-container">
-              <img src="./img/menu-page/coffee-img/coffee-4.jpg" alt="Ice cappuccino">
+              <img class="menu__slider__card-img" src="./img/menu-page/coffee-img/coffee-4.jpg" alt="Ice cappuccino">
             </div>
             <div class="menu__slider__card-desc-wrapper">
               <h2 class="menu__slider__card__title">Ice cappuccino</h2>
@@ -124,9 +127,9 @@
               <p class="menu__slider__card__price">$5.00</p>
             </div>
           </div>
-          <div class="menu__slider__card menu__slider__card_5">
+          <div class="menu__slider__card">
             <div class="menu__slider__card-img-container">
-              <img src="./img/menu-page/coffee-img/coffee-5.jpg" alt="Espresso">
+              <img class="menu__slider__card-img" src="./img/menu-page/coffee-img/coffee-5.jpg" alt="Espresso">
             </div>
             <div class="menu__slider__card-desc-wrapper">
               <h2 class="menu__slider__card__title">Espresso</h2>
@@ -134,9 +137,9 @@
               <p class="menu__slider__card__price">$4.50</p>
             </div>
           </div>
-          <div class="menu__slider__card menu__slider__card_5">
+          <div class="menu__slider__card">
             <div class="menu__slider__card-img-container">
-              <img src="./img/menu-page/coffee-img/coffee-6.jpg" alt="Latte">
+              <img class="menu__slider__card-img" src="./img/menu-page/coffee-img/coffee-6.jpg" alt="Latte">
             </div>
             <div class="menu__slider__card-desc-wrapper">
               <h2 class="menu__slider__card__title">Latte</h2>
@@ -146,9 +149,9 @@
               <p class="menu__slider__card__price">$5.50</p>
             </div>
           </div>
-          <div class="menu__slider__card menu__slider__card_5">
+          <div class="menu__slider__card">
             <div class="menu__slider__card-img-container">
-              <img src="./img/menu-page/coffee-img/coffee-7.jpg" alt="Latte macchiato">
+              <img class="menu__slider__card-img" src="./img/menu-page/coffee-img/coffee-7.jpg" alt="Latte macchiato">
             </div>
             <div class="menu__slider__card-desc-wrapper">
               <h2 class="menu__slider__card__title">Latte macchiato</h2>
@@ -156,9 +159,10 @@
               <p class="menu__slider__card__price">$5.50</p>
             </div>
           </div>
-          <div class="menu__slider__card menu__slider__card_5">
+          <div class="menu__slider__card">
             <div class="menu__slider__card-img-container">
-              <img src="./img/menu-page/coffee-img/coffee-8.jpg" alt="Coffee with cognac">
+              <img class="menu__slider__card-img" src="./img/menu-page/coffee-img/coffee-8.jpg"
+                alt="Coffee with cognac">
             </div>
             <div class="menu__slider__card-desc-wrapper">
               <h2 class="menu__slider__card__title">Coffee with cognac</h2>
@@ -169,6 +173,65 @@
         </div>
         <div class="menu__slider-reroll-button__wrapper">
           <img src="./img/menu-page/reroll.svg" alt="reroll">
+        </div>
+        <div class="menu__slider__modal">
+          <div class="menu__slider__modal__img-wrapper">
+            <img class="menu__slider__modal__img" src="./img/menu-page/coffee-img/coffee-1.jpg" alt="coffee">
+          </div>
+          <div class="menu__slider__modal_rightcolumn">
+            <h2 class="menu__slider__card__title menu__slider__modal__title">Irish coffee</h2>
+            <p class="menu__slider__card__description menu__slider__modal__description">Fragrant black coffee with
+              Jameson Irish whiskey and whipped milk
+            </p>
+            <p class="menu__slider__card__description menu__slider__modal__card__description">Size</p>
+            <div class="menu__slider__buttons-wrapper menu__slider__modal__buttons-wrapper-size">
+              <label class="menu__slider__label menu__slider__modal__label menu__slider__modal__label-size _active">
+                <input type="radio" name="menu" value="coffee">
+                <span class="menu__slider__modal__label-left menu__slider__modal__label-left-size _active">S</span>
+                <span class="menu__slider__modal__label-right menu__slider__modal__label-right-price-metric">200
+                  ml</span>
+              </label>
+              <label class="menu__slider__label menu__slider__modal__label menu__slider__modal__label-size">
+                <input type="radio" name="menu" value="tea">
+                <span class="menu__slider__modal__label-left menu__slider__modal__label-left-size">M</span>
+                <span class="menu__slider__modal__label-right menu__slider__modal__label-right-price-metric">300
+                  ml</span>
+              </label>
+              <label class="menu__slider__label menu__slider__modal__label menu__slider__modal__label-size">
+                <input type="radio" name="menu" value="dessert">
+                <span class="menu__slider__modal__label-left menu__slider__modal__label-left-size">L</span>
+                <span class="menu__slider__modal__label-right menu__slider__modal__label-right-price-metric">400
+                  ml</span>
+              </label>
+            </div>
+            <p class="menu__slider__card__description menu__slider__modal__card__description">Additives</p>
+            <div class="menu__slider__buttons-wrapper menu__slider__modal__buttons-wrapper-additives">
+              <label class="menu__slider__label menu__slider__modal__label menu__slider__modal__label-adittives">
+                <input type="checkbox" name="menu" value="coffee">
+                <span class="menu__slider__modal__label-left menu__slider__modal__label-left-additives">1</span>
+                <span class="menu__slider__modal__label-right menu__slider__modal__label-right-additives">Sugar</span>
+              </label>
+              <label class="menu__slider__label menu__slider__modal__label menu__slider__modal__label-adittives">
+                <input type="checkbox" name="menu" value="tea">
+                <span class="menu__slider__modal__label-left menu__slider__modal__label-left-additives">2</span>
+                <span
+                  class="menu__slider__modal__label-right menu__slider__modal__label-right-additives">Cinnamon</span>
+              </label>
+              <label class="menu__slider__label menu__slider__modal__label menu__slider__modal__label-adittives">
+                <input type="checkbox" name="menu" value="dessert">
+                <span class="menu__slider__modal__label-left menu__slider__modal__label-left-additives">3</span>
+                <span class="menu__slider__modal__label-right menu__slider__modal__label-right-additives">Syrup</span>
+              </label>
+            </div>
+            <div class="menu__slider__modal__price-wrapper">
+              <p class="menu__slider__card__price">Total:</p>
+              <p class="menu__slider__card__price menu__slider__modal__card__price">$7.00</p>
+            </div>
+            <hr>
+            <p class="menu__slider__modal__info">The cost is not final. Download our mobile app to see the final price
+              and place your order. Earn loyalty points and enjoy your favorite coffee with up to 20% discount.</p>
+            <button class="menu__slider__modal__btn">Close</button>
+          </div>
         </div>
       </div>
     </section>
@@ -227,6 +290,7 @@
       </div>
     </div>
   </footer>
+  <script type="module" src="./js/menu-items.js"></script>
   <script type="module" src="./js/default.js"></script>
   <script type="module" src="./js/menu-page.js"></script>
 </body>
