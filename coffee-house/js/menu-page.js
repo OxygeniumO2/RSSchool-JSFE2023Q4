@@ -5,6 +5,7 @@ import { smoothScrolling, burgerMenu } from "./default.js";
 
 const burgerNavigationWrapper = document.querySelector('.burger__navigation__wrapper');
 const burgerMenuContainer = document.querySelector('.burger-menu__container');
+const burgerWrapper = document.querySelector('.burger__navigation__wrapper');
 
 burgerNavigationWrapper.addEventListener('click', smoothScrolling);
 burgerMenuContainer.addEventListener('click', burgerMenu);
@@ -315,6 +316,12 @@ window.addEventListener('resize', () => {
 
   clearTimeout(resizeTimer);
   resizeTimer = setTimeout(() => {
+
+    if(window.innerWidth > 768 && body.classList.contains('_active-hidden')) {
+      body.classList.remove('_active-hidden');
+      burgerMenuContainer.classList.remove('_active');
+      burgerWrapper.classList.remove('_active');
+    }
 
     const allButtons = document.querySelectorAll('.menu__slider__label-btn');
 
