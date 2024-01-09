@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hangman</title>
+  <link rel="stylesheet" href="./normalize.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <h1>Hangman game</h1>
+    </div>
+  </header>
+  <main>
+    <div class="container">
+      <div class="main__columns-container">
+        <div class="main__left-column">
+          <div class="main__left-column-img-container">
+            <img src="./img/gallows.svg" alt="gallows">
+            <img src="./img/head.svg" alt="head">
+            <img src="./img/body.svg" alt="body">
+            <img src="./img/left-hand.svg" alt="left-hand">
+            <img src="./img/right-hand.svg" alt="right-hand">
+            <img src="./img/left-leg.svg" alt="left-leg">
+            <img src="./img/right-leg.svg" alt="right-leg">
+          </div>
+        </div>
+        <div class="main__right-column">
+          <div class="main__right-column__letters-container">
+            <div class="main__right-column__letter"></div>
+            <div class="main__right-column__letter"></div>
+            <div class="main__right-column__letter"></div>
+            <div class="main__right-column__letter"></div>
+            <div class="main__right-column__letter"></div>
+          </div>
+          <div class="main__right-column__hint"></div>
+          <div class="main__right-column__incorrect-tries"></div>
+          <div class="main__right-column__keyboard-container">
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="./index.js"></script>
+</body>
+
+</html>
