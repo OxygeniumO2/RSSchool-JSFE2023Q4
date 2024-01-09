@@ -10,9 +10,10 @@
 </head>
 
 <body>
-  <header>
+  <div class="shadow"></div>
+  <header class="header">
     <div class="container">
-      <h1>Hangman game</h1>
+      <h1 class="hangman__title">Hangman game</h1>
     </div>
   </header>
   <main>
@@ -21,28 +22,48 @@
         <div class="main__left-column">
           <div class="main__left-column-img-container">
             <img src="./img/gallows.svg" alt="gallows">
-            <img src="./img/head.svg" alt="head">
-            <img src="./img/body.svg" alt="body">
-            <img src="./img/left-hand.svg" alt="left-hand">
-            <img src="./img/right-hand.svg" alt="right-hand">
-            <img src="./img/left-leg.svg" alt="left-leg">
-            <img src="./img/right-leg.svg" alt="right-leg">
+            <div class="main__left-column-img-man-container">
+              <img class="main__left-column-img-head" src="./img/head.svg" alt="head">
+              <img class="main__left-column-img-body" src="./img/body.svg" alt="body">
+              <img class="main__left-column-img-lefthand" src="./img/left-hand.svg" alt="left-hand">
+              <img class="main__left-column-img-righthand" src="./img/right-hand.svg" alt="right-hand">
+              <img class="main__left-column-img-leftleg" src="./img/left-leg.svg" alt="left-leg">
+              <img class="main__left-column-img-rightleg" src="./img/right-leg.svg" alt="right-leg">
+            </div>
           </div>
         </div>
         <div class="main__right-column">
           <div class="main__right-column__letters-container">
-            <div class="main__right-column__letter"></div>
-            <div class="main__right-column__letter"></div>
-            <div class="main__right-column__letter"></div>
+            <div class="main__right-column__letter">s</div>
+            <div class="main__right-column__letter">d</div>
+            <div class="main__right-column__letter">f</div>
             <div class="main__right-column__letter"></div>
             <div class="main__right-column__letter"></div>
           </div>
-          <div class="main__right-column__hint"></div>
-          <div class="main__right-column__incorrect-tries"></div>
+          <div class="main__right-column__hint"><span>Hint:</span> Blsadsa asdasd dBBsfdsf jdnbn sdfsdfds fd sf
+            sddsfsddsfl</div>
+          <div class="main__right-column__incorrect-tries">Incorrect Guesses: 6 <span>/</span> 6</div>
           <div class="main__right-column__keyboard-container">
-
+            <div class="key">a</div>
+            <div class="key">b</div>
+            <div class="key">c</div>
+            <div class="key">d</div>
+            <div class="key">e</div>
+            <div class="key">f</div>
+            <div class="key">g</div>
+            <div class="key">h</div>
+            <div class="key">k</div>
+            <div class="key">l</div>
+            <div class="key">m</div>
+            <div class="key">n</div>
+            <div class="key">o</div>
           </div>
         </div>
+      </div>
+      <div class="modal-window">
+        <h2 class="modal-window__title">Congrats</h2>
+        <div class="modal-window__secretword">Sasoviy</div>
+        <button class="modal-window__btn">play again</button>
       </div>
     </div>
   </main>
