@@ -1,5 +1,7 @@
 'use strict';
 
+import { questions } from "./questions.js";
+
 function createElem(tag, classes, optionalText, src, alt) {
   const elem = document.createElement(`${tag}`);
 
@@ -87,12 +89,12 @@ mainLeftColumnImgContainer.append(imgGallows, imgManContainer);
 
 // img man container
 
-const imgHead = createElem('img', 'main__left-column-img-head', '', './img/head.svg', 'head');
-const imgBody = createElem('img', 'main__left-column-img-body', '', './img/body.svg', 'body');
-const imgLeftHand = createElem('img', 'main__left-column-img-lefthand', '', './img/left-hand.svg', 'left-hand');
-const imgRightHand = createElem('img', 'main__left-column-img-righthand', '', './img/right-hand.svg', 'right-hand');
-const imgLeftLeg = createElem('img', 'main__left-column-img-leftleg', '', './img/left-leg.svg', 'left-leg');
-const imgRightLeg = createElem('img', 'main__left-column-img-rightleg', '', './img/right-leg.svg', 'right-leg');
+const imgHead = createElem('img', 'main__left-column-img-head hangman-part', '', './img/head.svg', 'head');
+const imgBody = createElem('img', 'main__left-column-img-body hangman-part', '', './img/body.svg', 'body');
+const imgLeftHand = createElem('img', 'main__left-column-img-lefthand hangman-part', '', './img/left-hand.svg', 'left-hand');
+const imgRightHand = createElem('img', 'main__left-column-img-righthand hangman-part', '', './img/right-hand.svg', 'right-hand');
+const imgLeftLeg = createElem('img', 'main__left-column-img-leftleg hangman-part', '', './img/left-leg.svg', 'left-leg');
+const imgRightLeg = createElem('img', 'main__left-column-img-rightleg hangman-part', '', './img/right-leg.svg', 'right-leg');
 
 imgManContainer.append(imgHead, imgBody, imgLeftHand, imgRightHand, imgLeftLeg, imgRightLeg);
 
@@ -134,5 +136,127 @@ modalWindow.append(modalWindowTitle, modalWindowSecretWord, modalWindowBtn);
 
 // modal window end
 
+questions.forEach((question) => {
+  console.log(`${question.hint} : ${question.answer.toUpperCase()}`);
+});
 
+let incorrectTriesCount = 6;
 
+function generateQuestion() {
+  const randomNumber = Math.floor(Math.random() * questions.length);
+  sessionStorage.setItem('randomQuestion', randomNumber);
+  return questions[randomNumber];
+}
+
+function startGame() {
+  const question = generateQuestion();
+  const questionLength = question.answer.length;
+  for (let i = 0; i < questionLength; i += 1) {
+    const letter = createElem('div', 'main__right-column__letter');
+    lettersContainer.append(letter);
+  }
+  hintMessage.innerHTML = `<span>Hint:</span> ${question.hint}`;
+  incorrectTries.innerHTML = `Incorrect Guesses: ${incorrectTriesCount} <span>/</span> 6`;
+}
+
+startGame();
+
+keyBoardContainer.addEventListener('click', virtualKeyboard);
+
+const allHangmanParts = document.querySelectorAll('.hangman-part');
+let hangmanPartsCounter = 0;
+let winOrLose;
+
+function virtualKeyboard(event) {
+  if (event.target.nodeName === 'BUTTON') {
+    const btn = event.target;
+    const btnText = event.target.textContent;
+    const sessionStrNumber = sessionStorage.getItem('randomQuestion');
+    const allLetters = document.querySelectorAll('.main__right-column__letter');
+    const currQuestion = questions[sessionStrNumber];
+    for (let i = 0; i < currQuestion.answer.length; i += 1) {
+      if (currQuestion.answer[i] === btnText) {
+        allLetters[i].textContent = btnText;
+        allLetters[i].classList.add('_active');
+        btn.classList.add('_active');
+        btn.disabled = true;
+      } else {
+        btn.disabled = true;
+        btn.classList.add('_disabled');
+      }
+    }
+    if (btn.classList.contains('_active') && btn.classList.contains('_disabled')) {
+      btn.classList.remove('_disabled');
+    }
+    if (btn.classList.contains('_disabled')) {
+      incorrectTriesCount -= 1;
+      incorrectTries.innerHTML = `Incorrect Guesses: ${incorrectTriesCount} <span>/</span> 6`;
+      allHangmanParts[hangmanPartsCounter].classList.add('_visible');
+      hangmanPartsCounter += 1;
+      if (incorrectTriesCount === 0) {
+        winOrLose = false;
+        winnerOrLoser(winOrLose);
+      }
+    }
+    let counterGuesses = 0;
+    allLetters.forEach((item) => {
+      if (item.classList.contains('_active')) counterGuesses += 1;
+    });
+    if (counterGuesses === currQuestion.answer.length) {
+      winOrLose = true;
+      winnerOrLoser(winOrLose);
+    }
+  }
+}
+
+function winnerOrLoser(value) {
+  modalWindow.classList.add('_active');
+  shadow.classList.add('_active');
+  const sessionStrNumber = sessionStorage.getItem('randomQuestion');
+  const currQuestion = questions[sessionStrNumber];
+  modalWindowSecretWord.innerHTML = `Correct answer was: <span>${currQuestion.answer.toUpperCase()}</span>`;
+
+  value ? modalWindowTitle.textContent = `Congratulations! You are a winner!` : modalWindowTitle.textContent = `I'm sorry, but you lost`;
+}
+
+function playAgain() {
+  hangmanPartsCounter = 0;
+  incorrectTriesCount = 6;
+  winOrLose = null;
+  generateQuestionRecursion();
+  const sessionStrNumber = sessionStorage.getItem('randomQuestion');
+  const currQuestion = questions[sessionStrNumber];
+  allHangmanParts.forEach((item) => {
+    item.classList.remove('_visible');
+  });
+  lettersContainer.innerHTML = '';
+  const questionLength = currQuestion.answer.length;
+  for (let i = 0; i < questionLength; i += 1) {
+    const letter = createElem('div', 'main__right-column__letter');
+    lettersContainer.append(letter);
+  }
+  hintMessage.innerHTML = `<span>Hint:</span> ${currQuestion.hint}`;
+  incorrectTries.innerHTML = `Incorrect Guesses: ${incorrectTriesCount} <span>/</span> 6`;
+
+  const allKeys = document.querySelectorAll('.key');
+  allKeys.forEach((item) => {
+    item.classList.remove('_active');
+    item.classList.remove('_disabled');
+    item.disabled = false;
+  })
+
+  shadow.classList.remove('_active');
+  modalWindow.classList.remove('_active');
+}
+
+function generateQuestionRecursion() {
+  const currQuestion = sessionStorage.getItem('randomQuestion');
+  const randomNumber = Math.floor(Math.random() * questions.length);
+  if (currQuestion === randomNumber.toString()) {
+    return generateQuestionRecursion();
+  } else {
+    sessionStorage.setItem('randomQuestion', randomNumber);
+  }
+}
+
+modalWindowBtn.addEventListener('click', playAgain);

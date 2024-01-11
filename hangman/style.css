@@ -4,7 +4,7 @@
   font-family: "Cabin";
   font-style: italic;
   font-weight: 400;
-  src: url("../fonts/cabin-v27-latin-italic.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url("./fonts/cabin-v27-latin-italic.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 /* cabin-500 - latin */
 @font-face {
@@ -12,7 +12,7 @@
   font-family: "Cabin";
   font-style: normal;
   font-weight: 500;
-  src: url("../fonts/cabin-v27-latin-500.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url("./fonts/cabin-v27-latin-500.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 /* cabin-600 - latin */
 @font-face {
@@ -20,7 +20,7 @@
   font-family: "Cabin";
   font-style: normal;
   font-weight: 600;
-  src: url("../fonts/cabin-v27-latin-600.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url("./fonts/cabin-v27-latin-600.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 /* cabin-700 - latin */
 @font-face {
@@ -28,7 +28,7 @@
   font-family: "Cabin";
   font-style: normal;
   font-weight: 700;
-  src: url("../fonts/cabin-v27-latin-700.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url("./fonts/cabin-v27-latin-700.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 
 html {
@@ -172,7 +172,7 @@ body {
   opacity: 0;
 }
 
-.visible {
+._visible {
   opacity: 1;
 }
 
@@ -192,6 +192,7 @@ body {
 
 .main__right-column__letter {
   width: 25px;
+  height: 40px;
   border-bottom: 3px solid black;
   text-transform: uppercase;
   text-align: center;
@@ -241,6 +242,8 @@ body {
 .key {
   background-color: #b4a3dd;
   padding: 7px 12px;
+  width: 47px;
+  height: 42px;
   border-radius: 5px;
   text-transform: uppercase;
   cursor: pointer;
@@ -294,6 +297,11 @@ body {
 .modal-window__secretword {
   font-size: 24px;
   margin-bottom: 30px;
+}
+
+.modal-window__secretword span {
+  color: #ca5e28;
+  font-style: italic;
 }
 
 .modal-window__btn {
