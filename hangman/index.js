@@ -140,10 +140,6 @@ modalWindow.append(modalWindowTitle, modalWindowSecretWord, modalWindowBtn);
 
 // modal window end
 
-questions.forEach((question) => {
-  console.log(`${question.hint} : ${question.answer.toUpperCase()}`);
-});
-
 let incorrectTriesCount = 0;
 
 function generateQuestion() {
@@ -161,6 +157,7 @@ function startGame() {
   }
   hintMessage.innerHTML = `<span>Hint:</span> ${question.hint}`;
   incorrectTries.innerHTML = `Incorrect Guesses:  <span>${incorrectTriesCount} / 6</span>`;
+  console.log(`${question.hint} : ${question.answer.toUpperCase()}`);
 }
 
 startGame();
@@ -248,6 +245,10 @@ function playAgain() {
     item.classList.remove('_disabled');
     item.disabled = false;
   })
+
+  console.clear();
+
+  console.log(`${currQuestion.hint} : ${currQuestion.answer.toUpperCase()}`);
 
   shadow.classList.remove('_active');
   modalWindow.classList.remove('_active');
