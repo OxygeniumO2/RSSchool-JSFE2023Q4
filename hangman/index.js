@@ -119,10 +119,14 @@ mainRightColumn.append(lettersContainer, hintMessage, incorrectTries, keyBoardCo
 
 const keyboardKeys = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm'];
 
+const keyboardLetters = ['KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyU', 'KeyI', 'KeyO', 'KeyP', 'KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK', 'KeyL', 'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'KeyN', 'KeyM'];
+
 keyboardKeys.forEach((item) => {
   const keyElem = createElem('button', 'key', item);
   keyBoardContainer.append(keyElem);
 });
+
+const allKeys = document.querySelectorAll('.key');
 
 // keyboardContainer end
 
@@ -140,7 +144,7 @@ questions.forEach((question) => {
   console.log(`${question.hint} : ${question.answer.toUpperCase()}`);
 });
 
-let incorrectTriesCount = 6;
+let incorrectTriesCount = 0;
 
 function generateQuestion() {
   const randomNumber = Math.floor(Math.random() * questions.length);
@@ -156,7 +160,7 @@ function startGame() {
     lettersContainer.append(letter);
   }
   hintMessage.innerHTML = `<span>Hint:</span> ${question.hint}`;
-  incorrectTries.innerHTML = `Incorrect Guesses: ${incorrectTriesCount} <span>/</span> 6`;
+  incorrectTries.innerHTML = `Incorrect Guesses:  <span>${incorrectTriesCount} / 6</span>`;
 }
 
 startGame();
@@ -189,11 +193,11 @@ function virtualKeyboard(event) {
       btn.classList.remove('_disabled');
     }
     if (btn.classList.contains('_disabled')) {
-      incorrectTriesCount -= 1;
-      incorrectTries.innerHTML = `Incorrect Guesses: ${incorrectTriesCount} <span>/</span> 6`;
+      incorrectTriesCount += 1;
+      incorrectTries.innerHTML = `Incorrect Guesses:  <span>${incorrectTriesCount} / 6</span>`;
       allHangmanParts[hangmanPartsCounter].classList.add('_visible');
       hangmanPartsCounter += 1;
-      if (incorrectTriesCount === 0) {
+      if (incorrectTriesCount === 6) {
         winOrLose = false;
         winnerOrLoser(winOrLose);
       }
@@ -216,12 +220,12 @@ function winnerOrLoser(value) {
   const currQuestion = questions[sessionStrNumber];
   modalWindowSecretWord.innerHTML = `Correct answer was: <span>${currQuestion.answer.toUpperCase()}</span>`;
 
-  value ? modalWindowTitle.textContent = `Congratulations! You are a winner!` : modalWindowTitle.textContent = `I'm sorry, but you lost`;
+  value ? modalWindowTitle.textContent = `Congratulations! You are a winner!` : modalWindowTitle.textContent = `I'm sorry, but you lost.`;
 }
 
 function playAgain() {
   hangmanPartsCounter = 0;
-  incorrectTriesCount = 6;
+  incorrectTriesCount = 0;
   winOrLose = null;
   generateQuestionRecursion();
   const sessionStrNumber = sessionStorage.getItem('randomQuestion');
@@ -236,9 +240,8 @@ function playAgain() {
     lettersContainer.append(letter);
   }
   hintMessage.innerHTML = `<span>Hint:</span> ${currQuestion.hint}`;
-  incorrectTries.innerHTML = `Incorrect Guesses: ${incorrectTriesCount} <span>/</span> 6`;
+  incorrectTries.innerHTML = `Incorrect Guesses:  <span>${incorrectTriesCount} / 6</span>`;
 
-  const allKeys = document.querySelectorAll('.key');
   allKeys.forEach((item) => {
     item.classList.remove('_active');
     item.classList.remove('_disabled');
@@ -247,6 +250,10 @@ function playAgain() {
 
   shadow.classList.remove('_active');
   modalWindow.classList.remove('_active');
+  modalWindowBtn.removeEventListener('click', playAgain);
+  setTimeout(() => {
+    modalWindowBtn.addEventListener('click', playAgain);
+  }, 700)
 }
 
 function generateQuestionRecursion() {
@@ -260,3 +267,54 @@ function generateQuestionRecursion() {
 }
 
 modalWindowBtn.addEventListener('click', playAgain);
+
+function physicalKeyboard(event) {
+  let indexKeyboardLetter;
+  keyboardLetters.forEach((item, index) => {
+    if (event.code === item) indexKeyboardLetter = index;
+  });
+
+  if (indexKeyboardLetter !== undefined) {
+    const sessionStrNumber = sessionStorage.getItem('randomQuestion');
+    const allLetters = document.querySelectorAll('.main__right-column__letter');
+    const currQuestion = questions[sessionStrNumber];
+    const currKey = allKeys[indexKeyboardLetter];
+    if (!currKey.disabled) {
+      for (let i = 0; i < currQuestion.answer.length; i += 1) {
+        if (currQuestion.answer[i] === keyboardKeys[indexKeyboardLetter]) {
+          allLetters[i].textContent = keyboardKeys[indexKeyboardLetter];
+          allLetters[i].classList.add('_active');
+          currKey.classList.add('_active');
+          currKey.disabled = true;
+        } else {
+          currKey.disabled = true;
+          currKey.classList.add('_disabled');
+        }
+      }
+      if (currKey.classList.contains('_active') && currKey.classList.contains('_disabled')) {
+        currKey.classList.remove('_disabled');
+      }
+      if (currKey.classList.contains('_disabled')) {
+        incorrectTriesCount += 1;
+        incorrectTries.innerHTML = `Incorrect Guesses:  <span>${incorrectTriesCount} / 6</span>`;
+        allHangmanParts[hangmanPartsCounter].classList.add('_visible');
+        hangmanPartsCounter += 1;
+        if (incorrectTriesCount === 6) {
+          winOrLose = false;
+          winnerOrLoser(winOrLose);
+        }
+      }
+      let counterGuesses = 0;
+      allLetters.forEach((item) => {
+        if (item.classList.contains('_active')) counterGuesses += 1;
+      });
+      if (counterGuesses === currQuestion.answer.length) {
+        winOrLose = true;
+        winnerOrLoser(winOrLose);
+      }
+    }
+
+  }
+}
+
+window.addEventListener('keyup', physicalKeyboard);
