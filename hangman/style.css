@@ -516,3 +516,12 @@ body {
     margin-left: 10px;
   }
 }
+
+@media screen and (max-width: 456px) {
+  .modal-window {
+    padding: 20px;
+  }
+  .modal-window__btn {
+    padding: 10px 20px;
+  }
+}
