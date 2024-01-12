@@ -221,6 +221,7 @@ function winnerOrLoser(value) {
   modalWindowSecretWord.innerHTML = `Correct answer was: <span>${currQuestion.answer.toUpperCase()}</span>`;
 
   value ? modalWindowTitle.textContent = `Congratulations! You are a winner!` : modalWindowTitle.textContent = `I'm sorry, but you lost.`;
+  window.removeEventListener('keyup', physicalKeyboard);
 }
 
 function playAgain() {
@@ -251,6 +252,7 @@ function playAgain() {
   shadow.classList.remove('_active');
   modalWindow.classList.remove('_active');
   modalWindowBtn.removeEventListener('click', playAgain);
+  window.addEventListener('keyup', physicalKeyboard);
   setTimeout(() => {
     modalWindowBtn.addEventListener('click', playAgain);
   }, 700)
