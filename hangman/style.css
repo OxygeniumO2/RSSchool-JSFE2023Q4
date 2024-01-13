@@ -215,6 +215,7 @@ body {
   font-weight: 500;
   margin-bottom: 70px;
   max-width: 550px;
+  min-height: 65px;
 }
 
 .main__right-column__hint span {
@@ -311,12 +312,12 @@ body {
 .modal-window__title {
   font-size: 32px;
   font-weight: 500;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 }
 
 .modal-window__secretword {
   font-size: 24px;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
 }
 
 .modal-window__secretword span {
@@ -358,21 +359,17 @@ body {
   }
 }
 
-@media screen and (max-width: 1082px) {
-  /* .main__left-column {
-    width: 30%;
-  } */
-}
-
 @media screen and (max-width: 1052px) {
+  .header {
+    padding: 20px 0;
+  }
+
   .modal-window__title {
     font-size: 24px;
-    margin-bottom: 40px;
   }
 
   .modal-window__secretword {
     font-size: 20px;
-    margin-bottom: 40px;
     line-height: 150%;
   }
 
@@ -381,7 +378,7 @@ body {
   }
 
   .hangman__title {
-    font-size: 20px;
+    font-size: 24px;
   }
 
   .main__columns-container {
@@ -410,6 +407,7 @@ body {
   .main__right-column__hint {
     margin-bottom: 40px;
     font-size: 22px;
+    min-height: 58px;
   }
 
   .main__right-column__incorrect-tries {
@@ -464,19 +462,11 @@ body {
   .main__right-column {
     width: unset;
   }
-
-  .header {
-    padding: 20px 0;
-  }
-
-  .hangman__title {
-    font-size: 24px;
-  }
 }
 
 @media screen and (max-width: 696px) {
   .modal-window {
-    padding: 20px 40px;
+    padding: 40px;
   }
   .modal-window__btn {
     padding: 10px 30px;
@@ -525,9 +515,14 @@ body {
 
 @media screen and (max-width: 456px) {
   .modal-window {
-    padding: 20px;
+    padding: 40px 20px;
   }
   .modal-window__btn {
     padding: 10px 20px;
+  }
+
+  .main__right-column__letters-container {
+    column-gap: 7px;
+    flex-wrap: wrap;
   }
 }
