@@ -138,6 +138,8 @@ const modalWindowBtn = createElem('button', 'modal-window__btn', 'play again');
 
 modalWindow.append(modalWindowTitle, modalWindowSecretWord, modalWindowBtn);
 
+modalWindowBtn.disabled = true;
+
 // modal window end
 
 let incorrectTriesCount = 0;
@@ -218,7 +220,12 @@ function winnerOrLoser(value) {
   modalWindowSecretWord.innerHTML = `Correct answer was: <span>${currQuestion.answer.toUpperCase()}</span>`;
 
   value ? modalWindowTitle.textContent = `Congratulations! You are a winner!` : modalWindowTitle.textContent = `I'm sorry, but you lost.`;
-  window.removeEventListener('keyup', physicalKeyboard);
+  window.removeEventListener('keydown', physicalKeyboard);
+  modalWindowBtn.disabled = false;
+  allKeys.forEach((item) => {
+    item.tabIndex = -1;
+  });
+  modalWindowBtn.focus();
 }
 
 function playAgain() {
@@ -244,6 +251,7 @@ function playAgain() {
     item.classList.remove('_active');
     item.classList.remove('_disabled');
     item.disabled = false;
+    item.tabIndex = 0;
   })
 
   console.clear();
@@ -252,11 +260,8 @@ function playAgain() {
 
   shadow.classList.remove('_active');
   modalWindow.classList.remove('_active');
-  modalWindowBtn.removeEventListener('click', playAgain);
-  window.addEventListener('keyup', physicalKeyboard);
-  setTimeout(() => {
-    modalWindowBtn.addEventListener('click', playAgain);
-  }, 700)
+  window.addEventListener('keydown', physicalKeyboard);
+  modalWindowBtn.disabled = true;
 }
 
 function generateQuestionRecursion() {
@@ -278,6 +283,7 @@ function physicalKeyboard(event) {
   });
 
   if (indexKeyboardLetter !== undefined) {
+   if (!event.repeat) {
     const sessionStrNumber = sessionStorage.getItem('randomQuestion');
     const allLetters = document.querySelectorAll('.main__right-column__letter');
     const currQuestion = questions[sessionStrNumber];
@@ -316,8 +322,9 @@ function physicalKeyboard(event) {
         winnerOrLoser(winOrLose);
       }
     }
+   }
 
   }
 }
 
-window.addEventListener('keyup', physicalKeyboard);
+window.addEventListener('keydown', physicalKeyboard);
