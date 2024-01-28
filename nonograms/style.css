@@ -1,0 +1,63 @@
+.container {
+  max-width: 1440px;
+  padding: 0 20px;
+  margin: 0 auto;
+}
+
+.nonograms__container {
+  display: flex;
+  font-size: 22px;
+  justify-content: center;
+  margin-top: 100px;
+}
+
+.nonograms__leftcolumn {
+  width: 200px;
+}
+
+.empty__block {
+  background-color: aliceblue;
+  height: 230px;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.hints__top {
+  height: 230px;
+  display: flex;
+}
+
+.hints__left__item {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  height: 50px;
+  padding-right: 10px;
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+  border-right: 1px solid black;
+}
+
+.hints__top__item {
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  width: 50px;
+  padding: 0 12px 5px;
+  line-height: 125%;
+  text-align: center;
+  border: 1px solid black;
+  border-top: 2px solid black;
+}
+
+.gamefield {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 250px;
+}
+
+.gamefield__cell {
+  width: 50px;
+  height: 50px;
+  border: 1px solid black;
+}
