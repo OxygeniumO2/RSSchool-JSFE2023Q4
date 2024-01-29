@@ -43,11 +43,11 @@
   align-items: end;
   justify-content: center;
   width: 50px;
-  padding: 0 12px 5px;
+  padding: 0 12px 10px;
   line-height: 125%;
   text-align: center;
   border: 1px solid black;
-  border-top: 2px solid black;
+  border-top: 0;
 }
 
 .gamefield {
