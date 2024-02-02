@@ -57,7 +57,34 @@
 }
 
 .gamefield__cell {
+  position: relative;
   width: 50px;
   height: 50px;
   border: 1px solid black;
+}
+
+.gamefield__cell._active {
+  background-color: black;
+}
+
+.gamefield__cell._cross::before {
+  position: absolute;
+  content: "";
+  width: 115%;
+  height: 2px;
+  background-color: black;
+  top: 50%;
+  left: -5%;
+  transform: rotate(45deg);
+}
+
+.gamefield__cell._cross::after {
+  position: absolute;
+  content: "";
+  width: 115%;
+  height: 2px;
+  background-color: black;
+  top: 50%;
+  left: -5%;
+  transform: rotate(-45deg);
 }

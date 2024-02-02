@@ -39,13 +39,17 @@ const hintsTop = createElem({ tag: 'div', classesCss: ['hints__top'] });
 
 nonogramsRightColumn.append(hintsTop, gamefield);
 
+let emptyNonogram;
+
 function buildGame(value, title) {
 
   const currNonogram = nonogramsData.find((item) => item.title === title);
+  localStorage.setItem('currNonogram', JSON.stringify(currNonogram.nonogramArr));
 
 
   for (let i = 0; i < value * value; i += 1) {
     const cell = createElem({ tag: 'div', classesCss: ['gamefield__cell'] });
+    cell.setAttribute('cell-number-data', i);
     gamefield.append(cell);
     if (i < value) {
       const hintLeft = createElem({ tag: 'div', classesCss: ['hints__left__item'] });
@@ -56,7 +60,7 @@ function buildGame(value, title) {
       hintsTop.append(hintTop);
     }
   }
-
+  emptyNonogram = new Array(currNonogram.nonogramArr.length * currNonogram.nonogramArr.length).fill(0);
 }
 
 function calculateLeftHints(nonogram, i) {
@@ -82,6 +86,52 @@ function calculateLeftHints(nonogram, i) {
 }
 
 function calculateTopHints(nonogram, i) {
+
+  let temp = 0;
+
+  const res = nonogram.nonogramArr.reduce((acc, item, index) => {
+    if (item[i] === 1) {
+      temp += 1;
+    }
+    if (item[i] === 0) {
+      acc.push(temp);
+      temp = 0;
+    }
+    if (index === nonogram.nonogramArr[i].length - 1) {
+      acc.push(temp);
+      temp = 0;
+    }
+    return acc;
+  }, []);
+  const topHint = res.join(' ').replaceAll('0', '');
+  return topHint;
 }
 
 buildGame(5, 'ladder');
+
+function playGame(event) {
+  const currCell = event.target;
+  const currCellData = currCell.getAttribute('cell-number-data');
+
+  if (event.button === 0) {
+    currCell.classList.remove('_cross');
+    currCell.classList.toggle('_active');
+    emptyNonogram[currCellData] = 1;
+    if (!currCell.classList.contains('_active')) {
+      emptyNonogram[currCellData] = 0;
+    }
+    if (emptyNonogram.toString() === JSON.parse(localStorage.getItem('currNonogram')).flat().toString()) {
+      alert('sas');
+    }
+  }
+  if (event.button === 2) {
+    currCell.classList.remove('_active');
+    currCell.classList.toggle('_cross');
+    emptyNonogram[currCellData] = 0;
+  }
+}
+
+gamefield.addEventListener('mousedown', playGame);
+gamefield.addEventListener('contextmenu', (event) => {
+  event.preventDefault();
+});
