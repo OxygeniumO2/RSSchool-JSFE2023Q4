@@ -8,7 +8,7 @@
   display: flex;
   font-size: 22px;
   justify-content: center;
-  margin-top: 100px;
+  margin-top: 50px;
 }
 
 .nonograms__leftcolumn {
@@ -17,20 +17,20 @@
 
 .empty__block {
   background-color: aliceblue;
-  height: 230px;
-  border-right: 2px solid black;
-  border-bottom: 1px solid black;
+  height: 210px;
+  border-right: 3px solid black;
+  border-bottom: 2px solid black;
 }
 
 .hints__top {
-  height: 230px;
+  height: 210px;
   display: flex;
-  border-left: 1px solid black;
-  border-right: 2px solid black;
+  border: 1px solid black;
+  border-top: 0;
 }
 
 .hints__top__item:nth-child(5n) {
-  border-right: 2px solid black;
+  border-right: 5px solid black;
 }
 
 .hints__left {
@@ -40,25 +40,26 @@
 }
 
 .hints__left__item {
+  word-spacing: 3px;
   display: flex;
   align-items: center;
   justify-content: end;
-  height: 50px;
+  height: 45px;
   padding-right: 10px;
   border-bottom: 1px solid black;
   border-top: 1px solid black;
-  border-right: 1px solid black;
+  border-right: 2px solid black;
 }
 
 .hints__left__item:nth-child(5n) {
-  border-bottom: 2px solid black;
+  border-bottom: 3px solid black;
 }
 
 .hints__top__item {
   display: flex;
   align-items: end;
   justify-content: center;
-  width: 50px;
+  width: 45px;
   padding: 0 12px 10px;
   line-height: 125%;
   text-align: center;
@@ -69,24 +70,22 @@
 .gamefield {
   display: flex;
   flex-wrap: wrap;
-  max-width: 253px;
   border: 1px solid black;
-  border-right: 2px solid black;
 }
 
 .gamefield__cell {
   position: relative;
-  width: 50px;
-  height: 50px;
+  flex: 1 0 45px;
+  height: 45px;
   border: 1px solid black;
 }
 
-.gamefield__cell:nth-child(n + 21):nth-child(-n + 25) {
-  border-bottom: 2px solid black;
+.gamefield__cell.border-bottom {
+  border-bottom: 4px solid #000;
 }
 
 .gamefield__cell:nth-child(5n) {
-  border-right: 2px solid black;
+  border-right: 5px solid black;
 }
 
 .gamefield__cell._active {
@@ -113,4 +112,65 @@
   top: 50%;
   left: -5%;
   transform: rotate(-45deg);
+}
+
+@media screen and (max-width: 1220px) {
+  .nonograms__container {
+    font-size: 18px;
+  }
+
+  .hints__top,
+  .empty__block {
+    height: 180px;
+  }
+
+  .nonograms__leftcolumn {
+    width: 150px;
+  }
+
+  .nonograms__container {
+    margin-top: 50px;
+  }
+
+  .hints__left__item {
+    height: 40px;
+  }
+  .hints__top__item {
+    width: 40px;
+  }
+  .gamefield__cell {
+    flex: 1 0 40px;
+    height: 40px;
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .hints__top,
+  .empty__block {
+    height: 160px;
+  }
+
+  .nonograms__container {
+    font-size: 16px;
+  }
+
+  .nonograms__leftcolumn {
+    width: 120px;
+  }
+
+  .hints__left__item {
+    height: 32px;
+  }
+
+  .hints__top__item {
+    width: 33px;
+  }
+
+  .gamefield__cell {
+    flex: 1 0 32px;
+    height: 32px;
+  }
+}
+
+@media screen and (max-width: 660px) {
 }

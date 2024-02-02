@@ -59,6 +59,7 @@ function buildGame(value, title) {
       hintsLeft.append(hintLeft);
       hintsTop.append(hintTop);
     }
+
   }
   emptyNonogram = new Array(currNonogram.nonogramArr.length * currNonogram.nonogramArr.length).fill(0);
 }
@@ -81,7 +82,8 @@ function calculateLeftHints(nonogram, i) {
     }
     return acc;
   }, []);
-  const leftHint = res.join(' ').replaceAll('0', '');
+  const leftHint = res.filter((item) => item).join(' ');
+  if (!leftHint) return 0;
   return leftHint;
 }
 
@@ -94,8 +96,8 @@ function calculateTopHints(nonogram, i) {
       temp += 1;
     }
     if (item[i] === 0) {
-      acc.push(temp);
-      temp = 0;
+       acc.push(temp);
+       temp = 0;
     }
     if (index === nonogram.nonogramArr[i].length - 1) {
       acc.push(temp);
@@ -103,11 +105,12 @@ function calculateTopHints(nonogram, i) {
     }
     return acc;
   }, []);
-  const topHint = res.join(' ').replaceAll('0', '');
+  const topHint = res.filter((item) => item).join(' ');
+  if (!topHint) return 0;
   return topHint;
 }
 
-buildGame(5, 'ladder');
+buildGame(10, 'fish');
 
 function playGame(event) {
   const currCell = event.target;
