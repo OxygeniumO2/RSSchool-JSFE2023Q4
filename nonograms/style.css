@@ -18,13 +18,25 @@
 .empty__block {
   background-color: aliceblue;
   height: 230px;
-  border-right: 1px solid black;
+  border-right: 2px solid black;
   border-bottom: 1px solid black;
 }
 
 .hints__top {
   height: 230px;
   display: flex;
+  border-left: 1px solid black;
+  border-right: 2px solid black;
+}
+
+.hints__top__item:nth-child(5n) {
+  border-right: 2px solid black;
+}
+
+.hints__left {
+  border-top: 1px solid black;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
 }
 
 .hints__left__item {
@@ -36,6 +48,10 @@
   border-bottom: 1px solid black;
   border-top: 1px solid black;
   border-right: 1px solid black;
+}
+
+.hints__left__item:nth-child(5n) {
+  border-bottom: 2px solid black;
 }
 
 .hints__top__item {
@@ -53,7 +69,9 @@
 .gamefield {
   display: flex;
   flex-wrap: wrap;
-  max-width: 250px;
+  max-width: 253px;
+  border: 1px solid black;
+  border-right: 2px solid black;
 }
 
 .gamefield__cell {
@@ -61,6 +79,14 @@
   width: 50px;
   height: 50px;
   border: 1px solid black;
+}
+
+.gamefield__cell:nth-child(n + 21):nth-child(-n + 25) {
+  border-bottom: 2px solid black;
+}
+
+.gamefield__cell:nth-child(5n) {
+  border-right: 2px solid black;
 }
 
 .gamefield__cell._active {
