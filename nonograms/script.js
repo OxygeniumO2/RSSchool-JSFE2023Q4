@@ -46,16 +46,55 @@ function buildGame(value, title) {
   const currNonogram = nonogramsData.find((item) => item.title === title);
   localStorage.setItem('currNonogram', JSON.stringify(currNonogram.nonogramArr));
 
+  gamefield.innerHTML = ``;
+
+  if (value === 5 || value === 10 && !gamefield.classList.contains('gamefield_small')) {
+    hintsTop.classList.add('hints__top_small');
+    emptyBlock.classList.add('empty__block_small');
+    nonogramsContainer.classList.add('nonograms__container_small');
+    nonogramsLeftColumn.classList.add('nonograms__leftcolumn_small');
+    gamefield.classList.add('gamefield_small');
+  }
+
+  if (value === 10) {
+    gamefield.classList.add('gamefield__10x10_small')
+  } else {
+    gamefield.classList.remove('gamefield__10x10_small');
+  }
+
 
   for (let i = 0; i < value * value; i += 1) {
     const cell = createElem({ tag: 'div', classesCss: ['gamefield__cell'] });
     cell.setAttribute('cell-number-data', i);
+
+    if ( value === 5 && i >= 20 && i < 25) {
+      cell.classList.add('gamefield__cell_border-bottom');
+    }
+
+    if (( value === 10 && i >= 40 && i < 50) || ( value === 10 && i >= 90 && i < 100 )) {
+      cell.classList.add('gamefield__cell_border-bottom');
+    }
+
+    if ( (value === 15 && i >= 60 && i < 75) || ( value === 15 && i >= 135 && i < 150) || ( value === 15 && i >= 210 && i < 225)) {
+      cell.classList.add('gamefield__cell_border-bottom');
+    }
+
+    if (value === 5 || value === 10) {
+      cell.classList.add('gamefield__cell_small');
+    }
+
     gamefield.append(cell);
     if (i < value) {
       const hintLeft = createElem({ tag: 'div', classesCss: ['hints__left__item'] });
       const hintTop = createElem({ tag: 'div', classesCss: ['hints__top__item'] });
-      hintLeft.innerHTML = calculateLeftHints(currNonogram, i);
-      hintTop.innerHTML = calculateTopHints(currNonogram, i);
+      hintLeft.innerText = calculateLeftHints(currNonogram, i);
+      hintTop.innerText = calculateTopHints(currNonogram, i);
+
+      if (value === 5 || value === 10) {
+        hintLeft.classList.add('hints__left__item_small');
+        hintTop.classList.add('hints__top__item_small')
+      }
+
       hintsLeft.append(hintLeft);
       hintsTop.append(hintTop);
     }
@@ -110,7 +149,7 @@ function calculateTopHints(nonogram, i) {
   return topHint;
 }
 
-buildGame(10, 'fish');
+buildGame(15, 'sponge-bob');
 
 function playGame(event) {
   const currCell = event.target;

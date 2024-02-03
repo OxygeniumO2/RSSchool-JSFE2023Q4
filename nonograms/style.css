@@ -80,6 +80,10 @@
   border: 1px solid black;
 }
 
+.gamefield__cell_border-bottom {
+  border-bottom: 3px solid black;
+}
+
 .gamefield__cell.border-bottom {
   border-bottom: 4px solid #000;
 }
@@ -136,7 +140,7 @@
     height: 40px;
   }
   .hints__top__item {
-    width: 40px;
+    width: 42px;
   }
   .gamefield__cell {
     flex: 1 0 40px;
@@ -145,6 +149,10 @@
 }
 
 @media screen and (max-width: 850px) {
+  .gamefield {
+    max-width: 497px;
+  }
+
   .hints__top,
   .empty__block {
     height: 160px;
@@ -173,4 +181,68 @@
 }
 
 @media screen and (max-width: 660px) {
+  .gamefield {
+    max-width: 347px;
+  }
+
+  .gamefield__10x10_small {
+    max-width: 232px;
+  }
+
+  .hints__top,
+  .empty__block {
+    height: 120px;
+  }
+
+  .nonograms__container {
+    font-size: 12px;
+  }
+
+  .gamefield__cell {
+    flex: 1 0 22px;
+    height: 22px;
+  }
+
+  .hints__top__item {
+    width: 23px;
+    padding: 0 5px 10px 5px;
+  }
+
+  .hints__left__item {
+    height: 22px;
+  }
+
+  .nonograms__leftcolumn {
+    width: 100px;
+  }
+
+  .gamefield_small {
+    max-width: 497px;
+  }
+
+  .hints__top_small,
+  .empty__block_small {
+    height: 160px;
+  }
+
+  .nonograms__container_small {
+    font-size: 16px;
+  }
+
+  .nonograms__leftcolumn_small {
+    width: 120px;
+  }
+
+  .hints__left__item_small {
+    height: 32px;
+  }
+
+  .hints__top__item_small {
+    width: 33px;
+  }
+
+  .gamefield__cell_small {
+    flex: 1 0 32px;
+    height: 32px;
+  }
 }
