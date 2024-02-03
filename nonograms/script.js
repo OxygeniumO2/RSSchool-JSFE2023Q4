@@ -16,6 +16,9 @@ function createElem({tag, classesCss, content}) {
   return elem;
 }
 
+const shadow = createElem({ tag: 'div', classesCss: ['shadow']});
+document.body.append(shadow);
+
 const gamefield = createElem({ tag: 'div', classesCss: ['gamefield'] });
 
 const main = createElem({ tag: 'main' });
@@ -59,6 +62,14 @@ const timerContainer = createElem({ tag: 'div', classesCss: ['timer__container']
 
 container.append(btn1, btn2, btn3, timerContainer);
 
+const modalWin = createElem({ tag: 'div', classesCss: ['modalWin', 'modalWin_white']});
+const modalWinTitle = createElem({ tag: 'div', classesCss: ['modalWin__title']});
+const modalWinCloseBtn = createElem({ tag: 'button', classesCss: [ 'btn', 'btn_white', 'modalWin__closeBtn'], content: 'close'} );
+
+modalWin.append(modalWinTitle, modalWinCloseBtn);
+
+container.append(modalWin);
+
 function startTimer() {
 
   if (!isTimerRunning) {
@@ -99,7 +110,7 @@ btn3.addEventListener('click', () => {
 function buildGame(value, title) {
 
   const currNonogram = nonogramsData.find((item) => item.title === title);
-  localStorage.setItem('currNonogram', JSON.stringify(currNonogram.nonogramArr));
+  localStorage.setItem('currNonogramOxy', JSON.stringify(currNonogram.nonogramArr));
 
   stopTimer();
 
@@ -220,7 +231,6 @@ function calculateTopHints(nonogram, i) {
 buildGame(5, 'ladder');
 
 function playGame(event) {
-  event.preventDefault();
   const currCell = event.target;
   const currCellData = currCell.getAttribute('cell-number-data');
 
@@ -233,11 +243,15 @@ function playGame(event) {
     if (!currCell.classList.contains('_active')) {
       emptyNonogram[currCellData] = 0;
     }
-    if (emptyNonogram.toString() === JSON.parse(localStorage.getItem('currNonogram')).flat().toString()) {
-      alert('sas');
+    if (emptyNonogram.toString() === JSON.parse(localStorage.getItem('currNonogramOxy')).flat().toString()) {
+      modalWin.classList.add('_active');
+      modalWinTitle.innerText = `Great! You have solved the nonogram in ${durationTimer} seconds!`;
+      shadow.classList.add('_active');
+      stopTimer();
     }
   }
-  if (event.button === 2 || event.type === 'contextmenu') {
+  if (event.type === 'contextmenu') {
+    event.preventDefault();
     currCell.classList.remove('_active');
     currCell.classList.toggle('_cross');
     emptyNonogram[currCellData] = 0;
