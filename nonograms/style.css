@@ -9,6 +9,7 @@
   font-size: 22px;
   justify-content: center;
   margin-top: 50px;
+  margin-bottom: 30px;
 }
 
 .nonograms__leftcolumn {
@@ -30,7 +31,7 @@
 }
 
 .hints__top__item:nth-child(5n) {
-  border-right: 5px solid black;
+  border-right: 4px solid black;
 }
 
 .hints__left {
@@ -89,7 +90,7 @@
 }
 
 .gamefield__cell:nth-child(5n) {
-  border-right: 5px solid black;
+  border-right: 4px solid black;
 }
 
 .gamefield__cell._active {

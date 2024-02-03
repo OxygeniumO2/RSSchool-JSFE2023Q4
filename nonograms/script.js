@@ -2,13 +2,16 @@
 
 import { nonogramsData } from './data.js';
 
-function createElem({tag, classesCss}) {
+function createElem({tag, classesCss, content}) {
   const elem = document.createElement(tag);
 
   if (classesCss) {
     classesCss.forEach((item) => {
       elem.classList.add(item);
     });
+  }
+  if (content) {
+    elem.innerText = content;
   }
   return elem;
 }
@@ -40,13 +43,72 @@ const hintsTop = createElem({ tag: 'div', classesCss: ['hints__top'] });
 nonogramsRightColumn.append(hintsTop, gamefield);
 
 let emptyNonogram;
+let isTimerRunning = false;
+let durationTimer = 0;
+let intervalTimerId;
+
+const btnsContainer = createElem({ tag: 'div', classesCss: ['buttons__container']});
+
+container.append(btnsContainer);
+
+const btn1 = createElem({ tag: 'button', content: 'sadasdsa' });
+const btn2 = createElem({ tag: 'button', content: 'sadz' });
+const btn3 = createElem({ tag: 'button', content: 'sadasd' });
+
+const timerContainer = createElem({ tag: 'div', classesCss: ['timer__container'], content: '00:00'});
+
+container.append(btn1, btn2, btn3, timerContainer);
+
+function startTimer() {
+
+  if (!isTimerRunning) {
+    intervalTimerId = setInterval(() => {
+
+    durationTimer += 1;
+
+    let minutes = Math.floor(durationTimer / 60);
+    let seconds = durationTimer % 60;
+
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    seconds = seconds < 10 ? '0' + seconds : seconds;
+
+    timerContainer.innerText = minutes + ':' + seconds;
+
+    }, 1000);
+    isTimerRunning = true;
+  }
+}
+
+function stopTimer() {
+  clearInterval(intervalTimerId);
+  isTimerRunning = false;
+}
+
+btn1.addEventListener('click', () => {
+  buildGame(5, 'cross');
+})
+
+btn2.addEventListener('click', () => {
+  buildGame(15, 'sponge-bob')
+});
+
+btn3.addEventListener('click', () => {
+  buildGame(10, 'fish');
+})
 
 function buildGame(value, title) {
 
   const currNonogram = nonogramsData.find((item) => item.title === title);
   localStorage.setItem('currNonogram', JSON.stringify(currNonogram.nonogramArr));
 
+  stopTimer();
+
+  timerContainer.innerText = `00:00`;
+  durationTimer = 0;
+
   gamefield.innerHTML = ``;
+  hintsLeft.innerHTML = ``;
+  hintsTop.innerHTML = ``;
 
   if (value === 5 || value === 10 && !gamefield.classList.contains('gamefield_small')) {
     hintsTop.classList.add('hints__top_small');
@@ -54,6 +116,12 @@ function buildGame(value, title) {
     nonogramsContainer.classList.add('nonograms__container_small');
     nonogramsLeftColumn.classList.add('nonograms__leftcolumn_small');
     gamefield.classList.add('gamefield_small');
+  } else {
+    hintsTop.classList.remove('hints__top_small');
+    emptyBlock.classList.remove('empty__block_small');
+    nonogramsContainer.classList.remove('nonograms__container_small');
+    nonogramsLeftColumn.classList.remove('nonograms__leftcolumn_small');
+    gamefield.classList.remove('gamefield_small');
   }
 
   if (value === 10) {
@@ -149,11 +217,14 @@ function calculateTopHints(nonogram, i) {
   return topHint;
 }
 
-buildGame(15, 'sponge-bob');
+buildGame(5, 'ladder');
 
 function playGame(event) {
+  event.preventDefault();
   const currCell = event.target;
   const currCellData = currCell.getAttribute('cell-number-data');
+
+  startTimer();
 
   if (event.button === 0) {
     currCell.classList.remove('_cross');
@@ -166,7 +237,7 @@ function playGame(event) {
       alert('sas');
     }
   }
-  if (event.button === 2) {
+  if (event.button === 2 || event.type === 'contextmenu') {
     currCell.classList.remove('_active');
     currCell.classList.toggle('_cross');
     emptyNonogram[currCellData] = 0;
@@ -174,6 +245,4 @@ function playGame(event) {
 }
 
 gamefield.addEventListener('mousedown', playGame);
-gamefield.addEventListener('contextmenu', (event) => {
-  event.preventDefault();
-});
+gamefield.addEventListener('contextmenu', playGame);
