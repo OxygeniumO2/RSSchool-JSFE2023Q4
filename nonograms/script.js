@@ -16,6 +16,17 @@ function createElem({tag, classesCss, content}) {
   return elem;
 }
 
+const sounds = {
+  audioBlackCell: new Audio('./sound/black-cell.mp3'),
+  audioWhiteCell: new Audio('./sound/white-cell.mp3'),
+  audioCrossCell: new Audio('./sound/cross-cell.mp3'),
+  audioWin: new Audio('./sound/win.mp3'),
+};
+const audioBlackCell = new Audio('./sound/black-cell.mp3');
+const audioWhiteCell = new Audio('./sound/white-cell.mp3');
+const audioCrossCell = new Audio('./sound/cross-cell.mp3');
+const audioWin = new Audio('./sound/win.mp3');
+
 const shadow = createElem({ tag: 'div', classesCss: ['shadow']});
 document.body.append(shadow);
 
@@ -49,14 +60,13 @@ let emptyNonogram;
 let isTimerRunning = false;
 let durationTimer = 0;
 let intervalTimerId;
+let isMuted = true;
 
 const btnsContainer = createElem({ tag: 'div', classesCss: ['buttons__container']});
 const gamesFieldsContainer = createElem({ tag: 'div', classesCss: ['games__fields__container']});
 const gamesContainer = createElem({ tag: 'div', classesCss: ['games__container']});
 
 container.append(gamesContainer, gamesFieldsContainer, btnsContainer);
-
-console.log(nonogramsData.length)
 
 function fillGames(value) {
   gamesContainer.innerHTML = ``;
@@ -133,19 +143,93 @@ gamesFields15x15.addEventListener('click', () => {
 });
 
 const resetGameBtn = createElem({ tag: 'button', classesCss: ['btn', 'btn_white'], content: 'reset' });
+const muteBtn = createElem({ tag: 'button', classesCss: ['btn', 'btn_white', 'btn__sound'], content: 'Sound: ON'});
+const resultsBtn = createElem({ tag: 'button', classesCss: ['btn', 'btn_white'], content: 'results'});
+const resultsCloseBtn = createElem({ tag: 'button', classesCss: ['btn', 'btn_white', 'results__closeBtn'], content: 'close'});
+const solutionBtn = createElem({ tag: 'button', classesCss: ['btn', 'btn_white'], content: 'solution'});
 
 
 const timerContainer = createElem({ tag: 'div', classesCss: ['timer__container'], content: '00:00'});
 
-btnsContainer.append(resetGameBtn, timerContainer);
+btnsContainer.append(resetGameBtn, solutionBtn, muteBtn, resultsBtn, timerContainer);
 
-const modalWin = createElem({ tag: 'div', classesCss: ['modalWin', 'modalWin_white']});
-const modalWinTitle = createElem({ tag: 'div', classesCss: ['modalWin__title']});
+const modalWin = createElem({ tag: 'div', classesCss: ['modal', 'modal_white', 'modal__win']});
+const modalWinTitle = createElem({ tag: 'div', classesCss: ['modalWin__win__title']});
 const modalWinCloseBtn = createElem({ tag: 'button', classesCss: [ 'btn', 'btn_white', 'modalWin__closeBtn'], content: 'close'} );
+
+const modalResults = createElem({ tag: 'div', classesCss: ['modal', 'modal_white', 'modal__results']});
 
 modalWin.append(modalWinTitle, modalWinCloseBtn);
 
-container.append(modalWin);
+container.append(modalWin, modalResults);
+
+solutionBtn.addEventListener('click', () => {
+  gamefield.removeEventListener('mousedown', playGame);
+  gamefield.removeEventListener('contextmenu', playGame);
+  stopTimer();
+  const currNonogramArr = JSON.parse(localStorage.getItem('currNonogramOxy')).flat();
+  const allCells = document.querySelectorAll('.gamefield__cell');
+  allCells.forEach((item, index) => {
+    if (currNonogramArr[index] === 1) {
+      item.classList.add('_active');
+      item.classList.remove('_cross');
+    } else {
+      item.classList.remove('_active');
+      item.classList.remove('_cross');
+    }
+  });
+});
+
+resultsBtn.addEventListener('click', () => {
+  const storageResults = JSON.parse(localStorage.getItem('scoreTableOxy'));
+  modalResults.innerHTML = ``;
+  if (storageResults.length) {
+    const sortedResults = storageResults.sort(compareByTime);
+    for (let i = 0; i < storageResults.length; i += 1) {
+      const result = createElem({ tag: 'div', classesCss: ['modal__results__item'], content: `Difficuly: ${sortedResults[i].difficulty.toUpperCase()}, Level: ${sortedResults[i].gameName.toUpperCase()}, Time: ${sortedResults[i].time}`});
+      modalResults.append(result);
+    }
+    modalResults.classList.add('_active');
+    shadow.classList.add('_active');
+  }
+  modalResults.append(resultsCloseBtn);
+});
+
+resultsCloseBtn.addEventListener('click', () => {
+  modalResults.classList.remove('_active');
+  shadow.classList.remove('_active');
+});
+
+function compareByTime(a, b) {
+  const timeA = parseInt(a.time);
+  const timeB = parseInt(b.time);
+
+  if (timeA < timeB) {
+    return -1;
+  } else if (timeA > timeB) {
+    return 1;
+  } else {
+    return 0;
+  }
+}
+
+muteBtn.addEventListener('click', () => {
+  if (isMuted) {
+    Object.values(sounds).forEach((audio) => {
+      audio.muted = true;
+    });
+    isMuted = false;
+    muteBtn.classList.add('_muted');
+    muteBtn.innerText = `Sound: OFF`;
+  } else {
+    Object.values(sounds).forEach((audio) => {
+      audio.muted = false;
+    });
+    isMuted = true;
+    muteBtn.classList.remove('_muted');
+    muteBtn.innerText = `Sound: ON`;
+  }
+});
 
 resetGameBtn.addEventListener('click', () => {
   const currNonogramId = localStorage.getItem('currNonogramOxyId');
@@ -260,6 +344,10 @@ function buildGame(value, title) {
 
   gamefield.addEventListener('mousedown', playGame);
   gamefield.addEventListener('contextmenu', playGame);
+
+  if (!localStorage.getItem('scoreTableOxy')) {
+    localStorage.setItem('scoreTableOxy', JSON.stringify([]));
+  }
 }
 
 function calculateLeftHints(nonogram, i) {
@@ -308,7 +396,7 @@ function calculateTopHints(nonogram, i) {
   return topHint;
 }
 
-buildGame(5, 'tower');
+
 
 function playGame(event) {
   const currCell = event.target;
@@ -322,6 +410,11 @@ function playGame(event) {
     emptyNonogram[currCellData] = 1;
     if (!currCell.classList.contains('_active')) {
       emptyNonogram[currCellData] = 0;
+      sounds.audioWhiteCell.currentTime = 0;
+      sounds.audioWhiteCell.play();
+    } else {
+      sounds.audioBlackCell.currentTime = 0;
+      sounds.audioBlackCell.play();
     }
     if (emptyNonogram.toString() === JSON.parse(localStorage.getItem('currNonogramOxy')).flat().toString()) {
       winGame();
@@ -333,6 +426,14 @@ function playGame(event) {
     currCell.classList.remove('_active');
     currCell.classList.toggle('_cross');
     emptyNonogram[currCellData] = 0;
+    if (currCell.classList.contains('_cross')) {
+      sounds.audioCrossCell.currentTime = 0;
+      sounds.audioCrossCell.play();
+    } else {
+      sounds.audioWhiteCell.currentTime = 0;
+      sounds.audioWhiteCell.play();
+    }
+
   }
 }
 
@@ -353,4 +454,25 @@ function winGame() {
   modalWin.classList.add('_active');
   modalWinTitle.innerText = `Great! You have solved the nonogram in ${durationTimer} seconds!`;
   shadow.classList.add('_active');
+  sounds.audioWin.currentTime = 0;
+  sounds.audioWin.play();
+  const currNonogramId = localStorage.getItem('currNonogramOxyId');
+  const currNonogram = nonogramsData.find((item) => item.id.toString() === currNonogramId);
+  addScoreIntoTable(currNonogram);
 }
+
+function addScoreIntoTable(currNonogram) {
+  const scoreTable = JSON.parse(localStorage.getItem('scoreTableOxy'));
+  if (scoreTable.length >= 5) {
+    scoreTable.shift();
+    scoreTable.push({ gameName: currNonogram.title, difficulty: currNonogram.difficulty, time: `${durationTimer} sec`});
+    localStorage.setItem('scoreTableOxy', JSON.stringify(scoreTable));
+  } else {
+    scoreTable.push({ gameName: currNonogram.title, difficulty: currNonogram.difficulty, time: `${durationTimer} sec`});
+    localStorage.setItem('scoreTableOxy', JSON.stringify(scoreTable));
+  }
+}
+
+buildGame(5, 'plain');
+fillGames(5);
+gamesFields5x5.disabled = true;
