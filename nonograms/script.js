@@ -51,18 +51,71 @@ let durationTimer = 0;
 let intervalTimerId;
 
 const btnsContainer = createElem({ tag: 'div', classesCss: ['buttons__container']});
+const gamesFieldsContainer = createElem({ tag: 'div', classesCss: ['games__fields__container']});
+const gamesContainer = createElem({ tag: 'div', classesCss: ['games__container']});
 
-container.append(btnsContainer);
+container.append(gamesContainer, gamesFieldsContainer, btnsContainer);
 
-const btn1 = createElem({ tag: 'button', content: 'sadasdsa' });
-const btn2 = createElem({ tag: 'button', content: 'sadz' });
-const btn3 = createElem({ tag: 'button', content: 'sadasd' });
+console.log(nonogramsData.length)
+
+function fillGames(value) {
+  gamesContainer.innerHTML = ``;
+  let nonograms;
+  if (value === 5) {
+    nonograms = nonogramsData.filter((item) => item.id >= 100 && item.id < 200);
+    gamesFields5x5.classList.add('_active');
+    gamesFields10x10.classList.remove('_active');
+    gamesFields15x15.classList.remove('_active');
+  }
+
+  if (value === 10) {
+    nonograms = nonogramsData.filter((item) => item.id >= 200 && item.id < 300);
+    gamesFields5x5.classList.remove('_active');
+    gamesFields10x10.classList.add('_active');
+    gamesFields15x15.classList.remove('_active');
+  }
+
+  if (value === 15) {
+    nonograms = nonogramsData.filter((item) => item.id >= 300 && item.id < 400);
+    gamesFields5x5.classList.remove('_active');
+    gamesFields10x10.classList.remove('_active');
+    gamesFields15x15.classList.add('_active');
+  }
+
+  nonograms.forEach((item) => {
+    const currGame = createElem({ tag: 'button', classesCss: ['btn', 'btn_white'], content: item.title.toUpperCase() })
+    gamesContainer.append(currGame);
+    currGame.addEventListener('click', () => {
+      buildGame(value, item.title);
+    });
+  });
+
+}
+
+const gamesFields5x5 = createElem({ tag: 'button', classesCss: ['btn', 'btn_white', 'games__field'], content: '5x5' });
+const gamesFields10x10 = createElem({ tag: 'button', classesCss: ['btn', 'btn_white', 'games__field'], content: '10x10' });
+const gamesFields15x15 = createElem({ tag: 'button', classesCss: ['btn', 'btn_white', 'games__field'], content: '15x15' });
+
+gamesFieldsContainer.append(gamesFields5x5, gamesFields10x10, gamesFields15x15);
+
+gamesFields5x5.addEventListener('click', () => {
+  fillGames(5);
+});
+
+gamesFields10x10.addEventListener('click', () => {
+  fillGames(10);
+});
+
+gamesFields15x15.addEventListener('click', () => {
+  fillGames(15);
+});
+
 const resetGameBtn = createElem({ tag: 'button', classesCss: ['btn', 'btn_white'], content: 'reset' });
 
 
 const timerContainer = createElem({ tag: 'div', classesCss: ['timer__container'], content: '00:00'});
 
-btnsContainer.append(btn1, btn2, btn3, resetGameBtn, timerContainer);
+btnsContainer.append(resetGameBtn, timerContainer);
 
 const modalWin = createElem({ tag: 'div', classesCss: ['modalWin', 'modalWin_white']});
 const modalWinTitle = createElem({ tag: 'div', classesCss: ['modalWin__title']});
@@ -105,18 +158,6 @@ function stopTimer() {
   isTimerRunning = false;
 }
 
-btn1.addEventListener('click', () => {
-  buildGame(5, 'cross');
-})
-
-btn2.addEventListener('click', () => {
-  buildGame(15, 'sponge-bob')
-});
-
-btn3.addEventListener('click', () => {
-  buildGame(10, 'fish');
-})
-
 function buildGame(value, title) {
 
   const currNonogram = nonogramsData.find((item) => item.title === title);
@@ -132,7 +173,7 @@ function buildGame(value, title) {
   hintsLeft.innerHTML = ``;
   hintsTop.innerHTML = ``;
 
-  if (value === 5 || value === 10 && !gamefield.classList.contains('gamefield_small')) {
+  if (value === 5 || value === 10) {
     hintsTop.classList.add('hints__top_small');
     emptyBlock.classList.add('empty__block_small');
     nonogramsContainer.classList.add('nonograms__container_small');
@@ -245,7 +286,7 @@ function calculateTopHints(nonogram, i) {
   return topHint;
 }
 
-buildGame(5, 'ladder');
+buildGame(5, 'tower');
 
 function playGame(event) {
   const currCell = event.target;

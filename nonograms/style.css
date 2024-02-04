@@ -78,7 +78,7 @@
 }
 
 .empty__block {
-  background-color: aliceblue;
+  background-color: #e5ebf0;
   height: 210px;
   border-right: 3px solid black;
   border-bottom: 2px solid black;
@@ -178,6 +178,32 @@
   top: 50%;
   left: -5%;
   transform: rotate(-45deg);
+}
+
+.games__container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  min-height: 50px;
+  margin-bottom: 30px;
+}
+
+.games__fields__container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.games__field {
+  text-transform: lowercase;
+  min-width: 90px;
+}
+
+.games__field._active {
+  background-color: #90ee90;
 }
 
 @media screen and (max-width: 1220px) {
