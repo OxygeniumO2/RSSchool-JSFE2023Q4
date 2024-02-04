@@ -146,11 +146,12 @@ const resetGameBtn = createElem({ tag: 'button', classesCss: ['btn', 'btn_white'
 const muteBtn = createElem({ tag: 'button', classesCss: ['btn', 'btn_white', 'btn__sound'], content: 'Sound: ON'});
 const resultsBtn = createElem({ tag: 'button', classesCss: ['btn', 'btn_white'], content: 'results'});
 const resultsCloseBtn = createElem({ tag: 'button', classesCss: ['btn', 'btn_white', 'results__closeBtn'], content: 'close'});
+const solutionBtn = createElem({ tag: 'button', classesCss: ['btn', 'btn_white'], content: 'solution'});
 
 
 const timerContainer = createElem({ tag: 'div', classesCss: ['timer__container'], content: '00:00'});
 
-btnsContainer.append(resetGameBtn, muteBtn, resultsBtn, timerContainer);
+btnsContainer.append(resetGameBtn, solutionBtn, muteBtn, resultsBtn, timerContainer);
 
 const modalWin = createElem({ tag: 'div', classesCss: ['modal', 'modal_white', 'modal__win']});
 const modalWinTitle = createElem({ tag: 'div', classesCss: ['modalWin__win__title']});
@@ -161,6 +162,23 @@ const modalResults = createElem({ tag: 'div', classesCss: ['modal', 'modal_white
 modalWin.append(modalWinTitle, modalWinCloseBtn);
 
 container.append(modalWin, modalResults);
+
+solutionBtn.addEventListener('click', () => {
+  gamefield.removeEventListener('mousedown', playGame);
+  gamefield.removeEventListener('contextmenu', playGame);
+  stopTimer();
+  const currNonogramArr = JSON.parse(localStorage.getItem('currNonogramOxy')).flat();
+  const allCells = document.querySelectorAll('.gamefield__cell');
+  allCells.forEach((item, index) => {
+    if (currNonogramArr[index] === 1) {
+      item.classList.add('_active');
+      item.classList.remove('_cross');
+    } else {
+      item.classList.remove('_active');
+      item.classList.remove('_cross');
+    }
+  });
+});
 
 resultsBtn.addEventListener('click', () => {
   const storageResults = JSON.parse(localStorage.getItem('scoreTableOxy'));
