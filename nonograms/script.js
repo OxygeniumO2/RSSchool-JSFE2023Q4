@@ -57,10 +57,12 @@ container.append(btnsContainer);
 const btn1 = createElem({ tag: 'button', content: 'sadasdsa' });
 const btn2 = createElem({ tag: 'button', content: 'sadz' });
 const btn3 = createElem({ tag: 'button', content: 'sadasd' });
+const resetGameBtn = createElem({ tag: 'button', classesCss: ['btn', 'btn_white'], content: 'reset' });
+
 
 const timerContainer = createElem({ tag: 'div', classesCss: ['timer__container'], content: '00:00'});
 
-container.append(btn1, btn2, btn3, timerContainer);
+btnsContainer.append(btn1, btn2, btn3, resetGameBtn, timerContainer);
 
 const modalWin = createElem({ tag: 'div', classesCss: ['modalWin', 'modalWin_white']});
 const modalWinTitle = createElem({ tag: 'div', classesCss: ['modalWin__title']});
@@ -69,6 +71,14 @@ const modalWinCloseBtn = createElem({ tag: 'button', classesCss: [ 'btn', 'btn_w
 modalWin.append(modalWinTitle, modalWinCloseBtn);
 
 container.append(modalWin);
+
+resetGameBtn.addEventListener('click', () => {
+  const currNonogramId = localStorage.getItem('currNonogramOxyId');
+  const currNonogram = nonogramsData.find((item) => item.id.toString() === currNonogramId);
+  const currNonogramSize = currNonogram.nonogramArr.length;
+  const currNonogramTitle = currNonogram.title;
+  buildGame(currNonogramSize, currNonogramTitle);
+});
 
 function startTimer() {
 
@@ -111,6 +121,7 @@ function buildGame(value, title) {
 
   const currNonogram = nonogramsData.find((item) => item.title === title);
   localStorage.setItem('currNonogramOxy', JSON.stringify(currNonogram.nonogramArr));
+  localStorage.setItem('currNonogramOxyId', currNonogram.id);
 
   stopTimer();
 
@@ -180,6 +191,12 @@ function buildGame(value, title) {
 
   }
   emptyNonogram = new Array(currNonogram.nonogramArr.length * currNonogram.nonogramArr.length).fill(0);
+
+  gamefield.removeEventListener('mousedown', playGame);
+  gamefield.removeEventListener('contextmenu', playGame);
+
+  gamefield.addEventListener('mousedown', playGame);
+  gamefield.addEventListener('contextmenu', playGame);
 }
 
 function calculateLeftHints(nonogram, i) {
@@ -244,9 +261,7 @@ function playGame(event) {
       emptyNonogram[currCellData] = 0;
     }
     if (emptyNonogram.toString() === JSON.parse(localStorage.getItem('currNonogramOxy')).flat().toString()) {
-      modalWin.classList.add('_active');
-      modalWinTitle.innerText = `Great! You have solved the nonogram in ${durationTimer} seconds!`;
-      shadow.classList.add('_active');
+      winGame();
       stopTimer();
     }
   }
@@ -258,5 +273,21 @@ function playGame(event) {
   }
 }
 
-gamefield.addEventListener('mousedown', playGame);
-gamefield.addEventListener('contextmenu', playGame);
+
+modalWinCloseBtn.tabIndex = -1;
+modalWinCloseBtn.addEventListener('click', closeGame);
+
+
+function closeGame() {
+  modalWin.classList.remove('_active');
+  shadow.classList.remove('_active');
+  gamefield.removeEventListener('mousedown', playGame);
+  gamefield.removeEventListener('contextmenu', playGame);
+  modalWinCloseBtn.blur();
+}
+
+function winGame() {
+  modalWin.classList.add('_active');
+  modalWinTitle.innerText = `Great! You have solved the nonogram in ${durationTimer} seconds!`;
+  shadow.classList.add('_active');
+}
