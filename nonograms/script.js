@@ -16,6 +16,17 @@ function createElem({tag, classesCss, content}) {
   return elem;
 }
 
+const sounds = {
+  audioBlackCell: new Audio('./sound/black-cell.mp3'),
+  audioWhiteCell: new Audio('./sound/white-cell.mp3'),
+  audioCrossCell: new Audio('./sound/cross-cell.mp3'),
+  audioWin: new Audio('./sound/win.mp3'),
+};
+const audioBlackCell = new Audio('./sound/black-cell.mp3');
+const audioWhiteCell = new Audio('./sound/white-cell.mp3');
+const audioCrossCell = new Audio('./sound/cross-cell.mp3');
+const audioWin = new Audio('./sound/win.mp3');
+
 const shadow = createElem({ tag: 'div', classesCss: ['shadow']});
 document.body.append(shadow);
 
@@ -49,14 +60,13 @@ let emptyNonogram;
 let isTimerRunning = false;
 let durationTimer = 0;
 let intervalTimerId;
+let isMuted = true;
 
 const btnsContainer = createElem({ tag: 'div', classesCss: ['buttons__container']});
 const gamesFieldsContainer = createElem({ tag: 'div', classesCss: ['games__fields__container']});
 const gamesContainer = createElem({ tag: 'div', classesCss: ['games__container']});
 
 container.append(gamesContainer, gamesFieldsContainer, btnsContainer);
-
-console.log(nonogramsData.length)
 
 function fillGames(value) {
   gamesContainer.innerHTML = ``;
@@ -133,11 +143,12 @@ gamesFields15x15.addEventListener('click', () => {
 });
 
 const resetGameBtn = createElem({ tag: 'button', classesCss: ['btn', 'btn_white'], content: 'reset' });
+const muteBtn = createElem({ tag: 'button', classesCss: ['btn', 'btn_white', 'btn__sound'], content: 'Sound: ON'});
 
 
 const timerContainer = createElem({ tag: 'div', classesCss: ['timer__container'], content: '00:00'});
 
-btnsContainer.append(resetGameBtn, timerContainer);
+btnsContainer.append(resetGameBtn, muteBtn, timerContainer);
 
 const modalWin = createElem({ tag: 'div', classesCss: ['modalWin', 'modalWin_white']});
 const modalWinTitle = createElem({ tag: 'div', classesCss: ['modalWin__title']});
@@ -146,6 +157,24 @@ const modalWinCloseBtn = createElem({ tag: 'button', classesCss: [ 'btn', 'btn_w
 modalWin.append(modalWinTitle, modalWinCloseBtn);
 
 container.append(modalWin);
+
+muteBtn.addEventListener('click', () => {
+  if (isMuted) {
+    Object.values(sounds).forEach((audio) => {
+      audio.muted = true;
+    });
+    isMuted = false;
+    muteBtn.classList.add('_muted');
+    muteBtn.innerText = `Sound: OFF`;
+  } else {
+    Object.values(sounds).forEach((audio) => {
+      audio.muted = false;
+    });
+    isMuted = true;
+    muteBtn.classList.remove('_muted');
+    muteBtn.innerText = `Sound: ON`;
+  }
+});
 
 resetGameBtn.addEventListener('click', () => {
   const currNonogramId = localStorage.getItem('currNonogramOxyId');
@@ -308,7 +337,7 @@ function calculateTopHints(nonogram, i) {
   return topHint;
 }
 
-buildGame(5, 'tower');
+
 
 function playGame(event) {
   const currCell = event.target;
@@ -322,6 +351,11 @@ function playGame(event) {
     emptyNonogram[currCellData] = 1;
     if (!currCell.classList.contains('_active')) {
       emptyNonogram[currCellData] = 0;
+      sounds.audioWhiteCell.currentTime = 0;
+      sounds.audioWhiteCell.play();
+    } else {
+      sounds.audioBlackCell.currentTime = 0;
+      sounds.audioBlackCell.play();
     }
     if (emptyNonogram.toString() === JSON.parse(localStorage.getItem('currNonogramOxy')).flat().toString()) {
       winGame();
@@ -333,6 +367,14 @@ function playGame(event) {
     currCell.classList.remove('_active');
     currCell.classList.toggle('_cross');
     emptyNonogram[currCellData] = 0;
+    if (currCell.classList.contains('_cross')) {
+      sounds.audioCrossCell.currentTime = 0;
+      sounds.audioCrossCell.play();
+    } else {
+      sounds.audioWhiteCell.currentTime = 0;
+      sounds.audioWhiteCell.play();
+    }
+
   }
 }
 
@@ -353,4 +395,9 @@ function winGame() {
   modalWin.classList.add('_active');
   modalWinTitle.innerText = `Great! You have solved the nonogram in ${durationTimer} seconds!`;
   shadow.classList.add('_active');
+  sounds.audioWin.play();
 }
+
+buildGame(5, 'tower');
+fillGames(5);
+gamesFields5x5.disabled = true;

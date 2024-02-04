@@ -29,6 +29,7 @@ button:disabled {
   padding: 10px 20px;
   border-radius: 10px;
   text-transform: uppercase;
+  cursor: pointer;
 }
 
 .btn_white {
@@ -37,6 +38,16 @@ button:disabled {
 
 .btn__game._active {
   background-color: #90ee90;
+}
+
+.btn__sound {
+  background-color: #90ee90;
+  min-width: 125px;
+  text-transform: none;
+}
+
+.btn__sound._muted {
+  background-color: #d9534f;
 }
 
 .modalWin {
@@ -114,7 +125,7 @@ button:disabled {
 }
 
 .hints__left__item {
-  word-spacing: 3px;
+  word-spacing: 5px;
   display: flex;
   align-items: center;
   justify-content: end;
@@ -134,8 +145,8 @@ button:disabled {
   align-items: end;
   justify-content: center;
   width: 45px;
-  padding: 0 12px 10px;
-  line-height: 125%;
+  padding: 0 12px 5px;
+  line-height: 160%;
   text-align: center;
   border: 1px solid black;
   border-top: 0;
@@ -309,7 +320,7 @@ button:disabled {
 
   .hints__top__item {
     width: 23px;
-    padding: 0 5px 10px 5px;
+    padding: 0 5px 5px 5px;
   }
 
   .hints__left__item {
