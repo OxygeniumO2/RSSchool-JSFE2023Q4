@@ -83,10 +83,23 @@ function fillGames(value) {
   }
 
   nonograms.forEach((item) => {
-    const currGame = createElem({ tag: 'button', classesCss: ['btn', 'btn_white'], content: item.title.toUpperCase() })
+    const currGame = createElem({ tag: 'button', classesCss: ['btn', 'btn_white', 'btn__game'], content: item.title.toUpperCase() })
     gamesContainer.append(currGame);
+    nonograms.forEach((item) => {
+      if (item.id.toString() === localStorage.getItem('currNonogramOxyId') && currGame.innerText === item.title.toUpperCase()) {
+        currGame.disabled = true;
+        currGame.classList.add('_active');
+      }
+    });
     currGame.addEventListener('click', () => {
       buildGame(value, item.title);
+      const btnsGame = document.querySelectorAll('.btn__game');
+      btnsGame.forEach((item) => {
+        item.classList.remove('_active');
+        item.disabled = false;
+      });
+      currGame.classList.add('_active');
+      currGame.disabled = true;
     });
   });
 
@@ -100,14 +113,23 @@ gamesFieldsContainer.append(gamesFields5x5, gamesFields10x10, gamesFields15x15);
 
 gamesFields5x5.addEventListener('click', () => {
   fillGames(5);
+  gamesFields5x5.disabled = true;
+  gamesFields10x10.disabled = false;
+  gamesFields15x15.disabled = false;
 });
 
 gamesFields10x10.addEventListener('click', () => {
   fillGames(10);
+  gamesFields5x5.disabled = false;
+  gamesFields10x10.disabled = true;
+  gamesFields15x15.disabled = false;
 });
 
 gamesFields15x15.addEventListener('click', () => {
   fillGames(15);
+  gamesFields5x5.disabled = false;
+  gamesFields10x10.disabled = false;
+  gamesFields15x15.disabled = true;
 });
 
 const resetGameBtn = createElem({ tag: 'button', classesCss: ['btn', 'btn_white'], content: 'reset' });
