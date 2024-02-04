@@ -2,7 +2,7 @@
 
 import { nonogramsData } from './data.js';
 
-function createElem({tag, classesCss}) {
+function createElem({tag, classesCss, content}) {
   const elem = document.createElement(tag);
 
   if (classesCss) {
@@ -10,8 +10,14 @@ function createElem({tag, classesCss}) {
       elem.classList.add(item);
     });
   }
+  if (content) {
+    elem.innerText = content;
+  }
   return elem;
 }
+
+const shadow = createElem({ tag: 'div', classesCss: ['shadow']});
+document.body.append(shadow);
 
 const gamefield = createElem({ tag: 'div', classesCss: ['gamefield'] });
 
@@ -40,20 +46,167 @@ const hintsTop = createElem({ tag: 'div', classesCss: ['hints__top'] });
 nonogramsRightColumn.append(hintsTop, gamefield);
 
 let emptyNonogram;
+let isTimerRunning = false;
+let durationTimer = 0;
+let intervalTimerId;
+
+const btnsContainer = createElem({ tag: 'div', classesCss: ['buttons__container']});
+const gamesFieldsContainer = createElem({ tag: 'div', classesCss: ['games__fields__container']});
+const gamesContainer = createElem({ tag: 'div', classesCss: ['games__container']});
+
+container.append(gamesContainer, gamesFieldsContainer, btnsContainer);
+
+console.log(nonogramsData.length)
+
+function fillGames(value) {
+  gamesContainer.innerHTML = ``;
+  let nonograms;
+  if (value === 5) {
+    nonograms = nonogramsData.filter((item) => item.id >= 100 && item.id < 200);
+    gamesFields5x5.classList.add('_active');
+    gamesFields10x10.classList.remove('_active');
+    gamesFields15x15.classList.remove('_active');
+  }
+
+  if (value === 10) {
+    nonograms = nonogramsData.filter((item) => item.id >= 200 && item.id < 300);
+    gamesFields5x5.classList.remove('_active');
+    gamesFields10x10.classList.add('_active');
+    gamesFields15x15.classList.remove('_active');
+  }
+
+  if (value === 15) {
+    nonograms = nonogramsData.filter((item) => item.id >= 300 && item.id < 400);
+    gamesFields5x5.classList.remove('_active');
+    gamesFields10x10.classList.remove('_active');
+    gamesFields15x15.classList.add('_active');
+  }
+
+  nonograms.forEach((item) => {
+    const currGame = createElem({ tag: 'button', classesCss: ['btn', 'btn_white', 'btn__game'], content: item.title.toUpperCase() })
+    gamesContainer.append(currGame);
+    nonograms.forEach((item) => {
+      if (item.id.toString() === localStorage.getItem('currNonogramOxyId') && currGame.innerText === item.title.toUpperCase()) {
+        currGame.disabled = true;
+        currGame.classList.add('_active');
+      }
+    });
+    currGame.addEventListener('click', () => {
+      buildGame(value, item.title);
+      const btnsGame = document.querySelectorAll('.btn__game');
+      btnsGame.forEach((item) => {
+        item.classList.remove('_active');
+        item.disabled = false;
+      });
+      currGame.classList.add('_active');
+      currGame.disabled = true;
+    });
+  });
+
+}
+
+const gamesFields5x5 = createElem({ tag: 'button', classesCss: ['btn', 'btn_white', 'games__field'], content: '5x5' });
+const gamesFields10x10 = createElem({ tag: 'button', classesCss: ['btn', 'btn_white', 'games__field'], content: '10x10' });
+const gamesFields15x15 = createElem({ tag: 'button', classesCss: ['btn', 'btn_white', 'games__field'], content: '15x15' });
+
+gamesFieldsContainer.append(gamesFields5x5, gamesFields10x10, gamesFields15x15);
+
+gamesFields5x5.addEventListener('click', () => {
+  fillGames(5);
+  gamesFields5x5.disabled = true;
+  gamesFields10x10.disabled = false;
+  gamesFields15x15.disabled = false;
+});
+
+gamesFields10x10.addEventListener('click', () => {
+  fillGames(10);
+  gamesFields5x5.disabled = false;
+  gamesFields10x10.disabled = true;
+  gamesFields15x15.disabled = false;
+});
+
+gamesFields15x15.addEventListener('click', () => {
+  fillGames(15);
+  gamesFields5x5.disabled = false;
+  gamesFields10x10.disabled = false;
+  gamesFields15x15.disabled = true;
+});
+
+const resetGameBtn = createElem({ tag: 'button', classesCss: ['btn', 'btn_white'], content: 'reset' });
+
+
+const timerContainer = createElem({ tag: 'div', classesCss: ['timer__container'], content: '00:00'});
+
+btnsContainer.append(resetGameBtn, timerContainer);
+
+const modalWin = createElem({ tag: 'div', classesCss: ['modalWin', 'modalWin_white']});
+const modalWinTitle = createElem({ tag: 'div', classesCss: ['modalWin__title']});
+const modalWinCloseBtn = createElem({ tag: 'button', classesCss: [ 'btn', 'btn_white', 'modalWin__closeBtn'], content: 'close'} );
+
+modalWin.append(modalWinTitle, modalWinCloseBtn);
+
+container.append(modalWin);
+
+resetGameBtn.addEventListener('click', () => {
+  const currNonogramId = localStorage.getItem('currNonogramOxyId');
+  const currNonogram = nonogramsData.find((item) => item.id.toString() === currNonogramId);
+  const currNonogramSize = currNonogram.nonogramArr.length;
+  const currNonogramTitle = currNonogram.title;
+  buildGame(currNonogramSize, currNonogramTitle);
+});
+
+function startTimer() {
+
+  if (!isTimerRunning) {
+    intervalTimerId = setInterval(() => {
+
+    durationTimer += 1;
+
+    let minutes = Math.floor(durationTimer / 60);
+    let seconds = durationTimer % 60;
+
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    seconds = seconds < 10 ? '0' + seconds : seconds;
+
+    timerContainer.innerText = minutes + ':' + seconds;
+
+    }, 1000);
+    isTimerRunning = true;
+  }
+}
+
+function stopTimer() {
+  clearInterval(intervalTimerId);
+  isTimerRunning = false;
+}
 
 function buildGame(value, title) {
 
   const currNonogram = nonogramsData.find((item) => item.title === title);
-  localStorage.setItem('currNonogram', JSON.stringify(currNonogram.nonogramArr));
+  localStorage.setItem('currNonogramOxy', JSON.stringify(currNonogram.nonogramArr));
+  localStorage.setItem('currNonogramOxyId', currNonogram.id);
+
+  stopTimer();
+
+  timerContainer.innerText = `00:00`;
+  durationTimer = 0;
 
   gamefield.innerHTML = ``;
+  hintsLeft.innerHTML = ``;
+  hintsTop.innerHTML = ``;
 
-  if (value === 5 || value === 10 && !gamefield.classList.contains('gamefield_small')) {
+  if (value === 5 || value === 10) {
     hintsTop.classList.add('hints__top_small');
     emptyBlock.classList.add('empty__block_small');
     nonogramsContainer.classList.add('nonograms__container_small');
     nonogramsLeftColumn.classList.add('nonograms__leftcolumn_small');
     gamefield.classList.add('gamefield_small');
+  } else {
+    hintsTop.classList.remove('hints__top_small');
+    emptyBlock.classList.remove('empty__block_small');
+    nonogramsContainer.classList.remove('nonograms__container_small');
+    nonogramsLeftColumn.classList.remove('nonograms__leftcolumn_small');
+    gamefield.classList.remove('gamefield_small');
   }
 
   if (value === 10) {
@@ -101,6 +254,12 @@ function buildGame(value, title) {
 
   }
   emptyNonogram = new Array(currNonogram.nonogramArr.length * currNonogram.nonogramArr.length).fill(0);
+
+  gamefield.removeEventListener('mousedown', playGame);
+  gamefield.removeEventListener('contextmenu', playGame);
+
+  gamefield.addEventListener('mousedown', playGame);
+  gamefield.addEventListener('contextmenu', playGame);
 }
 
 function calculateLeftHints(nonogram, i) {
@@ -149,11 +308,13 @@ function calculateTopHints(nonogram, i) {
   return topHint;
 }
 
-buildGame(15, 'sponge-bob');
+buildGame(5, 'tower');
 
 function playGame(event) {
   const currCell = event.target;
   const currCellData = currCell.getAttribute('cell-number-data');
+
+  startTimer();
 
   if (event.button === 0) {
     currCell.classList.remove('_cross');
@@ -162,18 +323,34 @@ function playGame(event) {
     if (!currCell.classList.contains('_active')) {
       emptyNonogram[currCellData] = 0;
     }
-    if (emptyNonogram.toString() === JSON.parse(localStorage.getItem('currNonogram')).flat().toString()) {
-      alert('sas');
+    if (emptyNonogram.toString() === JSON.parse(localStorage.getItem('currNonogramOxy')).flat().toString()) {
+      winGame();
+      stopTimer();
     }
   }
-  if (event.button === 2) {
+  if (event.type === 'contextmenu') {
+    event.preventDefault();
     currCell.classList.remove('_active');
     currCell.classList.toggle('_cross');
     emptyNonogram[currCellData] = 0;
   }
 }
 
-gamefield.addEventListener('mousedown', playGame);
-gamefield.addEventListener('contextmenu', (event) => {
-  event.preventDefault();
-});
+
+modalWinCloseBtn.tabIndex = -1;
+modalWinCloseBtn.addEventListener('click', closeGame);
+
+
+function closeGame() {
+  modalWin.classList.remove('_active');
+  shadow.classList.remove('_active');
+  gamefield.removeEventListener('mousedown', playGame);
+  gamefield.removeEventListener('contextmenu', playGame);
+  modalWinCloseBtn.blur();
+}
+
+function winGame() {
+  modalWin.classList.add('_active');
+  modalWinTitle.innerText = `Great! You have solved the nonogram in ${durationTimer} seconds!`;
+  shadow.classList.add('_active');
+}

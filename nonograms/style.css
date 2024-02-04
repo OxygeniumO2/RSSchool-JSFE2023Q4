@@ -4,11 +4,85 @@
   margin: 0 auto;
 }
 
+.shadow {
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 19;
+}
+
+button:disabled {
+  color: black;
+}
+
+.shadow._active {
+  display: block;
+}
+
+.timer__container {
+  font-size: 24px;
+}
+
+.btn {
+  max-width: 200px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  text-transform: uppercase;
+}
+
+.btn_white {
+  background-color: white;
+}
+
+.btn__game._active {
+  background-color: #90ee90;
+}
+
+.modalWin {
+  position: fixed;
+  font-size: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 50%;
+  height: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0px 0px 5px 8000px rgb(17 17 16 / 80%);
+  border-radius: 10px;
+  opacity: 0;
+  z-index: -2;
+  text-align: center;
+  transition: opacity 0.4s ease, box-shadow 0.4s ease, z-index 0.7s;
+  padding: 60px 60px;
+}
+
+.modalWin_white {
+  background-color: white;
+}
+
+.modalWin._active {
+  opacity: 1;
+  z-index: 20;
+  transition: opacity 0.4s ease, box-shadow 0.4s ease, z-index 0s;
+}
+
+.modalWin__title {
+  margin-bottom: 20px;
+}
+
+.modalWin__closeBtn {
+  margin: 0 auto;
+}
+
 .nonograms__container {
   display: flex;
   font-size: 22px;
   justify-content: center;
   margin-top: 50px;
+  margin-bottom: 30px;
 }
 
 .nonograms__leftcolumn {
@@ -16,7 +90,7 @@
 }
 
 .empty__block {
-  background-color: aliceblue;
+  background-color: #e5ebf0;
   height: 210px;
   border-right: 3px solid black;
   border-bottom: 2px solid black;
@@ -30,7 +104,7 @@
 }
 
 .hints__top__item:nth-child(5n) {
-  border-right: 5px solid black;
+  border-right: 4px solid black;
 }
 
 .hints__left {
@@ -89,7 +163,7 @@
 }
 
 .gamefield__cell:nth-child(5n) {
-  border-right: 5px solid black;
+  border-right: 4px solid black;
 }
 
 .gamefield__cell._active {
@@ -116,6 +190,32 @@
   top: 50%;
   left: -5%;
   transform: rotate(-45deg);
+}
+
+.games__container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  min-height: 50px;
+  margin-bottom: 30px;
+}
+
+.games__fields__container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.games__field {
+  text-transform: lowercase;
+  min-width: 90px;
+}
+
+.games__field._active {
+  background-color: #90ee90;
 }
 
 @media screen and (max-width: 1220px) {
@@ -149,6 +249,10 @@
 }
 
 @media screen and (max-width: 850px) {
+  .modalWin {
+    width: 75%;
+  }
+
   .gamefield {
     max-width: 497px;
   }
