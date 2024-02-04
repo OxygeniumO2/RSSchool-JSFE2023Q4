@@ -144,19 +144,56 @@ gamesFields15x15.addEventListener('click', () => {
 
 const resetGameBtn = createElem({ tag: 'button', classesCss: ['btn', 'btn_white'], content: 'reset' });
 const muteBtn = createElem({ tag: 'button', classesCss: ['btn', 'btn_white', 'btn__sound'], content: 'Sound: ON'});
+const resultsBtn = createElem({ tag: 'button', classesCss: ['btn', 'btn_white'], content: 'results'});
+const resultsCloseBtn = createElem({ tag: 'button', classesCss: ['btn', 'btn_white', 'results__closeBtn'], content: 'close'});
 
 
 const timerContainer = createElem({ tag: 'div', classesCss: ['timer__container'], content: '00:00'});
 
-btnsContainer.append(resetGameBtn, muteBtn, timerContainer);
+btnsContainer.append(resetGameBtn, muteBtn, resultsBtn, timerContainer);
 
-const modalWin = createElem({ tag: 'div', classesCss: ['modalWin', 'modalWin_white']});
-const modalWinTitle = createElem({ tag: 'div', classesCss: ['modalWin__title']});
+const modalWin = createElem({ tag: 'div', classesCss: ['modal', 'modal_white', 'modal__win']});
+const modalWinTitle = createElem({ tag: 'div', classesCss: ['modalWin__win__title']});
 const modalWinCloseBtn = createElem({ tag: 'button', classesCss: [ 'btn', 'btn_white', 'modalWin__closeBtn'], content: 'close'} );
+
+const modalResults = createElem({ tag: 'div', classesCss: ['modal', 'modal_white', 'modal__results']});
 
 modalWin.append(modalWinTitle, modalWinCloseBtn);
 
-container.append(modalWin);
+container.append(modalWin, modalResults);
+
+resultsBtn.addEventListener('click', () => {
+  const storageResults = JSON.parse(localStorage.getItem('scoreTableOxy'));
+  modalResults.innerHTML = ``;
+  if (storageResults.length) {
+    const sortedResults = storageResults.sort(compareByTime);
+    for (let i = 0; i < storageResults.length; i += 1) {
+      const result = createElem({ tag: 'div', classesCss: ['modal__results__item'], content: `Difficuly: ${sortedResults[i].difficulty.toUpperCase()}, Level: ${sortedResults[i].gameName.toUpperCase()}, Time: ${sortedResults[i].time}`});
+      modalResults.append(result);
+    }
+    modalResults.classList.add('_active');
+    shadow.classList.add('_active');
+  }
+  modalResults.append(resultsCloseBtn);
+});
+
+resultsCloseBtn.addEventListener('click', () => {
+  modalResults.classList.remove('_active');
+  shadow.classList.remove('_active');
+});
+
+function compareByTime(a, b) {
+  const timeA = parseInt(a.time);
+  const timeB = parseInt(b.time);
+
+  if (timeA < timeB) {
+    return -1;
+  } else if (timeA > timeB) {
+    return 1;
+  } else {
+    return 0;
+  }
+}
 
 muteBtn.addEventListener('click', () => {
   if (isMuted) {
@@ -289,6 +326,10 @@ function buildGame(value, title) {
 
   gamefield.addEventListener('mousedown', playGame);
   gamefield.addEventListener('contextmenu', playGame);
+
+  if (!localStorage.getItem('scoreTableOxy')) {
+    localStorage.setItem('scoreTableOxy', JSON.stringify([]));
+  }
 }
 
 function calculateLeftHints(nonogram, i) {
@@ -395,9 +436,25 @@ function winGame() {
   modalWin.classList.add('_active');
   modalWinTitle.innerText = `Great! You have solved the nonogram in ${durationTimer} seconds!`;
   shadow.classList.add('_active');
+  sounds.audioWin.currentTime = 0;
   sounds.audioWin.play();
+  const currNonogramId = localStorage.getItem('currNonogramOxyId');
+  const currNonogram = nonogramsData.find((item) => item.id.toString() === currNonogramId);
+  addScoreIntoTable(currNonogram);
 }
 
-buildGame(5, 'tower');
+function addScoreIntoTable(currNonogram) {
+  const scoreTable = JSON.parse(localStorage.getItem('scoreTableOxy'));
+  if (scoreTable.length >= 5) {
+    scoreTable.shift();
+    scoreTable.push({ gameName: currNonogram.title, difficulty: currNonogram.difficulty, time: `${durationTimer} sec`});
+    localStorage.setItem('scoreTableOxy', JSON.stringify(scoreTable));
+  } else {
+    scoreTable.push({ gameName: currNonogram.title, difficulty: currNonogram.difficulty, time: `${durationTimer} sec`});
+    localStorage.setItem('scoreTableOxy', JSON.stringify(scoreTable));
+  }
+}
+
+buildGame(5, 'plain');
 fillGames(5);
 gamesFields5x5.disabled = true;

@@ -12,6 +12,15 @@
   z-index: 19;
 }
 
+.buttons__container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+  width: 70%;
+}
+
 button:disabled {
   color: black;
 }
@@ -38,6 +47,7 @@ button:disabled {
 
 .btn__game._active {
   background-color: #90ee90;
+  cursor: auto;
 }
 
 .btn__sound {
@@ -50,7 +60,7 @@ button:disabled {
   background-color: #d9534f;
 }
 
-.modalWin {
+.modal {
   position: fixed;
   font-size: 22px;
   display: flex;
@@ -70,21 +80,31 @@ button:disabled {
   padding: 60px 60px;
 }
 
-.modalWin_white {
+.modal_white {
   background-color: white;
 }
 
-.modalWin._active {
+.modal._active {
   opacity: 1;
   z-index: 20;
   transition: opacity 0.4s ease, box-shadow 0.4s ease, z-index 0s;
 }
 
-.modalWin__title {
+.modal__win__title {
   margin-bottom: 20px;
 }
 
-.modalWin__closeBtn {
+.modal__results {
+  height: auto;
+  padding: 20px;
+}
+
+.modal__results__item {
+  margin-bottom: 30px;
+}
+
+.modalWin__closeBtn,
+.results__closeBtn {
   margin: 0 auto;
 }
 
@@ -227,6 +247,7 @@ button:disabled {
 
 .games__field._active {
   background-color: #90ee90;
+  cursor: auto;
 }
 
 @media screen and (max-width: 1220px) {
@@ -260,7 +281,11 @@ button:disabled {
 }
 
 @media screen and (max-width: 850px) {
-  .modalWin {
+  .modal__results {
+    width: 80%;
+  }
+
+  .modal {
     width: 75%;
   }
 
