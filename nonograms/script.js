@@ -233,6 +233,8 @@ solutionBtn.addEventListener('click', () => {
       item.classList.remove('_cross');
     }
   });
+  saveGameBtn.classList.add('btn_disabled_red');
+  saveGameBtn.disabled = true;
 });
 
 resultsBtn.addEventListener('click', () => {
