@@ -17,6 +17,7 @@
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  gap: 10px;
   margin: 0 auto;
   width: 70%;
 }
@@ -237,7 +238,7 @@ button:disabled {
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 .games__field {

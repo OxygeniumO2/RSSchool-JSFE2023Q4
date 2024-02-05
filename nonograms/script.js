@@ -22,10 +22,6 @@ const sounds = {
   audioCrossCell: new Audio('./sound/cross-cell.mp3'),
   audioWin: new Audio('./sound/win.mp3'),
 };
-const audioBlackCell = new Audio('./sound/black-cell.mp3');
-const audioWhiteCell = new Audio('./sound/white-cell.mp3');
-const audioCrossCell = new Audio('./sound/cross-cell.mp3');
-const audioWin = new Audio('./sound/win.mp3');
 
 const shadow = createElem({ tag: 'div', classesCss: ['shadow']});
 document.body.append(shadow);
@@ -123,35 +119,48 @@ gamesFieldsContainer.append(gamesFields5x5, gamesFields10x10, gamesFields15x15);
 
 gamesFields5x5.addEventListener('click', () => {
   fillGames(5);
-  gamesFields5x5.disabled = true;
-  gamesFields10x10.disabled = false;
-  gamesFields15x15.disabled = false;
+  disable5x5();
 });
 
 gamesFields10x10.addEventListener('click', () => {
   fillGames(10);
-  gamesFields5x5.disabled = false;
-  gamesFields10x10.disabled = true;
-  gamesFields15x15.disabled = false;
+  disable10x10();
 });
 
 gamesFields15x15.addEventListener('click', () => {
   fillGames(15);
+  disable15x15();
+});
+
+function disable5x5() {
+  gamesFields5x5.disabled = true;
+  gamesFields10x10.disabled = false;
+  gamesFields15x15.disabled = false;
+}
+
+function disable10x10() {
+  gamesFields5x5.disabled = false;
+  gamesFields10x10.disabled = true;
+  gamesFields15x15.disabled = false;
+}
+
+function disable15x15() {
   gamesFields5x5.disabled = false;
   gamesFields10x10.disabled = false;
   gamesFields15x15.disabled = true;
-});
+}
 
-const resetGameBtn = createElem({ tag: 'button', classesCss: ['btn', 'btn_white'], content: 'reset' });
+const resetGameBtn = createElem({ tag: 'button', classesCss: ['btn', 'btn_white'], content: 'reset game' });
 const muteBtn = createElem({ tag: 'button', classesCss: ['btn', 'btn_white', 'btn__sound'], content: 'Sound: ON'});
 const resultsBtn = createElem({ tag: 'button', classesCss: ['btn', 'btn_white'], content: 'results'});
 const resultsCloseBtn = createElem({ tag: 'button', classesCss: ['btn', 'btn_white', 'results__closeBtn'], content: 'close'});
 const solutionBtn = createElem({ tag: 'button', classesCss: ['btn', 'btn_white'], content: 'solution'});
+const randomGameBtn = createElem({ tag: 'button', classesCss: ['btn', 'btn_white'], content: 'random game'});
 
 
 const timerContainer = createElem({ tag: 'div', classesCss: ['timer__container'], content: '00:00'});
 
-btnsContainer.append(resetGameBtn, solutionBtn, muteBtn, resultsBtn, timerContainer);
+btnsContainer.append(resetGameBtn, randomGameBtn, solutionBtn, muteBtn, resultsBtn, timerContainer);
 
 const modalWin = createElem({ tag: 'div', classesCss: ['modal', 'modal_white', 'modal__win']});
 const modalWinTitle = createElem({ tag: 'div', classesCss: ['modalWin__win__title']});
@@ -162,6 +171,30 @@ const modalResults = createElem({ tag: 'div', classesCss: ['modal', 'modal_white
 modalWin.append(modalWinTitle, modalWinCloseBtn);
 
 container.append(modalWin, modalResults);
+
+function randomNonogram() {
+  const currNonogramId = localStorage.getItem('currNonogramOxyId');
+  const randomNumber = Math.floor(Math.random() * nonogramsData.length);
+  const newNonogram = nonogramsData[randomNumber];
+  if (currNonogramId === newNonogram.id.toString()) {
+    return randomNonogram();
+  } else {
+    return newNonogram;
+  }
+}
+
+randomGameBtn.addEventListener('click', () => {
+  const newNonogram = randomNonogram();
+  buildGame(newNonogram.size, newNonogram.title);
+  fillGames(newNonogram.size);
+  if (newNonogram.size === 5) {
+    disable5x5();
+  } else if (newNonogram.size === 10) {
+    disable10x10();
+  } else {
+    disable15x15();
+  }
+});
 
 solutionBtn.addEventListener('click', () => {
   gamefield.removeEventListener('mousedown', playGame);
@@ -183,15 +216,20 @@ solutionBtn.addEventListener('click', () => {
 resultsBtn.addEventListener('click', () => {
   const storageResults = JSON.parse(localStorage.getItem('scoreTableOxy'));
   modalResults.innerHTML = ``;
+  modalResults.classList.add('_active');
+  shadow.classList.add('_active');
   if (storageResults.length) {
     const sortedResults = storageResults.sort(compareByTime);
     for (let i = 0; i < storageResults.length; i += 1) {
-      const result = createElem({ tag: 'div', classesCss: ['modal__results__item'], content: `Difficuly: ${sortedResults[i].difficulty.toUpperCase()}, Level: ${sortedResults[i].gameName.toUpperCase()}, Time: ${sortedResults[i].time}`});
+      const result = createElem({ tag: 'div', classesCss: ['modal__results__item'], content: `${i + 1}: Difficuly: ${sortedResults[i].difficulty.toUpperCase()}, Level: ${sortedResults[i].gameName.toUpperCase()}, Time: ${sortedResults[i].time}`});
       modalResults.append(result);
     }
-    modalResults.classList.add('_active');
-    shadow.classList.add('_active');
+  } else {
+    const result = createElem({ tag: 'div', classesCss: ['modal__results__item'], content: 'No results yet'});
+    modalResults.append(result);
   }
+
+
   modalResults.append(resultsCloseBtn);
 });
 
