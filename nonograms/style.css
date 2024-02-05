@@ -17,6 +17,7 @@
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  gap: 10px;
   margin: 0 auto;
   width: 70%;
 }
@@ -237,7 +238,7 @@ button:disabled {
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 .games__field {
@@ -250,7 +251,15 @@ button:disabled {
   cursor: auto;
 }
 
+.btn_disabled_red {
+  background-color: #d9534f;
+}
+
 @media screen and (max-width: 1220px) {
+  .modal__results__item {
+    font-size: 20px;
+  }
+
   .nonograms__container {
     font-size: 18px;
   }
@@ -277,6 +286,20 @@ button:disabled {
   .gamefield__cell {
     flex: 1 0 40px;
     height: 40px;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .modal__results__item {
+    font-size: 16px;
+  }
+
+  .btn {
+    font-size: 14px;
+  }
+
+  .buttons__container {
+    justify-content: center;
   }
 }
 
