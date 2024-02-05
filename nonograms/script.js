@@ -290,7 +290,13 @@ resultsBtn.addEventListener('click', () => {
     modalResults.append(result);
   }
 
-
+  if (body.classList.contains('body_dark')) {
+    resultsCloseBtn.classList.add('btn_dark');
+    resultsCloseBtn.classList.remove('btn_white');
+  } else {
+    resultsCloseBtn.classList.remove('btn_dark');
+    resultsCloseBtn.classList.add('btn_white');
+  }
   modalResults.append(resultsCloseBtn);
 });
 
