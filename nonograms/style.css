@@ -51,16 +51,6 @@ button:disabled {
   cursor: auto;
 }
 
-.btn__sound {
-  background-color: #90ee90;
-  min-width: 125px;
-  text-transform: none;
-}
-
-.btn__sound._muted {
-  background-color: #d9534f;
-}
-
 .modal {
   position: fixed;
   font-size: 22px;
@@ -251,9 +241,48 @@ button:disabled {
   cursor: auto;
 }
 
+.theme__btn {
+  min-width: 85px;
+}
+
+.body_dark {
+  background-color: #7d8797;
+  color: #fff3cf;
+}
+
+.btn_dark {
+  background-color: #38567e;
+  color: #f5f5f5;
+}
+
 .btn_disabled_red {
   background-color: #d9534f;
   cursor: auto;
+}
+
+.btn__sound {
+  background-color: #90ee90;
+  min-width: 125px;
+  text-transform: none;
+}
+
+.btn__sound_dark {
+  background-color: #90ee90;
+  color: #000;
+}
+
+.btn__sound._muted {
+  background-color: #d9534f;
+  color: #f5f5f5;
+}
+
+.empty__block_dark {
+  background-color: #b8ad8d;
+}
+
+.modal_dark {
+  background-color: #7d8797;
+  border: 1px solid #d53c3c;
 }
 
 @media screen and (max-width: 1220px) {

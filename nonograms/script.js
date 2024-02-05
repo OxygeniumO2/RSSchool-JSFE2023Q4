@@ -52,6 +52,8 @@ const hintsTop = createElem({ tag: 'div', classesCss: ['hints__top'] });
 
 nonogramsRightColumn.append(hintsTop, gamefield);
 
+const body = document.body;
+
 let emptyNonogram;
 let isTimerRunning = false;
 let durationTimer = 0;
@@ -89,7 +91,11 @@ function fillGames(value) {
   }
 
   nonograms.forEach((item) => {
-    const currGame = createElem({ tag: 'button', classesCss: ['btn', 'btn_white', 'btn__game'], content: item.title.toUpperCase() })
+    const currGame = createElem({ tag: 'button', classesCss: ['btn', 'btn_white', 'btn__game'], content: item.title.toUpperCase() });
+    if (body.classList.contains('body_dark')) {
+      currGame.classList.remove('btn_white');
+      currGame.classList.add('btn_dark');
+    }
     gamesContainer.append(currGame);
     nonograms.forEach((item) => {
       if (item.id.toString() === localStorage.getItem('currNonogramOxyId') && currGame.innerText === item.title.toUpperCase()) {
@@ -157,7 +163,7 @@ const solutionBtn = createElem({ tag: 'button', classesCss: ['btn', 'btn_white']
 const randomGameBtn = createElem({ tag: 'button', classesCss: ['btn', 'btn_white'], content: 'random game'});
 const saveGameBtn = createElem({ tag: 'button', classesCss: ['btn', 'btn_white'], content: 'save game'});
 const loadGameBtn = createElem({ tag: 'button', classesCss: ['btn', 'btn_white'], content: 'load game'});
-const themeBtn = createElem({ tag: 'button', classesCss: ['btn', 'btn_white'], content: 'light'});
+const themeBtn = createElem({ tag: 'button', classesCss: ['btn', 'btn_white', 'theme__btn'], content: 'light'});
 
 
 const timerContainer = createElem({ tag: 'div', classesCss: ['timer__container'], content: '00:00'});
@@ -173,6 +179,30 @@ const modalResults = createElem({ tag: 'div', classesCss: ['modal', 'modal_white
 modalWin.append(modalWinTitle, modalWinCloseBtn);
 
 container.append(modalWin, modalResults);
+
+function changeTheme() {
+  body.classList.toggle('body_dark');
+  emptyBlock.classList.toggle('empty__block_dark');
+  const allButtons = document.querySelectorAll('.btn');
+  allButtons.forEach((btn) => {
+    if (btn.classList.contains('btn_white')) {
+      btn.classList.remove('btn_white');
+      btn.classList.add('btn_dark');
+    } else {
+      btn.classList.remove('btn_dark');
+      btn.classList.add('btn_white')
+    }
+
+  });
+  muteBtn.classList.toggle('btn__sound_dark');
+  if (body.classList.contains('body_dark')) {
+    themeBtn.innerText = 'dark';
+  } else {
+    themeBtn.innerText = 'light';
+  }
+}
+
+themeBtn.addEventListener('click', changeTheme);
 
 function saveGame() {
   const currNonogramId = localStorage.getItem('currNonogramOxyId');
@@ -241,6 +271,13 @@ resultsBtn.addEventListener('click', () => {
   const storageResults = JSON.parse(localStorage.getItem('scoreTableOxy'));
   modalResults.innerHTML = ``;
   modalResults.classList.add('_active');
+  if (body.classList.contains('body_dark')) {
+    modalResults.classList.add('modal_dark');
+    modalResults.classList.remove('modal_white');
+  } else {
+    modalResults.classList.remove('modal_dark');
+    modalResults.classList.add('modal_white');
+  }
   shadow.classList.add('_active');
   if (storageResults.length) {
     const sortedResults = storageResults.sort(compareByTime);
@@ -522,6 +559,13 @@ function closeGame() {
 
 function winGame() {
   modalWin.classList.add('_active');
+  if (body.classList.contains('body_dark')) {
+    modalWin.classList.remove('modal_white');
+    modalWin.classList.add('modal_dark');
+  } else {
+    modalWin.classList.add('modal_white');
+    modalWin.classList.remove('modal_dark');
+  }
   modalWinTitle.innerText = `Great! You have solved the nonogram in ${durationTimer} seconds!`;
   shadow.classList.add('_active');
   sounds.audioWin.currentTime = 0;
