@@ -29,3 +29,13 @@ export interface IApiResponse {
     url: string;
     urlToImage: string;
 }
+
+export interface IApiResponseByCategory {
+    category: string;
+    country: string;
+    description: string;
+    id: string;
+    language: string;
+    name: string;
+    url: string;
+}
