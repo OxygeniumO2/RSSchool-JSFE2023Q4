@@ -15,11 +15,11 @@ Here is a collection of badges I earned from completing Microsoft Learn's TypeSc
 
 ## Reflections
 
-In module "Getting Started with TypeScript" i learned about typescript itself and his advantages and disadvantages.
-In module "Declare Variable Types in TypeScript" i learned how to declare variables in typescript and which types typescript can handle.
-In module "Implement Interfaces in TypeScript" i learned how to create intrefaces, and where it can be usefull. Very comfortable way to asign how's object must looks like (which properties and type of it's properties).
-In module "Develop Typed Functions in TypeScript" i learned how we can implement functions in typescript. How we can give types to parameters, and what function must return, if it returns nothing it must be void.
-In module "Declare and Instantiate Classes in TypeScript" i learned how to handle with classes in typescript. Before initialize constructor we must asing properties before with types.
-In module "Generics in TypeScript" i learned how to implement generics in typescript, it was hard to understand how to work properly with them.
-In module "Work with External Libraries in TypeScript" i learned how typescript works with external libraries.
+In module "Getting Started with TypeScript" i learned about typescript itself and his advantages and disadvantages.<br>
+In module "Declare Variable Types in TypeScript" i learned how to declare variables in typescript and which types typescript can handle.<br>
+In module "Implement Interfaces in TypeScript" i learned how to create intrefaces, and where it can be usefull. Very comfortable way to asign how's object must looks like (which properties and type of it's properties).<br>
+In module "Develop Typed Functions in TypeScript" i learned how we can implement functions in typescript. How we can give types to parameters, and what function must return, if it returns nothing it must be void.<br>
+In module "Declare and Instantiate Classes in TypeScript" i learned how to handle with classes in typescript. Before initialize constructor we must asing properties before with types.<br>
+In module "Generics in TypeScript" i learned how to implement generics in typescript, it was hard to understand how to work properly with them.<br>
+In module "Work with External Libraries in TypeScript" i learned how typescript works with external libraries.<br>
 In module "Organize Code with Namespaces in TypeScript" i learned about namespaces and differnce between modules and namespaces in typescript.
