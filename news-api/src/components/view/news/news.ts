@@ -1,8 +1,8 @@
 import './news.css';
-import { IApiResponse } from '../../../ts_features/interfaces';
+import { IApiResponse, INewsAndSources } from '../../../ts_features/interfaces';
 import { DrawFunc } from '../../../ts_features/funcTypes';
 
-class News {
+class News implements INewsAndSources {
     draw: DrawFunc<IApiResponse> = (data) => {
         const news: IApiResponse[] = data.length >= 10 ? data.filter((_item, idx) => idx < 10) : data;
 

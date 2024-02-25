@@ -1,8 +1,8 @@
 import './sources.css';
-import { IApiResponseByCategory } from '../../../ts_features/interfaces';
+import { IApiResponseByCategory, INewsAndSources } from '../../../ts_features/interfaces';
 import { DrawFunc } from '../../../ts_features/funcTypes';
 
-class Sources {
+class Sources implements INewsAndSources {
     draw: DrawFunc<IApiResponseByCategory> = (data) => {
         const fragment = document.createDocumentFragment();
         const sourceItemTemp = document.querySelector('#sourceItemTemp');
@@ -19,6 +19,8 @@ class Sources {
 
             const sources = document.querySelector('.sources');
             if (sources) sources.append(fragment);
+        } else {
+            throw new Error('sourceItemTemp is null');
         }
     };
 }
