@@ -1,7 +1,7 @@
-import { IController } from '../../ts_features/interfacesController';
+import { IAppController } from '../../ts_features/interfacesController';
 import AppLoader from './appLoader';
 
-class AppController extends AppLoader implements IController {
+class AppController extends AppLoader implements IAppController {
     getSources(callback: () => void) {
         super.getResp(
             {
@@ -10,12 +10,11 @@ class AppController extends AppLoader implements IController {
             },
             callback
         );
-        console.log(callback, typeof callback, ' - callback getresp');
     }
 
     getNews(e: { target: HTMLElement; currentTarget: HTMLElement }, callback: () => void) {
-        let target = e.target;
-        const newsContainer = e.currentTarget;
+        let target: HTMLElement = e.target;
+        const newsContainer: HTMLElement = e.currentTarget;
 
         while (target !== newsContainer && target) {
             if (target.classList.contains('source__item')) {

@@ -1,4 +1,4 @@
-import { IApiResponseSources } from './interfaces';
+import { IApiResponseSources, IDrawNewsData, IDrawSourceData } from './interfaces';
 
 export interface ILoaderOptions {
     [key: string]: string;
@@ -18,7 +18,10 @@ export interface ILoader {
     ): void;
 }
 
-export interface IController extends ILoader {
-    getSources(callBack: () => void): void;
-    getNews(e: { target: HTMLElement; currentTarget: HTMLElement }, callBack: () => void): void;
+export interface IAppController extends ILoader {
+    getSources(callBack?: (data: IDrawSourceData) => void): void;
+    getNews(
+        e: { target: HTMLElement; currentTarget: HTMLElement } | Event,
+        callBack?: (data: IDrawNewsData) => void
+    ): void;
 }
