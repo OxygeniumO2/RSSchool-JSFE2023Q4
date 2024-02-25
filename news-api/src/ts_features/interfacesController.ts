@@ -7,13 +7,18 @@ export interface ILoaderOptions {
 export interface ILoader {
     baseLink: string;
     options: ILoaderOptions;
-    getResp({ endpoint, options }: { endpoint: string; options: Record<string, never>; callBack: () => void }): void;
+    getResp({ endpoint, options }: { endpoint: string; options: ILoaderOptions; callBack: () => void }): void;
     errorHandler(res: Response): Response;
     makeUrl(options: ILoaderOptions, endpoint: string): string;
     load(
         method: string,
         endpoint: string,
         callback: (data: IApiResponseSources) => void,
-        options: Record<string, never>
+        options: ILoaderOptions
     ): void;
+}
+
+export interface IController extends ILoader {
+    getSources(callBack: () => void): void;
+    getNews(e: { target: HTMLElement; currentTarget: HTMLElement }, callBack: () => void): void;
 }

@@ -12,12 +12,12 @@ class Loader implements ILoader {
     }
 
     getResp(
-        { endpoint, options = {} }: { endpoint: string; options: Record<string, never> },
+        { endpoint, options = {} }: { endpoint: string; options: ILoaderOptions },
         callback = () => {
             console.error('No callback for GET response');
         }
     ) {
-        this.load('GET', endpoint, callback, options);
+        this.load('GET', endpoint, callback, options as Record<string, never>);
     }
 
     errorHandler(res: Response) {
@@ -45,7 +45,7 @@ class Loader implements ILoader {
         method: string,
         endpoint: string,
         callback: (data: IApiResponseSources) => void,
-        options: Record<string, never> = {}
+        options: ILoaderOptions = {}
     ) {
         fetch(this.makeUrl(options, endpoint), { method })
             .then(this.errorHandler)
