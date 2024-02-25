@@ -32,7 +32,7 @@ export interface IDrawNewsData {
     totalResults: number;
 }
 
-interface IApiResponseSources {
+export interface IApiResponseSources {
     status: string;
     sources: IApiResponseSourcesArr[];
 }

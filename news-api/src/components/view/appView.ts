@@ -23,7 +23,6 @@ export class AppView implements IAppView {
     }
 
     drawSources(data: IDrawSourceData) {
-        console.log(data);
         const values = data?.sources ? data?.sources : [];
         this.sources.draw(values as IApiResponseByCategory[]);
     }
