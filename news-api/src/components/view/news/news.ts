@@ -17,7 +17,7 @@ class News implements INewsAndSources {
 
                 const newClonePhoto = newsClone.querySelector('.news__meta-photo') as HTMLElement;
 
-                newClonePhoto.style.backgroundImage = `url(${item.urlToImage || 'img/news_placeholder.jpg'})`;
+                newClonePhoto.style.backgroundImage = `url(${item.urlToImage || 'img/news_placeholder.png'})`;
 
                 newsClone.querySelector('.news__meta-author')!.textContent = item.author || item.source.name;
                 newsClone.querySelector('.news__meta-date')!.textContent = item.publishedAt

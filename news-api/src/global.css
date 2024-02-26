@@ -11,11 +11,14 @@ header {
 header h1 {
     font-size: 40px;
     font-weight: 800;
+    text-align: center;
 }
 
 footer {
     height: 100px;
     display: flex;
+    flex-direction: column;
+    gap: 20px;
     align-items: center;
     justify-content: center;
 }
@@ -27,9 +30,59 @@ footer .copyright {
 footer .copyright a {
     color: #444;
 }
-footer .copyright a:hover {
-    color: #555;
-}
+
 footer .copyright:before {
     content: '©';
+}
+
+footer .rsschool__info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 95%;
+    font-size: 20px;
+}
+
+footer .rsschool__usergithub {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid transparent;
+}
+
+footer .rsschool__logo {
+    padding: 2px 2px 0 2px;
+    width: 100px;
+    height: 42px;
+    background-color: white;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+@media (any-hover: hover) {
+    footer .copyright a:hover {
+        color: #555;
+    }
+
+    footer .rsschool__usergithub:hover {
+        color: #69db7e;
+        border-bottom: 1px solid #3fcc59;
+        box-shadow: 0 0.5em 0.5em -0.4em #3fcc59;
+        transform: translateY(-0.25em);
+    }
+
+    footer .rsschool__logo:hover {
+        color: #69db7e;
+        border-bottom: 1px solid #3fcc59;
+        background-color: #3fcc59;
+        box-shadow: 0 0.5em 0.5em -0.4em #3fcc59;
+        transform: translateY(-0.25em);
+    }
+}
+
+@media screen and (max-width: 560px) {
+    header h1 {
+        font-size: 22px;
+    }
 }
