@@ -138,11 +138,9 @@ const modalWindowBtn = createElem('button', 'modal-window__btn', 'play again');
 
 modalWindow.append(modalWindowTitle, modalWindowSecretWord, modalWindowBtn);
 
-// modal window end
+modalWindowBtn.disabled = true;
 
-questions.forEach((question) => {
-  console.log(`${question.hint} : ${question.answer.toUpperCase()}`);
-});
+// modal window end
 
 let incorrectTriesCount = 0;
 
@@ -161,6 +159,7 @@ function startGame() {
   }
   hintMessage.innerHTML = `<span>Hint:</span> ${question.hint}`;
   incorrectTries.innerHTML = `Incorrect Guesses:  <span>${incorrectTriesCount} / 6</span>`;
+  console.log(`${question.hint} : ${question.answer.toUpperCase()}`);
 }
 
 startGame();
@@ -221,6 +220,12 @@ function winnerOrLoser(value) {
   modalWindowSecretWord.innerHTML = `Correct answer was: <span>${currQuestion.answer.toUpperCase()}</span>`;
 
   value ? modalWindowTitle.textContent = `Congratulations! You are a winner!` : modalWindowTitle.textContent = `I'm sorry, but you lost.`;
+  window.removeEventListener('keydown', physicalKeyboard);
+  modalWindowBtn.disabled = false;
+  allKeys.forEach((item) => {
+    item.tabIndex = -1;
+  });
+  modalWindowBtn.focus();
 }
 
 function playAgain() {
@@ -246,14 +251,17 @@ function playAgain() {
     item.classList.remove('_active');
     item.classList.remove('_disabled');
     item.disabled = false;
+    item.tabIndex = 0;
   })
+
+  console.clear();
+
+  console.log(`${currQuestion.hint} : ${currQuestion.answer.toUpperCase()}`);
 
   shadow.classList.remove('_active');
   modalWindow.classList.remove('_active');
-  modalWindowBtn.removeEventListener('click', playAgain);
-  setTimeout(() => {
-    modalWindowBtn.addEventListener('click', playAgain);
-  }, 700)
+  window.addEventListener('keydown', physicalKeyboard);
+  modalWindowBtn.disabled = true;
 }
 
 function generateQuestionRecursion() {
@@ -275,6 +283,7 @@ function physicalKeyboard(event) {
   });
 
   if (indexKeyboardLetter !== undefined) {
+   if (!event.repeat) {
     const sessionStrNumber = sessionStorage.getItem('randomQuestion');
     const allLetters = document.querySelectorAll('.main__right-column__letter');
     const currQuestion = questions[sessionStrNumber];
@@ -313,8 +322,9 @@ function physicalKeyboard(event) {
         winnerOrLoser(winOrLose);
       }
     }
+   }
 
   }
 }
 
-window.addEventListener('keyup', physicalKeyboard);
+window.addEventListener('keydown', physicalKeyboard);
