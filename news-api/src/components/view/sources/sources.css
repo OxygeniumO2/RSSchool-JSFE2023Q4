@@ -22,6 +22,10 @@
     cursor: pointer;
 }
 
+.source__item._hidden {
+    display: none;
+}
+
 .source__item:hover,
 .source__item:focus {
     border-color: #3fcc59;

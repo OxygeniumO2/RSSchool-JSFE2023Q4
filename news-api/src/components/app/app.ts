@@ -19,6 +19,20 @@ class App implements IApp {
             sources.addEventListener('click', (e: Event) =>
                 this.controller.getNews(e, (data: IDrawNewsData) => this.view.drawNews(data))
             );
+            const searchInput = document.querySelector('.search__input') as HTMLInputElement;
+            searchInput?.addEventListener('input', () => {
+                const sourceItem = document.querySelectorAll('.source__item');
+                const sourcesItemNames = document.querySelectorAll('.source__item-name');
+                const inputText = searchInput.value.trim().toLowerCase();
+                sourceItem.forEach((item, index) => {
+                    const itemName = sourcesItemNames[index].textContent?.trim().toLowerCase();
+                    if (itemName && !itemName.includes(inputText)) {
+                        item.classList.add('_hidden');
+                    } else {
+                        item.classList.remove('_hidden');
+                    }
+                });
+            });
         }
         this.controller.getSources((data: IDrawSourceData) => this.view.drawSources(data));
     }
