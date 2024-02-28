@@ -34,10 +34,10 @@ export interface IDrawNewsData {
 
 export interface IApiResponseSources {
     status: string;
-    sources: IApiResponseSourcesArr[];
+    sources: NewsSource[];
 }
 
-interface IApiResponseSourcesArr {
+interface NewsSource {
     id: string;
     name: string;
     description: string;
