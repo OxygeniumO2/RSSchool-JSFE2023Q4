@@ -39,12 +39,7 @@ class Loader implements ILoader {
         return url.slice(0, -1);
     }
 
-    load(
-        method: string,
-        endpoint: string,
-        callback: (data: IApiResponseSources) => void,
-        options: ILoaderOptions = {}
-    ) {
+    load(method: string, endpoint: string, callback: (data: IApiResponseSources) => void, options: ILoaderOptions) {
         fetch(this.makeUrl(options, endpoint), { method })
             .then(this.errorHandler)
             .then((res) => res.json())
