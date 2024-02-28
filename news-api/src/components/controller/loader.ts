@@ -13,7 +13,7 @@ class Loader implements ILoader {
     }
 
     getResp({ endpoint, options = {} }: IGetRespParams, callback = consoleErrorNoGET) {
-        this.load('GET', endpoint, callback, options as Record<string, never>);
+        this.load('GET', endpoint, callback, options);
     }
 
     errorHandler(res: Response) {
