@@ -18,7 +18,7 @@ class Sources implements INewsAndSources {
             });
 
             const sources = document.querySelector('.sources');
-            if (sources) sources.append(fragment);
+            sources && sources.append(fragment);
         } else {
             throw new Error('sourceItemTemp is null');
         }
