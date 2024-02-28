@@ -18,6 +18,11 @@ export interface ILoader {
     ): void;
 }
 
+export interface IGetRespParams {
+    endpoint: string;
+    options: ILoaderOptions;
+}
+
 export interface IAppController extends ILoader {
     getSources(callBack?: (data: IDrawSourceData) => void): void;
     getNews(

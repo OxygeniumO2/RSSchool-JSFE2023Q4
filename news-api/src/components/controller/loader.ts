@@ -1,6 +1,7 @@
-import { ILoader, ILoaderOptions } from '../../ts_features/interfacesController';
+import { ILoader, ILoaderOptions, IGetRespParams } from '../../ts_features/interfacesController';
 import { IApiResponseSources } from '../../ts_features/interfaces';
 import { LoaderErrorHander } from '../../ts_features/enums';
+import { consoleErrorNoGET } from '../../ts_features/funcTypes';
 
 class Loader implements ILoader {
     baseLink: string;
@@ -11,12 +12,7 @@ class Loader implements ILoader {
         this.options = options;
     }
 
-    getResp(
-        { endpoint, options = {} }: { endpoint: string; options: ILoaderOptions },
-        callback = () => {
-            console.error('No callback for GET response');
-        }
-    ) {
+    getResp({ endpoint, options = {} }: IGetRespParams, callback = consoleErrorNoGET) {
         this.load('GET', endpoint, callback, options as Record<string, never>);
     }
 
