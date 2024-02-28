@@ -1,6 +1,6 @@
 import { ILoader, ILoaderOptions, IGetRespParams } from '../../ts_features/interfacesController';
 import { IApiResponseSources } from '../../ts_features/interfaces';
-import { LoaderErrorHander } from '../../ts_features/enums';
+import { LoaderErrorStatusCodes } from '../../ts_features/enums';
 import { consoleErrorNoGET } from '../../ts_features/funcTypes';
 
 class Loader implements ILoader {
@@ -21,7 +21,7 @@ class Loader implements ILoader {
             return res;
         }
 
-        if (res.status === LoaderErrorHander.Unauthorized || res.status === LoaderErrorHander.Forbidden) {
+        if (res.status === LoaderErrorStatusCodes.Unauthorized || res.status === LoaderErrorStatusCodes.Forbidden) {
             console.log(`Sorry, but there is ${res.status} error: ${res.statusText}`);
         }
 
