@@ -18,7 +18,7 @@ export class AppView implements IAppView {
     }
 
     drawNews(data: IDrawNewsData) {
-        const values = data?.articles ? data?.articles : [];
+        const values = data?.articles ?? [];
         this.news.draw(values);
     }
 
