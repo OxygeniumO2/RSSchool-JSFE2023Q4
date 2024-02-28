@@ -17,13 +17,15 @@ class Loader implements ILoader {
     }
 
     errorHandler(res: Response) {
-        if (!res.ok) {
-            if (res.status === LoaderErrorHander.Unauthorized || res.status === LoaderErrorHander.Forbidden)
-                console.log(`Sorry, but there is ${res.status} error: ${res.statusText}`);
-            throw Error(res.statusText);
+        if (res.ok) {
+            return res;
         }
 
-        return res;
+        if (res.status === LoaderErrorHander.Unauthorized || res.status === LoaderErrorHander.Forbidden) {
+            console.log(`Sorry, but there is ${res.status} error: ${res.statusText}`);
+        }
+
+        throw Error(res.statusText);
     }
 
     makeUrl(options: ILoaderOptions, endpoint: string): string {
