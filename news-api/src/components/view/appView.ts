@@ -1,10 +1,4 @@
-import {
-    IAppView,
-    IDrawNewsData,
-    IDrawSourceData,
-    INewsAndSources,
-    IApiResponseByCategory,
-} from '../../ts_features/interfaces';
+import { IAppView, IDrawNewsData, IDrawSourceData, INewsAndSources } from '../../ts_features/interfaces';
 import News from './news/news';
 import Sources from './sources/sources';
 
@@ -23,8 +17,8 @@ export class AppView implements IAppView {
     }
 
     drawSources(data: IDrawSourceData) {
-        const values = data?.sources ? data?.sources : [];
-        this.sources.draw(values as IApiResponseByCategory[]);
+        const values = data?.sources ?? [];
+        this.sources.draw(values);
     }
 }
 

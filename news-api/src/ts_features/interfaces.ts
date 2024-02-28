@@ -48,7 +48,7 @@ interface NewsSource {
 }
 
 export interface IDrawSourceData {
-    sources: IApiResponseSources;
+    sources: IApiResponseByCategory[];
 }
 export interface IAppView {
     news: INewsAndSources;
