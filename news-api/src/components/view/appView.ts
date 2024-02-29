@@ -12,12 +12,12 @@ export class AppView implements IAppView {
     }
 
     drawNews(data: IDrawNewsData) {
-        const values = data?.articles ?? [];
+        const values = data.articles ?? [];
         this.news.draw(values);
     }
 
     drawSources(data: IDrawSourceData) {
-        const values = data?.sources ?? [];
+        const values = data.sources ?? [];
         this.sources.draw(values);
     }
 }
