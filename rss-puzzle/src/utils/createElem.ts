@@ -5,6 +5,11 @@ interface CreateElemProps {
   src?: string;
   alt?: string;
   type?: string;
+  required?: boolean;
+  minLength?: number;
+  pattern?: string;
+  placeholder?: string;
+  title?: string;
 }
 
 type CreateElem = (props: CreateElemProps) => HTMLElement | HTMLInputElement;
@@ -16,6 +21,11 @@ export const createElem: CreateElem = ({
   src,
   alt,
   type,
+  required,
+  minLength,
+  pattern,
+  placeholder,
+  title,
 }: CreateElemProps): HTMLElement | HTMLInputElement => {
   const elem = document.createElement(tag);
 
@@ -37,6 +47,34 @@ export const createElem: CreateElem = ({
 
   if (type) {
     elem.setAttribute('type', type);
+  }
+
+  if (required) {
+    if (tag === 'input') {
+      (elem as HTMLInputElement).required = required;
+    }
+  }
+
+  if (minLength) {
+    if (tag === 'input') {
+      (elem as HTMLInputElement).minLength = minLength;
+    }
+  }
+
+  if (pattern) {
+    if (tag === 'input') {
+      (elem as HTMLInputElement).pattern = pattern;
+    }
+  }
+
+  if (placeholder) {
+    if (tag === 'input') {
+      (elem as HTMLInputElement).placeholder = placeholder;
+    }
+  }
+
+  if (title) {
+    elem.title = title;
   }
 
   return elem;
