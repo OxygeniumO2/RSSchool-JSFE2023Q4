@@ -1,0 +1,26 @@
+.login__screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #bbdddd;
+  display: flex;
+  justify-content: center;
+  padding-top: 200px;
+}
+
+.login__screen__form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.login__screen__form-container label span {
+  display: block;
+  width: fit-content;
+}
+
+.login__screen__form-btn {
+  width: 150px;
+}

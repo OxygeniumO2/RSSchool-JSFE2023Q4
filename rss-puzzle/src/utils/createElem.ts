@@ -4,11 +4,19 @@ interface CreateElemProps {
   textContent?: string;
   src?: string;
   alt?: string;
+  type?: string;
 }
 
-type CreateElem = (props: CreateElemProps) => HTMLElement;
+type CreateElem = (props: CreateElemProps) => HTMLElement | HTMLInputElement;
 
-export const createElem: CreateElem = ({ tag, classesCss, textContent, src, alt }: CreateElemProps): HTMLElement => {
+export const createElem: CreateElem = ({
+  tag,
+  classesCss,
+  textContent,
+  src,
+  alt,
+  type,
+}: CreateElemProps): HTMLElement | HTMLInputElement => {
   const elem = document.createElement(tag);
 
   if (classesCss) {
@@ -25,6 +33,10 @@ export const createElem: CreateElem = ({ tag, classesCss, textContent, src, alt 
 
   if (alt) {
     elem.setAttribute('alt', alt);
+  }
+
+  if (type) {
+    elem.setAttribute('type', type);
   }
 
   return elem;
