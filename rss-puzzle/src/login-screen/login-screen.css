@@ -21,6 +21,34 @@
   width: fit-content;
 }
 
+.login__screen__form-container label input {
+  border: 2px solid #ce8181;
+  border-radius: 5px;
+  outline-color: #376aa4;
+}
+
+.login__screen__form-container label input:valid {
+  border-color: green;
+  outline: green;
+}
+
+.login__screen__form-container label input:invalid:not(:placeholder-shown) {
+  border-color: red;
+  outline: red;
+}
+
+.login__screen__form-container label input::placeholder {
+  font-size: 1rem;
+}
+
 .login__screen__form-btn {
   width: 150px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+@media (any-hover: hover) {
+  .login__screen__form-btn:hover {
+    background-color: #d8c0ff;
+  }
 }
