@@ -13,11 +13,12 @@
 .login__screen__form-container {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 40px;
 }
 
 .login__screen__form-container label span {
   display: block;
+  margin-bottom: 5px;
   width: fit-content;
 }
 

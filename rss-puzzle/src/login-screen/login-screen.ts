@@ -7,8 +7,8 @@ const MINIMUM_FIRSTNAME_LENGTH: number = 3;
 const MINIMUM_LASTNAME_LENGTH: number = 4;
 const INPUT_REGEX: string = '[A-Z][a-z]*-?[a-z]*';
 const INPUT_PLACEHOLDER_DEFAULT: string = 'First letter must be uppercase';
-const INPUT_TITLE_FIRSTNAME_DEFAULT: string = 'First letter uppercase, English alphabet, at least 3 characters';
-const INPUT_TITLE_LASTNAME_DEFAULT: string = 'First letter uppercase, English alphabet, at least 4 characters';
+const INPUT_TITLE_FIRSTNAME_DEFAULT: string = `First letter uppercase, English alphabet, at least ${MINIMUM_FIRSTNAME_LENGTH} characters`;
+const INPUT_TITLE_LASTNAME_DEFAULT: string = `First letter uppercase, English alphabet, at least ${MINIMUM_LASTNAME_LENGTH} characters`;
 
 type ValidateUserInfo = (name: string, lastName: string) => void;
 
@@ -55,7 +55,7 @@ function createLoginScreen() {
   loginScreenFormContainer.append(labelFirstName, labelLastName, loginScreenBtn);
   container.append(loginScreen);
 
-  loginScreenFormContainer.addEventListener('submit', function (event) {
+  loginScreenFormContainer.addEventListener('submit', (event) => {
     event.preventDefault();
     validateUserInfo(firstNameInput.value, lastNameInput.value);
   });
