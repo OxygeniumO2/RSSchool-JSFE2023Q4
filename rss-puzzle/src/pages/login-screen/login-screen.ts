@@ -2,8 +2,8 @@ import './login-screen.css';
 import { createElem } from '../../utils/createElem';
 import { container } from '../../app-container/container';
 import { LOCALSTORAGE_KEY_LASTNAME, LOCALSTORAGE_KEY_NAME } from '../../utils/localStorageKeys';
+import generateStartScreen from '../start-screen/start-screen';
 
-// const VALIDATE_REGEX: RegExp = /^[A-Z][-a-zA-Z]+$/;
 const MINIMUM_FIRSTNAME_LENGTH: number = 3;
 const MINIMUM_LASTNAME_LENGTH: number = 4;
 const INPUT_REGEX: string = '[A-Z][a-zA-Z]*-?[a-zA-Z]*';
@@ -12,6 +12,11 @@ const INPUT_TITLE_FIRSTNAME_DEFAULT: string = `First letter uppercase, English a
 const INPUT_TITLE_LASTNAME_DEFAULT: string = `First letter uppercase, English alphabet, at least ${MINIMUM_LASTNAME_LENGTH} characters`;
 
 type SaveUserInfoInLocalStorage = (name: string, lastName: string) => void;
+
+const saveUserInfoInLocalStorage: SaveUserInfoInLocalStorage = (name, lastName) => {
+  localStorage.setItem(LOCALSTORAGE_KEY_NAME, name);
+  localStorage.setItem(LOCALSTORAGE_KEY_LASTNAME, lastName);
+};
 
 function createLoginScreen() {
   const loginScreen = createElem({ tag: 'div', classesCss: ['login__screen'] });
@@ -59,13 +64,11 @@ function createLoginScreen() {
   loginScreenFormContainer.addEventListener('submit', (event) => {
     event.preventDefault();
     saveUserInfoInLocalStorage(firstNameInput.value, lastNameInput.value);
+
+    generateStartScreen();
+
     loginScreen.classList.add('_hidden');
   });
 }
-
-const saveUserInfoInLocalStorage: SaveUserInfoInLocalStorage = (name, lastName) => {
-  localStorage.setItem(LOCALSTORAGE_KEY_NAME, name);
-  localStorage.setItem(LOCALSTORAGE_KEY_LASTNAME, lastName);
-};
 
 export default createLoginScreen;
