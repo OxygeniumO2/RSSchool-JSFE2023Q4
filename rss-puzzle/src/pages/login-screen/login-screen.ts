@@ -1,6 +1,7 @@
 import './login-screen.css';
-import { createElem } from '../utils/createElem';
-import { container } from '../app-container/container';
+import { createElem } from '../../utils/createElem';
+import { container } from '../../app-container/container';
+import { LOCALSTORAGE_KEY_LASTNAME, LOCALSTORAGE_KEY_NAME } from '../../utils/localStorageKeys';
 
 // const VALIDATE_REGEX: RegExp = /^[A-Z][-a-zA-Z]+$/;
 const MINIMUM_FIRSTNAME_LENGTH: number = 3;
@@ -9,8 +10,6 @@ const INPUT_REGEX: string = '[A-Z][a-zA-Z]*-?[a-zA-Z]*';
 const INPUT_PLACEHOLDER_DEFAULT: string = 'First letter must be uppercase';
 const INPUT_TITLE_FIRSTNAME_DEFAULT: string = `First letter uppercase, English alphabet, at least ${MINIMUM_FIRSTNAME_LENGTH} characters`;
 const INPUT_TITLE_LASTNAME_DEFAULT: string = `First letter uppercase, English alphabet, at least ${MINIMUM_LASTNAME_LENGTH} characters`;
-const LOCALSTORAGE_KEY_NAME: string = 'rss-puzzleNameOxy';
-const LOCALSTORAGE_KEY_LASTNAME: string = 'rss-puzzleLastNameOxy';
 
 type SaveUserInfoInLocalStorage = (name: string, lastName: string) => void;
 
@@ -60,6 +59,7 @@ function createLoginScreen() {
   loginScreenFormContainer.addEventListener('submit', (event) => {
     event.preventDefault();
     saveUserInfoInLocalStorage(firstNameInput.value, lastNameInput.value);
+    loginScreen.classList.add('_hidden');
   });
 }
 

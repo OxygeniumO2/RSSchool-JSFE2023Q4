@@ -1,0 +1,25 @@
+.start__screen {
+  padding-top: 200px;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('./start-page-img.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.start__screen__title {
+  letter-spacing: 10px;
+  word-spacing: 7px;
+  font-size: 3.8rem;
+}
+
+.start__screen__desc {
+  font-size: 2.5rem;
+}
