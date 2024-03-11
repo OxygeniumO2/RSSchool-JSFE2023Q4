@@ -2,9 +2,11 @@ import './start-screen.css';
 import { container } from '../../app-container/container';
 import { createElem } from '../../utils/createElem';
 import { LOCALSTORAGE_KEY_LASTNAME, LOCALSTORAGE_KEY_NAME } from '../../utils/localStorageKeys';
+import generateGameScreen from '../game-screen/game-screen';
 
-const START_SCREEN_TITLE = 'RSS PUZZLE';
-const START_SCREEN_DESC = 'You can learn English by clicking on words';
+const START_SCREEN_TITLE: string = 'RSS PUZZLE';
+const START_SCREEN_DESC: string = 'You can learn English by clicking on words';
+const START_SCREEN_BTN_TEXT: string = 'START';
 
 function generateStartScreen() {
   const startScreen = createElem({ tag: 'div', classesCss: ['start__screen'] });
@@ -26,7 +28,19 @@ function generateStartScreen() {
     textContent: userDataGreeting,
   });
 
-  startScreen.append(startScreenTitle, startScreenDesc, welcomeUserElem);
+  const startButton = createElem({
+    tag: 'button',
+    classesCss: ['btn', 'start__screen__btn'],
+    textContent: START_SCREEN_BTN_TEXT,
+  });
+
+  startScreen.append(startScreenTitle, startScreenDesc, welcomeUserElem, startButton);
+
+  startButton.addEventListener('click', () => {
+    startScreen.classList.add('_hidden');
+
+    generateGameScreen();
+  });
   container.append(startScreen);
 }
 

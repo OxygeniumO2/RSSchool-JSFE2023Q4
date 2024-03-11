@@ -1,7 +1,7 @@
 import './default_css/modern-normalize.css';
 import './default_css/default.css';
 import { addContainerToBody } from './app-container/container';
-import checkLSAndGenLogOrStartScreen from './utils/checkLSandGenLogScreen';
+import checkLSAndGenLogOrStartScreen from './utils/checkLSAndGenLogOrStartScreen';
 
 addContainerToBody();
 checkLSAndGenLogOrStartScreen();

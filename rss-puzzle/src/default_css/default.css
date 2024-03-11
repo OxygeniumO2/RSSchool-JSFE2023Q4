@@ -10,9 +10,17 @@ body {
 }
 
 .btn {
+  cursor: pointer;
   padding: 10px;
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.3s ease;
+}
+
+@media (any-hover: hover) {
+  .btn:hover {
+    background-color: #d8c0ff;
+  }
 }
