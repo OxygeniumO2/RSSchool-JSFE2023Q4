@@ -1,6 +1,7 @@
 import './start-screen.css';
 import { container } from '../../app-container/container';
 import { createElem } from '../../utils/createElem';
+import { LOCALSTORAGE_KEY_LASTNAME, LOCALSTORAGE_KEY_NAME } from '../../utils/localStorageKeys';
 
 const START_SCREEN_TITLE = 'RSS PUZZLE';
 const START_SCREEN_DESC = 'You can learn English by clicking on words';
@@ -13,7 +14,19 @@ function generateStartScreen() {
     textContent: START_SCREEN_TITLE,
   });
   const startScreenDesc = createElem({ tag: 'p', classesCss: ['start__screen__desc'], textContent: START_SCREEN_DESC });
-  startScreen.append(startScreenTitle, startScreenDesc);
+
+  const userNameFromLS = localStorage.getItem(LOCALSTORAGE_KEY_NAME);
+  const userLastNameFromLS = localStorage.getItem(LOCALSTORAGE_KEY_LASTNAME);
+
+  const userDataGreeting = `Welcome, ${userNameFromLS} ${userLastNameFromLS}`;
+
+  const welcomeUserElem = createElem({
+    tag: 'p',
+    classesCss: ['start__screen__userinfo'],
+    textContent: userDataGreeting,
+  });
+
+  startScreen.append(startScreenTitle, startScreenDesc, welcomeUserElem);
   container.append(startScreen);
 }
 
