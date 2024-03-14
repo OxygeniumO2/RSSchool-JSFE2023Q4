@@ -75,7 +75,7 @@ function moveWordToRow(word: HTMLElement, currRow: HTMLElement) {
     const item = currRowItems[i];
     if (!item.textContent) {
       item.textContent = wordText;
-      item.style.width = item.scrollWidth + 'px';
+      item.style.width = Math.floor(item.scrollWidth / 2.5) + 'px';
       item.addEventListener('transitionend', function transitionEndHandler() {
         item.removeAttribute('style');
         item.classList.add('_autoWidth');
