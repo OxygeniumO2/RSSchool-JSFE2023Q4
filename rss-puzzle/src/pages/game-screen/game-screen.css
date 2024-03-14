@@ -1,0 +1,64 @@
+.gamefield {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 50px;
+}
+
+.gamefield__row {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  margin-bottom: 5px;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+.gamefield__row__item {
+  flex-grow: 1;
+  border: 1px solid black;
+  border-radius: 5px;
+  margin-right: 5px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  width: 0;
+  transition: all 0.2s ease;
+}
+
+.gamefield__row__item._autoWidth {
+  transition: all 0.2s ease;
+  width: auto !important;
+}
+
+.gamefield__row__item:last-child {
+  margin-right: 0;
+}
+
+.gamefield__words-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.gamefield__words__item {
+  padding: 10px;
+  border: 1px solid black;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.gamefield__words__item._zeroWidth {
+  opacity: 0;
+  transform: scale(0.5);
+  padding: 0;
+  border-width: 0;
+}
+
+@media (any-hover: hover) {
+  .gamefield__words__item:hover {
+    background-color: #d8c0ff;
+  }
+}
