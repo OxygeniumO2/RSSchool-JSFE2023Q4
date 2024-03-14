@@ -9,8 +9,7 @@
   height: 50px;
   display: flex;
   margin-bottom: 5px;
-  border: 1px solid black;
-  border-radius: 5px;
+  cursor: pointer;
 }
 
 .gamefield__row__item {
@@ -38,8 +37,9 @@
 
 .gamefield__words-container {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  gap: 10px;
+  gap: 20px;
 }
 
 .gamefield__words__item {
