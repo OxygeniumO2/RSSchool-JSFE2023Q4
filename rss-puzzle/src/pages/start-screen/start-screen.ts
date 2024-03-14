@@ -5,6 +5,7 @@ import { LOCALSTORAGE_KEY_LASTNAME, LOCALSTORAGE_KEY_NAME } from '../../utils/lo
 import generateGame from '../game-screen/game-screen';
 import level1 from '../../data/words-levels/wordCollectionLevel1';
 import gameData from '../../interfaces/game-data-interface';
+import createMenuContainer from '../game-screen/game-screen-menus/menu-container/menu-container';
 
 const START_SCREEN_TITLE: string = 'RSS PUZZLE';
 const START_SCREEN_DESC: string = 'You can learn English by clicking on words';
@@ -42,6 +43,7 @@ function generateStartScreen() {
     startScreen.classList.add('_hidden');
 
     const currGamelevel: gameData = level1.rounds[0];
+    createMenuContainer();
     generateGame(currGamelevel);
   });
   container.append(startScreen);
