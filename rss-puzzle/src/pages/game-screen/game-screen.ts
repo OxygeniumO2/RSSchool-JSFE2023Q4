@@ -74,6 +74,7 @@ function moveWordToRow(word: HTMLElement, currRow: HTMLElement) {
   for (let i = 0; i < currRowItems.length; i += 1) {
     const item = currRowItems[i];
     if (!item.textContent) {
+      word.style.pointerEvents = 'none';
       item.textContent = wordText;
       item.style.width = Math.floor(item.scrollWidth / 2.5) + 'px';
       item.addEventListener('transitionend', function transitionEndHandler() {
@@ -83,9 +84,9 @@ function moveWordToRow(word: HTMLElement, currRow: HTMLElement) {
       });
       word.classList.add('_zeroWidth');
       word.addEventListener('transitionend', function transitionEndHandler() {
-        word.classList.add('_zeroWidth');
         word.textContent = '';
         word.removeEventListener('transitionend', transitionEndHandler);
+        word.removeAttribute('style');
       });
       break;
     }
