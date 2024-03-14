@@ -54,3 +54,9 @@
   cursor: pointer;
   transition: all 0.3s ease;
 }
+
+@media screen and (max-width: 1024px) {
+  .login__screen__form-container label input::placeholder {
+    font-size: 0.85rem;
+  }
+}
