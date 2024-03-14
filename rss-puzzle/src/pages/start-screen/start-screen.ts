@@ -2,7 +2,9 @@ import './start-screen.css';
 import { container } from '../../app-container/container';
 import { createElem } from '../../utils/createElem';
 import { LOCALSTORAGE_KEY_LASTNAME, LOCALSTORAGE_KEY_NAME } from '../../utils/localStorageKeys';
-import generateGameScreen from '../game-screen/game-screen';
+import generateGame from '../game-screen/game-screen';
+import level1 from '../../data/words-levels/wordCollectionLevel1';
+import gameData from '../../interfaces/game-data-interface';
 
 const START_SCREEN_TITLE: string = 'RSS PUZZLE';
 const START_SCREEN_DESC: string = 'You can learn English by clicking on words';
@@ -39,7 +41,8 @@ function generateStartScreen() {
   startButton.addEventListener('click', () => {
     startScreen.classList.add('_hidden');
 
-    generateGameScreen();
+    const currGamelevel: gameData = level1.rounds[0];
+    generateGame(currGamelevel);
   });
   container.append(startScreen);
 }
