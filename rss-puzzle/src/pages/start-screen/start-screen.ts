@@ -6,6 +6,7 @@ import generateGame from '../game-screen/game-screen';
 import level1 from '../../data/words-levels/wordCollectionLevel1';
 import gameData from '../../interfaces/game-data-interface';
 import createMenuContainer from '../game-screen/game-screen-menus/menu-container/menu-container';
+import createGameBtnsContainer from '../game-screen/game-screen-menus/game-btns-container/game-btns-container';
 
 const START_SCREEN_TITLE: string = 'RSS PUZZLE';
 const START_SCREEN_DESC: string = 'You can learn English by clicking on words';
@@ -45,6 +46,7 @@ function generateStartScreen() {
     const currGamelevel: gameData = level1.rounds[0];
     createMenuContainer();
     generateGame(currGamelevel);
+    createGameBtnsContainer();
   });
   container.append(startScreen);
 }

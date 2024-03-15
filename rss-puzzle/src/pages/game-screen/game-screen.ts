@@ -2,6 +2,7 @@ import './game-screen.css';
 import { createElem } from '../../utils/createElem';
 import { container } from '../../app-container/container';
 import gameData from '../../interfaces/game-data-interface';
+import { fromInnactiveToActiveBtn } from './game-screen-menus/game-btns-container/game-btns-container';
 // import { words } from '../../interfaces/game-data-interface';
 
 function generateGame(round: gameData): void {
@@ -17,6 +18,7 @@ function generateGame(round: gameData): void {
     if (currWord) {
       if (currWord.parentElement === gamefieldItemsContainer) {
         moveWordToRow(currWord, currRow);
+        isCurrRowRight(currRow, round);
       }
     }
   });
@@ -106,6 +108,16 @@ function moveWordFromRow(currRow: HTMLElement, words: HTMLElement[]) {
     currRow.textContent = '';
     console.log(currRow.offsetWidth);
     currRow.style.width = '30px';
+  }
+}
+
+function isCurrRowRight(row: HTMLElement, round: gameData) {
+  const rowItems: HTMLElement[] = Array.from(row.children) as HTMLElement[];
+  const rowItemsContent: string = rowItems.map((item) => item.textContent).join('');
+  const correctSentence: string = round.words[0].textExample.split(' ').join('');
+  console.log(correctSentence);
+  if (rowItemsContent === correctSentence) {
+    fromInnactiveToActiveBtn();
   }
 }
 
