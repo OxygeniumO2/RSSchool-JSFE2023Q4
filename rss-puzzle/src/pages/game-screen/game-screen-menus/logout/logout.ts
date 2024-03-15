@@ -2,6 +2,7 @@ import './logout.css';
 import { createElem } from '../../../../utils/createElem';
 import { container } from '../../../../app-container/container';
 import createLoginScreen from '../../../login-screen/login-screen';
+import { GAMEFIELD, GAMEFIELD_WORDS_CONTAINER } from '../../game-screen';
 
 const LOGOUT_BTN_TEXT: string = 'Logout';
 
@@ -13,6 +14,8 @@ function generateLogout(): HTMLElement {
 
 function logout() {
   localStorage.clear();
+  GAMEFIELD.innerHTML = '';
+  GAMEFIELD_WORDS_CONTAINER.innerHTML = '';
   container.innerHTML = '';
   document.body.style.opacity = '0';
   setTimeout(() => {

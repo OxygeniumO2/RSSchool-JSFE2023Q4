@@ -1,7 +1,11 @@
 import './start-screen.css';
 import { container } from '../../app-container/container';
 import { createElem } from '../../utils/createElem';
-import { LOCALSTORAGE_KEY_LASTNAME, LOCALSTORAGE_KEY_NAME } from '../../utils/localStorageKeys';
+import {
+  LOCALSTORAGE_KEY_LASTNAME,
+  LOCALSTORAGE_KEY_NAME,
+  LOCALSTORAGE_KEY_ROUND_NUMBER,
+} from '../../utils/localStorageKeys';
 import generateGame from '../game-screen/game-screen';
 import level1 from '../../data/words-levels/wordCollectionLevel1';
 import gameData from '../../interfaces/game-data-interface';
@@ -11,6 +15,7 @@ import createGameBtnsContainer from '../game-screen/game-screen-menus/game-btns-
 const START_SCREEN_TITLE: string = 'RSS PUZZLE';
 const START_SCREEN_DESC: string = 'You can learn English by clicking on words';
 const START_SCREEN_BTN_TEXT: string = 'START';
+const START_ROUND_NUMBER_DEFAULT_STRING: string = '0';
 
 function generateStartScreen() {
   const startScreen = createElem({ tag: 'div', classesCss: ['start__screen'] });
@@ -42,8 +47,8 @@ function generateStartScreen() {
 
   startButton.addEventListener('click', () => {
     startScreen.classList.add('_hidden');
-
     const currGamelevel: gameData = level1.rounds[0];
+    localStorage.setItem(LOCALSTORAGE_KEY_ROUND_NUMBER, START_ROUND_NUMBER_DEFAULT_STRING);
     createMenuContainer();
     generateGame(currGamelevel);
     createGameBtnsContainer();

@@ -3,20 +3,31 @@ import { createElem } from '../../utils/createElem';
 import { container } from '../../app-container/container';
 import gameData from '../../interfaces/game-data-interface';
 import { fromInnactiveToActiveBtn } from './game-screen-menus/game-btns-container/game-btns-container';
+import { LOCALSTORAGE_KEY_ROUND } from '../../utils/localStorageKeys';
 // import { words } from '../../interfaces/game-data-interface';
 
+export const START_GAME_ZERO = 0;
+export let currentRowNumber = START_GAME_ZERO;
+export const GAMEFIELD = createElem({ tag: 'div', classesCss: ['gamefield'] });
+export const GAMEFIELD_WORDS_CONTAINER = createElem({ tag: 'div', classesCss: ['gamefield__words-container'] });
+
 function generateGame(round: gameData): void {
-  const gamefield = generateGamefieldRows(round);
-  const gamefieldItemsContainer = generateGamefieldWords(round);
+  GAMEFIELD.append(generateGamefieldRow(round, START_GAME_ZERO));
+  const gamefieldWords = generateGamefieldWords(round, START_GAME_ZERO);
+  GAMEFIELD_WORDS_CONTAINER.append(gamefieldWords);
 
-  const currRow = gamefield.children[0] as HTMLElement;
+  localStorage.setItem(LOCALSTORAGE_KEY_ROUND, JSON.stringify(round));
 
-  container.append(gamefield, gamefieldItemsContainer);
+  const currRow = GAMEFIELD.children[START_GAME_ZERO] as HTMLElement;
+  console.log(currRow);
 
-  gamefieldItemsContainer.addEventListener('click', (event) => {
+  container.append(GAMEFIELD, GAMEFIELD_WORDS_CONTAINER);
+
+  GAMEFIELD_WORDS_CONTAINER.addEventListener('click', (event) => {
     const currWord = event.target as HTMLElement;
     if (currWord) {
-      if (currWord.parentElement === gamefieldItemsContainer) {
+      if (currWord.parentElement === GAMEFIELD_WORDS_CONTAINER) {
+        const currRow = GAMEFIELD.children[currentRowNumber] as HTMLElement;
         moveWordToRow(currWord, currRow);
         isCurrRowRight(currRow, round);
       }
@@ -24,42 +35,46 @@ function generateGame(round: gameData): void {
   });
 
   currRow.addEventListener('click', (event) => {
-    const currRow = event.target as HTMLElement;
-    if (currRow) {
-      if (currRow.classList.contains('gamefield__row__item')) {
-        const words = Array.from(gamefieldItemsContainer.children) as HTMLElement[];
-        moveWordFromRow(currRow, words);
+    const currRowItem = event.target as HTMLElement;
+    if (currRowItem) {
+      if (currRowItem.classList.contains('gamefield__row__item')) {
+        const words = Array.from(GAMEFIELD_WORDS_CONTAINER.children) as HTMLElement[];
+        moveWordFromRow(currRowItem, words);
       }
     }
   });
 }
 
-function generateGamefieldRows(round: gameData): HTMLDivElement {
-  const gamefield = createElem({ tag: 'div', classesCss: ['gamefield'] });
-
-  const TOTAL_WORDS_LENGTH: number = round.words.length;
-
-  for (let i = 0; i < TOTAL_WORDS_LENGTH; i += 1) {
-    const gamefieldRow = createElem({ tag: 'div', classesCss: ['gamefield__row'] });
-    const currRowWords = round.words[i].textExample.split(' ');
-    for (let j = 0; j < currRowWords.length; j += 1) {
-      const gamefieldRowItem = createElem({ tag: 'div', classesCss: ['gamefield__row__item'] });
-      gamefieldRow.append(gamefieldRowItem);
-    }
-    gamefield.append(gamefieldRow);
+export function generateGamefieldRow(round: gameData, rowNumber: number): HTMLDivElement {
+  const gamefieldRow = createElem({ tag: 'div', classesCss: ['gamefield__row'] });
+  const currRowWords = round.words[rowNumber].textExample.split(' ');
+  for (let i = 0; i < currRowWords.length; i += 1) {
+    const gamefieldRowItem = createElem({ tag: 'div', classesCss: ['gamefield__row__item'] });
+    gamefieldRow.append(gamefieldRowItem);
   }
-  return gamefield as HTMLDivElement;
+  return gamefieldRow as HTMLDivElement;
 }
 
-function generateGamefieldWords(round: gameData): HTMLDivElement {
-  const gamefieldItemsContainer = createElem({ tag: 'div', classesCss: ['gamefield__words-container'] });
-  const gamefieldItems = round.words[0].textExample.split(' ');
+export function generateGamefieldWords(round: gameData, rowNumber: number): DocumentFragment {
+  // const gamefieldItemsContainer = createElem({ tag: 'div', classesCss: ['gamefield__words-container'] });
+  // const gamefieldItems = round.words[rowNumber].textExample.split(' ');
+  // const shuffleFieldItems = shuffleArray(gamefieldItems);
+  // shuffleFieldItems.forEach((item) => {
+  //   const gamefieldItem = createElem({ tag: 'div', classesCss: ['gamefield__words__item'], textContent: item });
+  //   gamefieldItemsContainer.append(gamefieldItem);
+  // });
+  // return gamefieldItemsContainer as HTMLDivElement;
+  const fragment = document.createDocumentFragment();
+
+  const gamefieldItems = round.words[rowNumber].textExample.split(' ');
   const shuffleFieldItems = shuffleArray(gamefieldItems);
+
   shuffleFieldItems.forEach((item) => {
     const gamefieldItem = createElem({ tag: 'div', classesCss: ['gamefield__words__item'], textContent: item });
-    gamefieldItemsContainer.append(gamefieldItem);
+    fragment.appendChild(gamefieldItem);
   });
-  return gamefieldItemsContainer as HTMLDivElement;
+
+  return fragment;
 }
 
 function shuffleArray(arr: string[]) {
@@ -72,9 +87,10 @@ function shuffleArray(arr: string[]) {
 
 function moveWordToRow(word: HTMLElement, currRow: HTMLElement) {
   const wordText: string = word.textContent ?? '';
-  const currRowItems: HTMLElement[] = Array.from(currRow.children) as HTMLElement[];
-  for (let i = 0; i < currRowItems.length; i += 1) {
-    const item = currRowItems[i];
+  // const allItemsFromRows = Array.from(document.querySelectorAll('.gamefield__row__item')) as HTMLElement[];
+  const allItemsFromRow = Array.from(currRow.children) as HTMLElement[];
+  for (let i = 0; i < allItemsFromRow.length; i += 1) {
+    const item = allItemsFromRow[i];
     if (!item.textContent) {
       word.style.pointerEvents = 'none';
       item.textContent = wordText;
@@ -95,30 +111,32 @@ function moveWordToRow(word: HTMLElement, currRow: HTMLElement) {
   }
 }
 
-function moveWordFromRow(currRow: HTMLElement, words: HTMLElement[]) {
-  if (currRow.textContent) {
+export function moveWordFromRow(currRowItem: HTMLElement, words: HTMLElement[]) {
+  if (currRowItem.textContent) {
     for (let i = 0; i < words.length; i += 1) {
       if (!words[i].textContent) {
-        words[i].textContent = currRow.textContent;
+        words[i].textContent = currRowItem.textContent;
         words[i].classList.remove('_zeroWidth');
         break;
       }
     }
-    currRow.classList.remove('_autoWidth');
-    currRow.textContent = '';
-    console.log(currRow.offsetWidth);
-    currRow.style.width = '30px';
+    currRowItem.classList.remove('_autoWidth');
+    currRowItem.textContent = '';
+    currRowItem.style.width = '30px';
   }
 }
 
 function isCurrRowRight(row: HTMLElement, round: gameData) {
   const rowItems: HTMLElement[] = Array.from(row.children) as HTMLElement[];
   const rowItemsContent: string = rowItems.map((item) => item.textContent).join('');
-  const correctSentence: string = round.words[0].textExample.split(' ').join('');
-  console.log(correctSentence);
+  const correctSentence: string = round.words[currentRowNumber].textExample.split(' ').join('');
   if (rowItemsContent === correctSentence) {
     fromInnactiveToActiveBtn();
   }
+}
+
+export function setCurrentRowNumber(value: number) {
+  currentRowNumber = value;
 }
 
 export default generateGame;
