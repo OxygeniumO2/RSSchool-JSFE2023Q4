@@ -7,6 +7,8 @@ import {
   handleCurrRowClick,
   prevHandlerWithRound,
   GAMEFIELD,
+  setCurrRow,
+  setPrevHandlerWithRound,
 } from '../../game-screen';
 import { container } from '../../../../app-container/container';
 import { MENU } from '../menu-container/menu-container';
@@ -27,6 +29,8 @@ function logout() {
   document.body.style.opacity = '0';
   currRow.removeEventListener('click', handleCurrRowClick);
   GAMEFIELD_WORDS_CONTAINER.removeEventListener('click', prevHandlerWithRound as EventListener);
+  setCurrRow(null);
+  setPrevHandlerWithRound(null);
   setTimeout(() => {
     container.innerHTML = '';
     createLoginScreen();
