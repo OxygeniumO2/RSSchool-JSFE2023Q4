@@ -3,6 +3,7 @@ const LOCALSTORAGE_KEY_LASTNAME: string = 'rss-puzzleLastNameOxy';
 const LOCALSTORAGE_KEY_ROUND_NUMBER: string = 'rss-puzzleRoundNumberOxy';
 const LOCALSTORAGE_KEY_ROUND: string = 'rss-puzzleRoundOxy';
 const LOCALSTORAGE_KEY_LEVEL_ROUND_NUMBER: string = 'rss-puzzleLevelRoundOxy';
+const LOCALSTORAGE_KEY_RANDOM_WORD_GEN: string = 'rss-puzzleRandomWordGen';
 
 export {
   LOCALSTORAGE_KEY_NAME,
@@ -10,4 +11,5 @@ export {
   LOCALSTORAGE_KEY_ROUND_NUMBER,
   LOCALSTORAGE_KEY_ROUND,
   LOCALSTORAGE_KEY_LEVEL_ROUND_NUMBER,
+  LOCALSTORAGE_KEY_RANDOM_WORD_GEN,
 };

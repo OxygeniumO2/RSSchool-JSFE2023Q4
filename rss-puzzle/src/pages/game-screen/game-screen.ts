@@ -7,11 +7,17 @@ import {
   fromActiveToInnactiveBtn,
   fromInnactiveToActiveBtn,
 } from './game-screen-menus/game-btns-container/game-btns-container';
-import { LOCALSTORAGE_KEY_LEVEL_ROUND_NUMBER, LOCALSTORAGE_KEY_ROUND } from '../../utils/localStorageKeys';
+import {
+  LOCALSTORAGE_KEY_LEVEL_ROUND_NUMBER,
+  LOCALSTORAGE_KEY_RANDOM_WORD_GEN,
+  LOCALSTORAGE_KEY_ROUND,
+} from '../../utils/localStorageKeys';
 import { MENU } from './game-screen-menus/menu-container/menu-container';
 
-export const START_GAME_ZERO = 0;
-let currentRowNumber = START_GAME_ZERO;
+const MULTIPLE_LENGTH_HEIGHT_GAMEFIELD: number = 10;
+const STATIC_LENGTH: number = 45;
+export const START_GAME_ZERO: number = 0;
+let currentRowNumber: number = START_GAME_ZERO;
 export const GAMEFIELD = createElem({ tag: 'div', classesCss: ['gamefield'] });
 export const GAMEFIELD_WORDS_CONTAINER = createElem({ tag: 'div', classesCss: ['gamefield__words-container'] });
 export let currRow: HTMLElement;
@@ -21,6 +27,7 @@ const continueBtn = CONTINUE_BTN;
 
 function generateGame(level: Level, roundNumber: number): void {
   const round: GameData = level.rounds[roundNumber];
+  GAMEFIELD.style.minHeight = `${level.rounds.length * MULTIPLE_LENGTH_HEIGHT_GAMEFIELD + STATIC_LENGTH}px`;
   const handlerWithRound = gamefieldWordsContainerClickHandlerWithRound(round);
   localStorage.setItem(LOCALSTORAGE_KEY_LEVEL_ROUND_NUMBER, roundNumber.toString());
 
@@ -50,6 +57,9 @@ export function generateGamefieldRow(round: GameData, rowNumber: number): HTMLDi
   for (let i = 0; i < currRowWords.length; i += 1) {
     const gamefieldRowItem = createElem({ tag: 'div', classesCss: ['gamefield__row__item'] });
     gamefieldRow.append(gamefieldRowItem);
+    setTimeout(() => {
+      gamefieldRowItem.classList.add('_appearing'); // Добавляем класс для запуска анимации
+    }, i * 100);
   }
   return gamefieldRow as HTMLDivElement;
 }
@@ -58,17 +68,42 @@ export function generateGamefieldWords(round: GameData, rowNumber: number): Docu
   const fragment = document.createDocumentFragment();
 
   const gamefieldItems = round.words[rowNumber].textExample.split(' ');
-  const shuffleFieldItems = shuffleArray(gamefieldItems);
 
-  shuffleFieldItems.forEach((item) => {
-    const gamefieldItem = createElem({ tag: 'div', classesCss: ['gamefield__words__item'], textContent: item });
-    fragment.appendChild(gamefieldItem);
-  });
+  const elementsArr: HTMLElement[] = [];
+
+  for (let i = 0; i < gamefieldItems.length; i += 1) {
+    const gamefieldItem = createElem({
+      tag: 'div',
+      classesCss: ['gamefield__words__item'],
+      textContent: gamefieldItems[i],
+    });
+    if (i === 0) {
+      gamefieldItem.classList.add('_noPseudoAfter');
+    }
+    if (i === gamefieldItems.length - 1) {
+      gamefieldItem.classList.add('_noPseudoBefore');
+    }
+    elementsArr.push(gamefieldItem);
+  }
+
+  const shuffledElements: HTMLElement[] = shuffleArray(elementsArr) as HTMLElement[];
+  const strFromWords = shuffledElements.map((item) => item.textContent).join('');
+  const strFromLS = localStorage.getItem(LOCALSTORAGE_KEY_RANDOM_WORD_GEN);
+
+  if (strFromLS === strFromWords) {
+    const shuffledElements: HTMLElement[] = shuffleArray(elementsArr) as HTMLElement[];
+    const strFromWords = shuffledElements.map((item) => item.textContent).join('');
+    localStorage.setItem(LOCALSTORAGE_KEY_RANDOM_WORD_GEN, strFromWords);
+  } else {
+    localStorage.setItem(LOCALSTORAGE_KEY_RANDOM_WORD_GEN, strFromWords);
+  }
+
+  shuffledElements.forEach((item) => fragment.append(item));
 
   return fragment;
 }
 
-function shuffleArray(arr: string[]) {
+function shuffleArray(arr: string[] | HTMLElement[]) {
   for (let i = arr.length - 1; i > 0; i -= 1) {
     const j = Math.floor(Math.random() * (i + 1));
     [arr[i], arr[j]] = [arr[j], arr[i]];
