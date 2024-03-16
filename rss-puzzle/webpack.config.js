@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
 const EslingPlugin = require('eslint-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   entry: './src/index.ts',
   output: {
@@ -26,7 +27,11 @@ module.exports = {
     ],
   },
   plugins: [
-    new EslingPlugin({ extensions: 'ts' })
+    new EslingPlugin({ extensions: 'ts' }),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, './src/index.html'),
+      filename: 'index.html',
+  }),
   ],
   devServer: {
     static: path.join(__dirname, 'src'),
