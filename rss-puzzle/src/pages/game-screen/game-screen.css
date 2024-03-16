@@ -1,7 +1,7 @@
 .gamefield {
   display: flex;
   flex-direction: column;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
   padding: 20px;
   border: 2px solid black;
   transition: all 0.3s ease;
@@ -10,7 +10,7 @@
 
 .gamefield__row {
   width: 100%;
-  height: 45px;
+  height: 40px;
   display: flex;
   margin-bottom: 5px;
   cursor: pointer;
@@ -18,17 +18,23 @@
 
 .gamefield__row__item {
   flex-grow: 1;
-  border: 2px solid black;
-  border-radius: 5px;
+  border-radius: 3px;
   margin-right: 5px;
   display: flex;
   text-align: center;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
   width: 0;
-  transition: all 0.2s ease;
+  position: relative;
+  padding-left: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
   background-color: #cab395;
+  opacity: 0;
+}
+
+.gamefield__row__item._appearing {
+  opacity: 1;
 }
 
 .gamefield__row__item._autoWidth {
@@ -38,6 +44,58 @@
 
 .gamefield__row__item:last-child {
   margin-right: 0;
+}
+
+.gamefield__row__item::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: -10px;
+  width: 20px;
+  height: 20px;
+  background-color: #cab395;
+  border-radius: 50%;
+  z-index: 2;
+  opacity: 0;
+  transition:
+    opacity 0.4s ease-in-out,
+    background-color 0.3s ease,
+    z-index 0s;
+}
+
+.gamefield__row__item::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -10px;
+  width: 20px;
+  height: 20px;
+  background-color: #bac4cd;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition:
+    opacity 0.4s ease-in-out,
+    background-color 0.3s ease,
+    z-index 0s;
+}
+
+.gamefield__row__item._appearing {
+  opacity: 1;
+}
+
+.gamefield__row__item._appearing::before,
+.gamefield__row__item._appearing::after {
+  opacity: 1;
+}
+
+.gamefield__row__item:last-child::before {
+  display: none;
+}
+
+.gamefield__row__item:first-child::after {
+  display: none;
 }
 
 .gamefield__words-container {
@@ -52,12 +110,40 @@
 }
 
 .gamefield__words__item {
-  padding: 8px 18px;
-  border: 2px solid black;
+  position: relative;
+  padding: 10px 35px 10px 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
   transition: all 0.3s ease;
-  overflow: hidden;
   background-color: #cab395;
+}
+
+.gamefield__words__item::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: -10px;
+  width: 20px;
+  height: 20px;
+  background-color: #cab395;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.gamefield__words__item::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -10px;
+  width: 20px;
+  height: 20px;
+  background-color: #9ac6d6;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  transition: all 0.3s ease;
 }
 
 .gamefield__words__item._zeroWidth {
@@ -72,15 +158,32 @@
 }
 
 .word_correct {
-  border-color: green;
+  color: #008000;
 }
 
 .word_incorrect {
-  border-color: red;
+  color: #da1414;
+}
+
+.gamefield__words__item._noPseudoBefore::before {
+  display: none;
+}
+
+.gamefield__words__item._noPseudoAfter::after {
+  display: none;
 }
 
 @media (any-hover: hover) {
   .gamefield__words__item:hover {
+    background-color: #d8c0ff;
+  }
+  .gamefield__words__item:hover::before {
+    background-color: #d8c0ff;
+  }
+  .gamefield__row__item:hover {
+    background-color: #d8c0ff;
+  }
+  .gamefield__row__item:hover::before {
     background-color: #d8c0ff;
   }
 }
