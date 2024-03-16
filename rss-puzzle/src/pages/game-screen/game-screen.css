@@ -2,11 +2,14 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 50px;
+  padding: 10px;
+  border: 1px solid black;
+  transition: all 0.3s ease;
 }
 
 .gamefield__row {
   width: 100%;
-  height: 50px;
+  height: 45px;
   display: flex;
   margin-bottom: 5px;
   cursor: pointer;
@@ -40,10 +43,13 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
+  padding: 10px;
+  border: 1px solid black;
+  margin-bottom: 20px;
 }
 
 .gamefield__words__item {
-  padding: 10px;
+  padding: 6px 15px;
   border: 1px solid black;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -55,6 +61,10 @@
   transform: scale(0.5);
   padding: 0;
   border-width: 0;
+}
+
+.completed-row {
+  pointer-events: none;
 }
 
 @media (any-hover: hover) {

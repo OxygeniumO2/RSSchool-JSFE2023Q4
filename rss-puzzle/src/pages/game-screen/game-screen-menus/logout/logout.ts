@@ -1,7 +1,15 @@
 import './logout.css';
 import { createElem } from '../../../../utils/createElem';
-import { container } from '../../../../app-container/container';
 import createLoginScreen from '../../../login-screen/login-screen';
+import {
+  GAMEFIELD_WORDS_CONTAINER,
+  currRow,
+  handleCurrRowClick,
+  prevHandlerWithRound,
+  GAMEFIELD,
+} from '../../game-screen';
+import { container } from '../../../../app-container/container';
+import { MENU } from '../menu-container/menu-container';
 
 const LOGOUT_BTN_TEXT: string = 'Logout';
 
@@ -13,9 +21,14 @@ function generateLogout(): HTMLElement {
 
 function logout() {
   localStorage.clear();
-  container.innerHTML = '';
+  GAMEFIELD.innerHTML = '';
+  MENU.innerHTML = '';
+  GAMEFIELD_WORDS_CONTAINER.innerHTML = '';
   document.body.style.opacity = '0';
+  currRow.removeEventListener('click', handleCurrRowClick);
+  GAMEFIELD_WORDS_CONTAINER.removeEventListener('click', prevHandlerWithRound as EventListener);
   setTimeout(() => {
+    container.innerHTML = '';
     createLoginScreen();
     document.body.style.opacity = '1';
   }, 400);

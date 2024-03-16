@@ -1,0 +1,9 @@
+.continue__btn_default {
+  border-color: red;
+  pointer-events: none;
+}
+
+.continue__btn_active {
+  border-color: green;
+  pointer-events: all;
+}
