@@ -1,7 +1,12 @@
 import './game-screen.css';
 import { createElem } from '../../utils/createElem';
 import GameData, { Level } from '../../interfaces/game-data-interface';
-import { fromInnactiveToActiveBtn } from './game-screen-menus/game-btns-container/game-btns-container';
+import {
+  CHECK_BTN,
+  CONTINUE_BTN,
+  fromActiveToInnactiveBtn,
+  fromInnactiveToActiveBtn,
+} from './game-screen-menus/game-btns-container/game-btns-container';
 import { LOCALSTORAGE_KEY_LEVEL_ROUND_NUMBER, LOCALSTORAGE_KEY_ROUND } from '../../utils/localStorageKeys';
 import { MENU } from './game-screen-menus/menu-container/menu-container';
 
@@ -11,6 +16,7 @@ export const GAMEFIELD = createElem({ tag: 'div', classesCss: ['gamefield'] });
 export const GAMEFIELD_WORDS_CONTAINER = createElem({ tag: 'div', classesCss: ['gamefield__words-container'] });
 export let currRow: HTMLElement;
 export let prevHandlerWithRound: EventListener | null = null;
+const checkBtn = CHECK_BTN;
 
 function generateGame(level: Level, roundNumber: number): void {
   const round: GameData = level.rounds[roundNumber];
@@ -92,6 +98,11 @@ function moveWordToRow(word: HTMLElement, currRow: HTMLElement) {
       break;
     }
   }
+  const checkFillWithContent: boolean = allItemsFromRow.every((item) => item.textContent);
+
+  if (checkFillWithContent) {
+    fromInnactiveToActiveBtn(checkBtn);
+  }
 }
 
 export function moveWordFromRow(currRowItem: HTMLElement, words: HTMLElement[]) {
@@ -106,6 +117,12 @@ export function moveWordFromRow(currRowItem: HTMLElement, words: HTMLElement[]) 
     currRowItem.classList.remove('_autoWidth');
     currRowItem.textContent = '';
     currRowItem.style.width = Math.floor(currRowItem.scrollWidth / 10) + 'px';
+    currRowItem.classList.remove('word_correct');
+    currRowItem.classList.remove('word_incorrect');
+  }
+  const checkFillWithContent: boolean = words.every((item) => item.textContent);
+  if (!checkFillWithContent) {
+    fromActiveToInnactiveBtn(checkBtn);
   }
 }
 
@@ -114,7 +131,8 @@ function isCurrRowRight(row: HTMLElement, round: GameData) {
   const rowItemsContent: string = rowItems.map((item) => item.textContent).join('');
   const correctSentence: string = round.words[currentRowNumber].textExample.split(' ').join('');
   if (rowItemsContent === correctSentence) {
-    fromInnactiveToActiveBtn();
+    const continueBtn = CONTINUE_BTN;
+    fromInnactiveToActiveBtn(continueBtn);
   }
 }
 
@@ -132,7 +150,7 @@ function handleGamefieldWordsContainerClick(event: MouseEvent, round: GameData) 
   const currWord = event.target as HTMLElement;
   if (currWord) {
     if (currWord.parentElement === GAMEFIELD_WORDS_CONTAINER) {
-      const currRow = GAMEFIELD.children[currentRowNumber] as HTMLElement;
+      currRow = GAMEFIELD.children[currentRowNumber] as HTMLElement;
       moveWordToRow(currWord, currRow);
       isCurrRowRight(currRow, round);
     }
