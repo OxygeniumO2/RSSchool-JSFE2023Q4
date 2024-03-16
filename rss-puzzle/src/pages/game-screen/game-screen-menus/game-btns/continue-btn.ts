@@ -1,10 +1,6 @@
 import './game-btn.css';
 import { createElem } from '../../../../utils/createElem';
-import {
-  LOCALSTORAGE_KEY_ROUND,
-  LOCALSTORAGE_KEY_ROUND_NUMBER,
-  LOCALSTORAGE_KEY_LEVEL_ROUND_NUMBER,
-} from '../../../../utils/localStorageKeys';
+import { LOCALSTORAGE_KEY_ROUND_NUMBER, LOCALSTORAGE_KEY_LEVEL_ROUND_NUMBER } from '../../../../utils/localStorageKeys';
 import generateGame, {
   START_GAME_ZERO,
   GAMEFIELD,
@@ -13,11 +9,14 @@ import generateGame, {
   GAMEFIELD_WORDS_CONTAINER,
   setCurrentRowNumber,
   handleCurrRowClick,
+  setCurrRow,
+  currRow,
 } from '../../game-screen';
-import GameData from '../../../../interfaces/game-data-interface';
+//import GameData from '../../../../interfaces/game-data-interface';
 import level1 from '../../../../data/words-levels/wordCollectionLevel1';
 import { CHECK_BTN, fromActiveToInnactiveBtn } from '../game-btns-container/game-btns-container';
 import { checkCorrectWords } from './check-btn';
+import { RoundDataFromLS, getDataRoundFromLS } from '../../../../utils/getDataRoundLS';
 
 const BTN_CONTINUE_TEXT = 'Continue';
 function createContinueBtn(): HTMLElement {
@@ -38,26 +37,32 @@ function createContinueBtn(): HTMLElement {
 
 function changeRowOrRound() {
   const checkBtn = CHECK_BTN;
-  const localStorageRoundNumber = +localStorage.getItem(LOCALSTORAGE_KEY_ROUND_NUMBER)!;
-  const localStorageRound = localStorage.getItem(LOCALSTORAGE_KEY_ROUND);
-  const currRound: GameData | null = localStorageRound ? JSON.parse(localStorageRound) : null;
-  let currRowNumber = localStorageRoundNumber ? +localStorageRoundNumber : START_GAME_ZERO;
-  if (currRound) {
-    if (localStorageRoundNumber < currRound.words.length - 1) {
+
+  const currRoundFromLS: RoundDataFromLS = getDataRoundFromLS();
+
+  let currRowNumber = currRoundFromLS.localStorageRoundNumber
+    ? +currRoundFromLS.localStorageRoundNumber
+    : START_GAME_ZERO;
+
+  if (currRoundFromLS.currRound) {
+    if (currRoundFromLS.localStorageRoundNumber < currRoundFromLS.currRound.words.length - 1) {
       checkCorrectWords();
+      const currRowItems = Array.from(currRow.children) as HTMLElement[];
+      currRowItems.forEach((item) => item.classList.add('word_correct'));
       currRowNumber += 1;
       setCurrentRowNumber(currRowNumber);
       const completedRows = Array.from(GAMEFIELD.children) as HTMLElement[];
       completedRows.forEach((item) => {
         item.classList.add('completed-row');
       });
-      const newRow = generateGamefieldRow(currRound, currRowNumber);
+      const newRow = generateGamefieldRow(currRoundFromLS.currRound, currRowNumber);
       newRow.addEventListener('click', handleCurrRowClick);
       GAMEFIELD.append(newRow);
       GAMEFIELD_WORDS_CONTAINER.innerHTML = '';
-      GAMEFIELD_WORDS_CONTAINER.append(generateGamefieldWords(currRound, currRowNumber));
+      GAMEFIELD_WORDS_CONTAINER.append(generateGamefieldWords(currRoundFromLS.currRound, currRowNumber));
       localStorage.setItem(LOCALSTORAGE_KEY_ROUND_NUMBER, currRowNumber.toString());
       fromActiveToInnactiveBtn(checkBtn);
+      setCurrRow(newRow);
     } else {
       currRowNumber = 0;
       setCurrentRowNumber(currRowNumber);

@@ -17,6 +17,7 @@ export const GAMEFIELD_WORDS_CONTAINER = createElem({ tag: 'div', classesCss: ['
 export let currRow: HTMLElement;
 export let prevHandlerWithRound: EventListener | null = null;
 const checkBtn = CHECK_BTN;
+const continueBtn = CONTINUE_BTN;
 
 function generateGame(level: Level, roundNumber: number): void {
   const round: GameData = level.rounds[roundNumber];
@@ -28,7 +29,7 @@ function generateGame(level: Level, roundNumber: number): void {
   }
 
   GAMEFIELD.append(generateGamefieldRow(round, START_GAME_ZERO));
-  const gamefieldWords = generateGamefieldWords(round, currentRowNumber);
+  const gamefieldWords = generateGamefieldWords(round, START_GAME_ZERO);
   GAMEFIELD_WORDS_CONTAINER.append(gamefieldWords);
 
   MENU.insertAdjacentElement('afterend', GAMEFIELD);
@@ -123,6 +124,7 @@ export function moveWordFromRow(currRowItem: HTMLElement, words: HTMLElement[]) 
   const checkFillWithContent: boolean = words.every((item) => item.textContent);
   if (!checkFillWithContent) {
     fromActiveToInnactiveBtn(checkBtn);
+    fromActiveToInnactiveBtn(continueBtn);
   }
 }
 
@@ -138,6 +140,14 @@ function isCurrRowRight(row: HTMLElement, round: GameData) {
 
 export function setCurrentRowNumber(value: number) {
   currentRowNumber = value;
+}
+
+export function setCurrRow(row: HTMLElement | null) {
+  if (row) currRow = row;
+}
+
+export function setPrevHandlerWithRound(handler: EventListener | null) {
+  prevHandlerWithRound = handler;
 }
 
 const gamefieldWordsContainerClickHandlerWithRound = (round: GameData) => {
