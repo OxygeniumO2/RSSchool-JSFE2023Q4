@@ -1,17 +1,21 @@
 import './continue-btn.css';
 import { createElem } from '../../../../utils/createElem';
-import { LOCALSTORAGE_KEY_ROUND, LOCALSTORAGE_KEY_ROUND_NUMBER } from '../../../../utils/localStorageKeys';
 import {
+  LOCALSTORAGE_KEY_ROUND,
+  LOCALSTORAGE_KEY_ROUND_NUMBER,
+  LOCALSTORAGE_KEY_LEVEL_ROUND_NUMBER,
+} from '../../../../utils/localStorageKeys';
+import generateGame, {
   START_GAME_ZERO,
   GAMEFIELD,
   generateGamefieldRow,
   generateGamefieldWords,
   GAMEFIELD_WORDS_CONTAINER,
-  moveWordFromRow,
   setCurrentRowNumber,
+  handleCurrRowClick,
 } from '../../game-screen';
-import gameData from '../../../../interfaces/game-data-interface';
-// import gameData from '../../../../interfaces/game-data-interface';
+import GameData from '../../../../interfaces/game-data-interface';
+import level1 from '../../../../data/words-levels/wordCollectionLevel1';
 
 const BTN_CONTINUE_TEXT = 'Continue';
 function createContinueBtn(): HTMLElement {
@@ -31,33 +35,35 @@ function createContinueBtn(): HTMLElement {
 }
 
 function changeRowOrRound() {
-  const localStorageRoundNumber = localStorage.getItem(LOCALSTORAGE_KEY_ROUND_NUMBER);
-  let currRowNumber = localStorageRoundNumber ? +localStorageRoundNumber : START_GAME_ZERO;
-  currRowNumber += 1;
-  setCurrentRowNumber(currRowNumber);
+  const localStorageRoundNumber = +localStorage.getItem(LOCALSTORAGE_KEY_ROUND_NUMBER)!;
   const localStorageRound = localStorage.getItem(LOCALSTORAGE_KEY_ROUND);
-  const currRound: gameData | null = localStorageRound ? JSON.parse(localStorageRound) : null;
+  const currRound: GameData | null = localStorageRound ? JSON.parse(localStorageRound) : null;
+  let currRowNumber = localStorageRoundNumber ? +localStorageRoundNumber : START_GAME_ZERO;
   if (currRound) {
-    const completedRows = Array.from(GAMEFIELD.children) as HTMLElement[];
-    completedRows.forEach((item) => {
-      item.classList.add('completed-row');
-    });
-    const newRow = generateGamefieldRow(currRound, currRowNumber);
-    newRow.addEventListener('click', (event) => {
-      const currRow = event.target as HTMLElement;
-      if (currRow) {
-        if (currRow.classList.contains('gamefield__row__item')) {
-          const words = Array.from(GAMEFIELD_WORDS_CONTAINER.children) as HTMLElement[];
-          moveWordFromRow(currRow, words);
-        }
-      }
-    });
-    // GAMEFIELD.append(generateGamefieldRow(currRound, currRowNumber));
-    GAMEFIELD.append(newRow);
-    GAMEFIELD_WORDS_CONTAINER.innerHTML = '';
-    GAMEFIELD_WORDS_CONTAINER.append(generateGamefieldWords(currRound, currRowNumber));
+    if (localStorageRoundNumber < currRound.words.length - 1) {
+      currRowNumber += 1;
+      setCurrentRowNumber(currRowNumber);
+      const completedRows = Array.from(GAMEFIELD.children) as HTMLElement[];
+      completedRows.forEach((item) => {
+        item.classList.add('completed-row');
+      });
+      const newRow = generateGamefieldRow(currRound, currRowNumber);
+      newRow.addEventListener('click', handleCurrRowClick);
+      GAMEFIELD.append(newRow);
+      GAMEFIELD_WORDS_CONTAINER.innerHTML = '';
+      GAMEFIELD_WORDS_CONTAINER.append(generateGamefieldWords(currRound, currRowNumber));
+      localStorage.setItem(LOCALSTORAGE_KEY_ROUND_NUMBER, currRowNumber.toString());
+    } else {
+      currRowNumber = 0;
+      setCurrentRowNumber(currRowNumber);
+      localStorage.setItem(LOCALSTORAGE_KEY_ROUND_NUMBER, currRowNumber.toString());
+      let levelRoundNumber = +localStorage.getItem(LOCALSTORAGE_KEY_LEVEL_ROUND_NUMBER)!;
+      levelRoundNumber += 1;
+      GAMEFIELD.innerHTML = '';
+      GAMEFIELD_WORDS_CONTAINER.innerHTML = '';
+      generateGame(level1, levelRoundNumber);
+    }
   }
-  localStorage.setItem(LOCALSTORAGE_KEY_ROUND_NUMBER, currRowNumber.toString());
 }
 
 export default createContinueBtn;

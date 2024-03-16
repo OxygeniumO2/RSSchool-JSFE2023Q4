@@ -1,4 +1,4 @@
-interface levelData {
+interface LevelData {
   id: string;
   name: string;
   imageSrc: string;
@@ -7,7 +7,7 @@ interface levelData {
   year: string;
 }
 
-export interface words {
+export interface Words {
   audioExample: string;
   textExample: string;
   textExampleTranslate: string;
@@ -16,9 +16,17 @@ export interface words {
   wordTranslate: string;
 }
 
-interface gameData {
-  levelData: levelData;
-  words: words[];
+interface GameData {
+  levelData: LevelData;
+  words: Words[];
 }
 
-export default gameData;
+export interface Level {
+  rounds: {
+    levelData: LevelData;
+    words: Words[];
+  }[];
+  roundsCount: number;
+}
+
+export default GameData;

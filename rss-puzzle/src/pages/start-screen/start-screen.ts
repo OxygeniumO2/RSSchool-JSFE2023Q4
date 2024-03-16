@@ -8,7 +8,7 @@ import {
 } from '../../utils/localStorageKeys';
 import generateGame from '../game-screen/game-screen';
 import level1 from '../../data/words-levels/wordCollectionLevel1';
-import gameData from '../../interfaces/game-data-interface';
+import { Level } from '../../interfaces/game-data-interface';
 import createMenuContainer from '../game-screen/game-screen-menus/menu-container/menu-container';
 import createGameBtnsContainer from '../game-screen/game-screen-menus/game-btns-container/game-btns-container';
 
@@ -47,10 +47,10 @@ function generateStartScreen() {
 
   startButton.addEventListener('click', () => {
     startScreen.classList.add('_hidden');
-    const currGamelevel: gameData = level1.rounds[0];
+    const currGamelevel: Level = level1;
     localStorage.setItem(LOCALSTORAGE_KEY_ROUND_NUMBER, START_ROUND_NUMBER_DEFAULT_STRING);
     createMenuContainer();
-    generateGame(currGamelevel);
+    generateGame(currGamelevel, 0);
     createGameBtnsContainer();
   });
   container.append(startScreen);
