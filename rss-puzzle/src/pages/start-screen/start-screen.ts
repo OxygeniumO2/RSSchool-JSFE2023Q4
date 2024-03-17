@@ -16,6 +16,7 @@ const START_SCREEN_TITLE: string = 'RSS PUZZLE';
 const START_SCREEN_DESC: string = 'You can learn English by clicking on words';
 const START_SCREEN_BTN_TEXT: string = 'START';
 const START_ROUND_NUMBER_DEFAULT_STRING: string = '0';
+const START_ROUND_DEFAULT_NUMBER: number = 0;
 
 function generateStartScreen() {
   const startScreen = createElem({ tag: 'div', classesCss: ['start__screen'] });
@@ -50,7 +51,7 @@ function generateStartScreen() {
     const currGamelevel: Level = level1;
     localStorage.setItem(LOCALSTORAGE_KEY_ROUND_NUMBER, START_ROUND_NUMBER_DEFAULT_STRING);
     createMenuContainer();
-    generateGame(currGamelevel, 0);
+    generateGame(currGamelevel, START_ROUND_DEFAULT_NUMBER);
     createGameBtnsContainer();
   });
   container.append(startScreen);

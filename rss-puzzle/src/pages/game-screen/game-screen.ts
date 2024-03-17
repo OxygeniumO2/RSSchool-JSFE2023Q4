@@ -13,6 +13,7 @@ import {
   LOCALSTORAGE_KEY_ROUND,
 } from '../../utils/localStorageKeys';
 import { MENU } from './game-screen-menus/menu-container/menu-container';
+import { createHintContainer, generateHint } from './game-screen-menus/game-hint/game-hint';
 
 const MULTIPLE_LENGTH_HEIGHT_GAMEFIELD: number = 10;
 const STATIC_LENGTH: number = 45;
@@ -34,21 +35,24 @@ function generateGame(level: Level, roundNumber: number): void {
   if (prevHandlerWithRound) {
     GAMEFIELD_WORDS_CONTAINER.removeEventListener('click', prevHandlerWithRound);
   }
+  currRow = generateGamefieldRow(round, START_GAME_ZERO);
+  GAMEFIELD.append(currRow);
 
-  GAMEFIELD.append(generateGamefieldRow(round, START_GAME_ZERO));
   const gamefieldWords = generateGamefieldWords(round, START_GAME_ZERO);
   GAMEFIELD_WORDS_CONTAINER.append(gamefieldWords);
+  currRow.removeEventListener('click', handleCurrRowClick);
 
   MENU.insertAdjacentElement('afterend', GAMEFIELD);
   GAMEFIELD.insertAdjacentElement('afterend', GAMEFIELD_WORDS_CONTAINER);
 
   localStorage.setItem(LOCALSTORAGE_KEY_ROUND, JSON.stringify(round));
-  currRow = GAMEFIELD.children[START_GAME_ZERO] as HTMLElement;
-  currRow.removeEventListener('click', handleCurrRowClick);
+  createHintContainer();
 
   GAMEFIELD_WORDS_CONTAINER.addEventListener('click', handlerWithRound as EventListener);
   prevHandlerWithRound = handlerWithRound as EventListener;
   currRow.addEventListener('click', handleCurrRowClick);
+
+  generateHint(round);
 }
 
 export function generateGamefieldRow(round: GameData, rowNumber: number): HTMLDivElement {
@@ -195,7 +199,6 @@ function handleGamefieldWordsContainerClick(event: MouseEvent, round: GameData) 
   const currWord = event.target as HTMLElement;
   if (currWord) {
     if (currWord.parentElement === GAMEFIELD_WORDS_CONTAINER) {
-      currRow = GAMEFIELD.children[currentRowNumber] as HTMLElement;
       moveWordToRow(currWord, currRow);
       isCurrRowRight(currRow, round);
     }
