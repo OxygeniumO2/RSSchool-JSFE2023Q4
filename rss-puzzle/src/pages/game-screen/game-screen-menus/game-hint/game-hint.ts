@@ -4,13 +4,16 @@ import { createElem } from '../../../../utils/createElem';
 import GameData from '../../../../interfaces/game-data-interface';
 import { getDataRoundFromLS } from '../../../../utils/getDataRoundLS';
 import { GAMEFIELD } from '../../game-screen';
+import { HINT_BTN } from '../game-btns-container/game-btns-container';
 
-const BTN_HINT_TEXT = 'Hint-ON';
-const HINT_CONTAINER = createElem({ tag: 'div', classesCss: ['hint-container', '_open'] });
+export const BTN_HINT_TEXT = 'Hint-ON';
+export const BTN_HINT_TEXT_OFF = 'Hint-OFF';
+export const HINT_CONTAINER = createElem({ tag: 'div', classesCss: ['hint-container', '_open'] });
 const HINT_INNER_DIV = createElem({ tag: 'div', classesCss: ['hint-inner'] });
 
 export function createHintBtn(): HTMLElement {
-  const btn = createElem({ tag: 'button', classesCss: ['btn', 'hint-btn_on'], textContent: BTN_HINT_TEXT });
+  const btn = createElem({ tag: 'button', classesCss: ['btn', 'hint-btn'], textContent: BTN_HINT_TEXT });
+  btn.addEventListener('click', toggleHint);
   return btn;
 }
 
@@ -31,4 +34,21 @@ export function hintInnerOpacityChange() {
     HINT_INNER_DIV.style.opacity = '1';
     HINT_INNER_DIV.removeAttribute('style');
   }, 300);
+}
+
+function toggleHint(this: HTMLElement) {
+  this.classList.toggle('_off');
+  if (this.textContent === BTN_HINT_TEXT) {
+    this.textContent = BTN_HINT_TEXT_OFF;
+    HINT_CONTAINER.classList.remove('_open');
+  } else {
+    this.textContent = BTN_HINT_TEXT;
+    HINT_CONTAINER.classList.add('_open');
+  }
+}
+
+export function checkIfHintDisabledDontShowHint() {
+  if (HINT_BTN.textContent === BTN_HINT_TEXT_OFF) {
+    HINT_CONTAINER.classList.remove('_open');
+  }
 }

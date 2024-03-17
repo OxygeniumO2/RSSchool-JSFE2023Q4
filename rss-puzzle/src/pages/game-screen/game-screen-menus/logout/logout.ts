@@ -12,6 +12,8 @@ import {
 } from '../../game-screen';
 import { container } from '../../../../app-container/container';
 import { MENU } from '../menu-container/menu-container';
+import { BTN_HINT_TEXT, HINT_CONTAINER } from '../game-hint/game-hint';
+import { HINT_BTN } from '../game-btns-container/game-btns-container';
 
 const LOGOUT_BTN_TEXT: string = 'Logout';
 
@@ -31,6 +33,9 @@ function logout() {
   GAMEFIELD_WORDS_CONTAINER.removeEventListener('click', prevHandlerWithRound as EventListener);
   setCurrRow(null);
   setPrevHandlerWithRound(null);
+  HINT_CONTAINER.classList.add('_open');
+  HINT_BTN.textContent = BTN_HINT_TEXT;
+  HINT_BTN.classList.remove('_off');
   setTimeout(() => {
     container.innerHTML = '';
     createLoginScreen();

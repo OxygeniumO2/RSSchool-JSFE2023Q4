@@ -16,7 +16,7 @@ import level1 from '../../../../data/words-levels/wordCollectionLevel1';
 import { CHECK_BTN, fromActiveToInnactiveBtn } from '../game-btns-container/game-btns-container';
 import { checkCorrectWords } from './check-btn';
 import { RoundDataFromLS, getDataRoundFromLS } from '../../../../utils/getDataRoundLS';
-import { generateHint, hintInnerOpacityChange } from '../game-hint/game-hint';
+import { checkIfHintDisabledDontShowHint, generateHint, hintInnerOpacityChange } from '../game-hint/game-hint';
 import GameData from '../../../../interfaces/game-data-interface';
 
 const BTN_CONTINUE_TEXT = 'Continue';
@@ -68,6 +68,7 @@ function changeRowOrRound() {
       setTimeout(() => {
         generateHint(currRoundFromLS.currRound as GameData);
       }, 300);
+      checkIfHintDisabledDontShowHint();
     } else {
       currRowNumber = 0;
       setCurrentRowNumber(currRowNumber);
@@ -79,6 +80,7 @@ function changeRowOrRound() {
       generateGame(level1, levelRoundNumber);
       hintInnerOpacityChange();
       fromActiveToInnactiveBtn(checkBtn);
+      checkIfHintDisabledDontShowHint();
     }
   }
 }
