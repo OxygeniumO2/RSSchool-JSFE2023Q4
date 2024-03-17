@@ -4,7 +4,7 @@ import { GAMEFIELD_WORDS_CONTAINER, currRow } from '../../game-screen';
 import { CHECK_BTN, CONTINUE_BTN, fromInnactiveToActiveBtn } from '../game-btns-container/game-btns-container';
 import { checkCorrectWords } from './check-btn';
 
-const BTN_COMPLETE_TEXT = 'Complete';
+const BTN_COMPLETE_TEXT = 'Auto-Complete';
 
 export function createCompleteBtn(): HTMLElement {
   const btn = createElem({

@@ -12,11 +12,12 @@ import generateGame, {
   setCurrRow,
   currRow,
 } from '../../game-screen';
-//import GameData from '../../../../interfaces/game-data-interface';
 import level1 from '../../../../data/words-levels/wordCollectionLevel1';
 import { CHECK_BTN, fromActiveToInnactiveBtn } from '../game-btns-container/game-btns-container';
 import { checkCorrectWords } from './check-btn';
 import { RoundDataFromLS, getDataRoundFromLS } from '../../../../utils/getDataRoundLS';
+import { generateHint, hintInnerOpacityChange } from '../game-hint/game-hint';
+import GameData from '../../../../interfaces/game-data-interface';
 
 const BTN_CONTINUE_TEXT = 'Continue';
 function createContinueBtn(): HTMLElement {
@@ -63,6 +64,10 @@ function changeRowOrRound() {
       localStorage.setItem(LOCALSTORAGE_KEY_ROUND_NUMBER, currRowNumber.toString());
       fromActiveToInnactiveBtn(checkBtn);
       setCurrRow(newRow);
+      hintInnerOpacityChange();
+      setTimeout(() => {
+        generateHint(currRoundFromLS.currRound as GameData);
+      }, 300);
     } else {
       currRowNumber = 0;
       setCurrentRowNumber(currRowNumber);
@@ -72,6 +77,7 @@ function changeRowOrRound() {
       GAMEFIELD.innerHTML = '';
       GAMEFIELD_WORDS_CONTAINER.innerHTML = '';
       generateGame(level1, levelRoundNumber);
+      hintInnerOpacityChange();
       fromActiveToInnactiveBtn(checkBtn);
     }
   }

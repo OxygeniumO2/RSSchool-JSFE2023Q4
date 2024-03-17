@@ -1,0 +1,29 @@
+.hint-container {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition:
+    grid-template-rows 0.3s ease,
+    opacity 0.3s ease,
+    padding 0.3s ease,
+    margin 0.3s ease opacity 0.3s ease;
+  text-align: center;
+  background-color: #d3dfe9;
+  font-weight: 600;
+  opacity: 0;
+}
+
+.hint-container._open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  padding: 20px 0;
+  margin-bottom: 30px;
+}
+
+.hint-inner {
+  overflow: hidden;
+  transition: opacity 0.3s ease;
+}
+
+.hint-btn_on {
+  background-color: #4bd0a3;
+}

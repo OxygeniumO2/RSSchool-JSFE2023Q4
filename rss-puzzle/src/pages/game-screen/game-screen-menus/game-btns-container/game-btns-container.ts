@@ -4,14 +4,16 @@ import { container } from '../../../../app-container/container';
 import createContinueBtn from '../game-btns/continue-btn';
 import { createCheckBtn } from '../game-btns/check-btn';
 import { createCompleteBtn } from '../game-btns/auto-complete-btn';
+import { createHintBtn } from '../game-hint/game-hint';
 
 export const CONTINUE_BTN = createContinueBtn();
 export const CHECK_BTN = createCheckBtn();
 export const COMPLETE_BTN = createCompleteBtn();
+const HINT_BTN = createHintBtn();
 
 function createGameBtnsContainer() {
   const gameBtnsContainer = createElem({ tag: 'div', classesCss: ['game__btns-container'] });
-  gameBtnsContainer.append(CHECK_BTN, COMPLETE_BTN, CONTINUE_BTN);
+  gameBtnsContainer.append(HINT_BTN, CHECK_BTN, COMPLETE_BTN, CONTINUE_BTN);
   container.append(gameBtnsContainer);
 }
 
