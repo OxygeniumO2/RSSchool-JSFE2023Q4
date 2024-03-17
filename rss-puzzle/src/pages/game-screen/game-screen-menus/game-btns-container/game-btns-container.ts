@@ -9,7 +9,7 @@ import { createHintBtn } from '../game-hint/game-hint';
 export const CONTINUE_BTN = createContinueBtn();
 export const CHECK_BTN = createCheckBtn();
 export const COMPLETE_BTN = createCompleteBtn();
-const HINT_BTN = createHintBtn();
+export const HINT_BTN = createHintBtn();
 
 function createGameBtnsContainer() {
   const gameBtnsContainer = createElem({ tag: 'div', classesCss: ['game__btns-container'] });

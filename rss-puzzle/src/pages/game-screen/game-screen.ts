@@ -13,7 +13,7 @@ import {
   LOCALSTORAGE_KEY_ROUND,
 } from '../../utils/localStorageKeys';
 import { MENU } from './game-screen-menus/menu-container/menu-container';
-import { createHintContainer, generateHint } from './game-screen-menus/game-hint/game-hint';
+import { HINT_CONTAINER, createHintContainer, generateHint } from './game-screen-menus/game-hint/game-hint';
 
 const MULTIPLE_LENGTH_HEIGHT_GAMEFIELD: number = 10;
 const STATIC_LENGTH: number = 45;
@@ -174,6 +174,8 @@ function isCurrRowRight(row: HTMLElement, round: GameData) {
   if (rowItemsContent === correctSentence) {
     const continueBtn = CONTINUE_BTN;
     fromInnactiveToActiveBtn(continueBtn);
+    const hintContainer = HINT_CONTAINER;
+    hintContainer.classList.add('_open');
   }
 }
 
