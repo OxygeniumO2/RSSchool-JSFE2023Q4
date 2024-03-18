@@ -13,7 +13,8 @@ import {
 import { container } from '../../../../app-container/container';
 import { MENU } from '../menu-container/menu-container';
 import { BTN_HINT_TEXT, HINT_CONTAINER } from '../game-hints/game-hint-text';
-import { CHECK_BTN, CONTINUE_BTN, HINT_BTN } from '../game-btns-container/game-btns-container';
+import { CHECK_BTN, CONTINUE_BTN, HINT_AUDIO_BTN, HINT_BTN } from '../game-btns-container/game-btns-container';
+import { AUDIO_ICO, AUDIO_ICO_CONTAINER, HINT_AUDIO_TEXT } from '../game-hints/game-hint-audio';
 
 const LOGOUT_BTN_TEXT: string = 'Logout';
 
@@ -40,6 +41,10 @@ function logout() {
   CHECK_BTN.classList.add('btn_wrong');
   CONTINUE_BTN.classList.add('btn_wrong');
   CONTINUE_BTN.classList.remove('btn_active');
+  AUDIO_ICO_CONTAINER.classList.add('_open');
+  HINT_AUDIO_BTN.textContent = HINT_AUDIO_TEXT;
+  HINT_AUDIO_BTN.classList.remove('_off');
+  AUDIO_ICO.classList.remove('_hidden');
   setTimeout(() => {
     container.innerHTML = '';
     createLoginScreen();

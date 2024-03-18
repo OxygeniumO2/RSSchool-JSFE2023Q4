@@ -3,6 +3,9 @@ import { createElem } from '../../../../utils/createElem';
 import { HINT_CONTAINER } from './game-hint-text';
 import { currAudio } from '../../game-screen';
 
+export const HINT_AUDIO_TEXT = 'Audio Hint - ON';
+const HINT_AUDIO_TEXT_OFF = 'Audio Hint - OFF';
+
 export const AUDIO_ICO_CONTAINER = createElem({ tag: 'div', classesCss: ['audio__ico-container', '_open'] });
 export const AUDIO_ICO = createElem({ tag: 'img', classesCss: ['audio__ico'], src: './img/audio.svg', alt: 'sound' });
 export function createHintAudioIco() {
@@ -16,8 +19,29 @@ export function playAudio() {
     currAudioToPlay.currentTime = 0;
     currAudioToPlay.play();
     AUDIO_ICO.classList.add('_audioPlaying');
+    AUDIO_ICO_CONTAINER.classList.add('_showAfter');
     currAudioToPlay.addEventListener('ended', () => {
       AUDIO_ICO.classList.remove('_audioPlaying');
+      AUDIO_ICO_CONTAINER.classList.remove('_showAfter');
     });
+  }
+}
+
+export function createAudioHintBtn() {
+  const btn = createElem({ tag: 'button', classesCss: ['btn', 'hint-btn'], textContent: HINT_AUDIO_TEXT });
+  btn.addEventListener('click', toggleAudioHint);
+  return btn;
+}
+
+function toggleAudioHint(this: HTMLElement) {
+  this.classList.toggle('_off');
+  if (this.textContent === HINT_AUDIO_TEXT) {
+    this.textContent = HINT_AUDIO_TEXT_OFF;
+    AUDIO_ICO_CONTAINER.classList.remove('_open');
+    AUDIO_ICO.classList.add('_hidden');
+  } else {
+    this.textContent = HINT_AUDIO_TEXT;
+    AUDIO_ICO_CONTAINER.classList.add('_open');
+    AUDIO_ICO.classList.remove('_hidden');
   }
 }
