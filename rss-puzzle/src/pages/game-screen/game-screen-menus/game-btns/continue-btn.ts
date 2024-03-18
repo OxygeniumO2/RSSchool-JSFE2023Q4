@@ -14,7 +14,7 @@ import generateGame, {
   AUDIO_PATH_HTTP,
   setCurrAudio,
 } from '../../game-screen';
-import level1 from '../../../../data/words-levels/wordCollectionLevel1';
+import level from '../../../../data/words-levels/wordCollectionLevel';
 import { CHECK_BTN, fromActiveToInnactiveBtn } from '../game-btns-container/game-btns-container';
 import { checkCorrectWords } from './check-btn';
 import { RoundDataFromLS, getDataRoundFromLS } from '../../../../utils/getDataRoundLS';
@@ -81,7 +81,7 @@ function changeRowOrRound() {
       levelRoundNumber += 1;
       GAMEFIELD.innerHTML = '';
       GAMEFIELD_WORDS_CONTAINER.innerHTML = '';
-      generateGame(level1, levelRoundNumber);
+      generateGame(level, levelRoundNumber);
       hintInnerOpacityChange();
       fromActiveToInnactiveBtn(checkBtn);
       checkIfHintDisabledDontShowHint();

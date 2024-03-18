@@ -7,10 +7,10 @@ import {
   LOCALSTORAGE_KEY_ROUND_NUMBER,
 } from '../../utils/localStorageKeys';
 import generateGame from '../game-screen/game-screen';
-import level1 from '../../data/words-levels/wordCollectionLevel1';
 import { Level } from '../../interfaces/game-data-interface';
 import createMenuContainer from '../game-screen/game-screen-menus/menu-container/menu-container';
 import createGameBtnsContainer from '../game-screen/game-screen-menus/game-btns-container/game-btns-container';
+import level from '../../data/words-levels/wordCollectionLevel';
 
 const START_SCREEN_TITLE: string = 'RSS PUZZLE';
 const START_SCREEN_DESC: string = 'You can learn English by clicking on words';
@@ -48,7 +48,7 @@ function generateStartScreen() {
 
   startButton.addEventListener('click', () => {
     startScreen.classList.add('_hidden');
-    const currGamelevel: Level = level1;
+    const currGamelevel: Level = level;
     localStorage.setItem(LOCALSTORAGE_KEY_ROUND_NUMBER, START_ROUND_NUMBER_DEFAULT_STRING);
     createMenuContainer();
     generateGame(currGamelevel, START_ROUND_DEFAULT_NUMBER);
