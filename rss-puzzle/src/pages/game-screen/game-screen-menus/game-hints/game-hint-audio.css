@@ -26,6 +26,17 @@
   width: 30px;
   height: 30px;
   overflow: hidden;
-  transition: opacity 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    filter 0.3s ease;
   margin: 0 auto;
+}
+
+.audi__ico._hidden {
+  height: 0;
+}
+
+.audio__ico._audioPlaying {
+  filter: brightness(0) saturate(100%) invert(42%) sepia(53%) saturate(805%) hue-rotate(72deg) brightness(99%)
+    contrast(90%);
 }
