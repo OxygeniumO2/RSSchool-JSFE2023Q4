@@ -11,12 +11,14 @@ import generateGame, {
   handleCurrRowClick,
   setCurrRow,
   currRow,
+  AUDIO_PATH_HTTP,
+  setCurrAudio,
 } from '../../game-screen';
 import level1 from '../../../../data/words-levels/wordCollectionLevel1';
 import { CHECK_BTN, fromActiveToInnactiveBtn } from '../game-btns-container/game-btns-container';
 import { checkCorrectWords } from './check-btn';
 import { RoundDataFromLS, getDataRoundFromLS } from '../../../../utils/getDataRoundLS';
-import { checkIfHintDisabledDontShowHint, generateHint, hintInnerOpacityChange } from '../game-hint/game-hint';
+import { checkIfHintDisabledDontShowHint, generateHint, hintInnerOpacityChange } from '../game-hints/game-hint-text';
 import GameData from '../../../../interfaces/game-data-interface';
 
 const BTN_CONTINUE_TEXT = 'Continue';
@@ -69,6 +71,8 @@ function changeRowOrRound() {
         generateHint(currRoundFromLS.currRound as GameData);
       }, 300);
       checkIfHintDisabledDontShowHint();
+      const newAudio = new Audio(`${AUDIO_PATH_HTTP}${currRoundFromLS.currRound.words[currRowNumber].audioExample}`);
+      setCurrAudio(newAudio);
     } else {
       currRowNumber = 0;
       setCurrentRowNumber(currRowNumber);
