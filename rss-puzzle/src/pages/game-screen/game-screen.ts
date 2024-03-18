@@ -69,9 +69,9 @@ export function generateGamefieldRow(round: GameData, rowNumber: number): HTMLDi
   for (let i = 0; i < currRowWords.length; i += 1) {
     const gamefieldRowItem = createElem({ tag: 'div', classesCss: ['gamefield__row__item'] });
     gamefieldRow.append(gamefieldRowItem);
-    setTimeout(() => {
-      gamefieldRowItem.classList.add('_appearing'); // Добавляем класс для запуска анимации
-    }, i * 100);
+    // setTimeout(() => {
+    //   gamefieldRowItem.classList.add('_appearing'); // Добавляем класс для запуска анимации
+    // }, i * 100);
   }
   return gamefieldRow as HTMLDivElement;
 }
@@ -132,6 +132,7 @@ function moveWordToRow(word: HTMLElement, currRow: HTMLElement) {
       word.style.pointerEvents = 'none';
       item.textContent = wordText;
       item.style.width = Math.floor(item.scrollWidth / 2) + 'px';
+      item.classList.add('_appearing');
       item.addEventListener('transitionend', function transitionEndHandler() {
         item.removeAttribute('style');
         item.classList.add('_autoWidth');
@@ -167,6 +168,7 @@ export function moveWordFromRow(currRowItem: HTMLElement, words: HTMLElement[]) 
     currRowItem.style.width = Math.floor(currRowItem.scrollWidth / 10) + 'px';
     currRowItem.classList.remove('word_correct');
     currRowItem.classList.remove('word_incorrect');
+    currRowItem.classList.remove('_appearing');
   }
   const checkFillWithContent: boolean = words.every((item) => item.textContent);
   if (!checkFillWithContent) {

@@ -56,15 +56,11 @@
   height: 20px;
   background-color: #cab395;
   border-radius: 50%;
-  z-index: 2;
   opacity: 0;
-  transition:
-    opacity 0.4s ease-in-out,
-    background-color 0.3s ease,
-    z-index 0s;
+  z-index: 3;
   border-right: 2px solid #ab8045;
+  transition: opacity 0.3s ease;
   box-shadow: 3px 0 4px rgba(0, 0, 0, 0.25);
-  z-index: 1;
 }
 
 .gamefield__row__item::after {
@@ -77,20 +73,10 @@
   background-color: #bac4cd;
   border-radius: 50%;
   transform: translateY(-50%);
-  opacity: 0;
-  transition:
-    opacity 0.4s ease-in-out,
-    background-color 0.3s ease,
-    z-index 0s;
   z-index: 0;
 }
 
-.gamefield__row__item._appearing {
-  opacity: 1;
-}
-
-.gamefield__row__item._appearing::before,
-.gamefield__row__item._appearing::after {
+.gamefield__row__item._appearing::before {
   opacity: 1;
 }
 

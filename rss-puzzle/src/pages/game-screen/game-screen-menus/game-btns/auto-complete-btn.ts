@@ -3,7 +3,6 @@ import { RoundDataFromLS, getDataRoundFromLS } from '../../../../utils/getDataRo
 import { GAMEFIELD_WORDS_CONTAINER, currRow } from '../../game-screen';
 import { CHECK_BTN, CONTINUE_BTN, fromInnactiveToActiveBtn } from '../game-btns-container/game-btns-container';
 import { HINT_CONTAINER } from '../game-hints/game-hint-text';
-import { checkCorrectWords } from './check-btn';
 
 const BTN_COMPLETE_TEXT = 'Auto-Complete';
 
@@ -23,13 +22,14 @@ function completeCurrRow() {
   if (currRoundFromLS.currRound) {
     const correctRowArr: string[] =
       currRoundFromLS.currRound?.words[currRoundFromLS.localStorageRoundNumber].textExample.split(' ');
-    const promises = currRowItems.map((item, index) => {
+    currRowItems.map((item, index) => {
       return new Promise<void>((resolve) => {
         setTimeout(() => {
           item.textContent = correctRowArr[index];
-          item.classList.add('word_correct');
+          item.classList.remove('word_correct');
           item.classList.remove('word_incorrect');
           item.classList.add('_autoWidth');
+          item.classList.add('_appearing');
           resolve();
         }, index * 40);
       });
@@ -38,9 +38,6 @@ function completeCurrRow() {
     gamefieldWordsItems.forEach((item) => {
       item.classList.add('_zeroWidth');
       item.textContent = '';
-    });
-    Promise.all(promises).then(() => {
-      checkCorrectWords();
     });
     const continueBtn = CONTINUE_BTN;
     const checkBtn = CHECK_BTN;
