@@ -13,10 +13,11 @@ import {
   LOCALSTORAGE_KEY_ROUND,
 } from '../../utils/localStorageKeys';
 import { MENU } from './game-screen-menus/menu-container/menu-container';
-import { HINT_CONTAINER, createHintContainer, generateHint } from './game-screen-menus/game-hint/game-hint';
+import { HINT_CONTAINER, createHintContainer, generateHint } from './game-screen-menus/game-hints/game-hint-text';
+import { AUDIO_ICO_CONTAINER, createHintAudioIco, playAudio } from './game-screen-menus/game-hints/game-hint-audio';
 
-const MULTIPLE_LENGTH_HEIGHT_GAMEFIELD: number = 10;
-const STATIC_LENGTH: number = 45;
+const MULTIPLE_LENGTH_HEIGHT_GAMEFIELD: number = 50;
+const STATIC_LENGTH: number = 24;
 export const START_GAME_ZERO: number = 0;
 let currentRowNumber: number = START_GAME_ZERO;
 export const GAMEFIELD = createElem({ tag: 'div', classesCss: ['gamefield'] });
@@ -25,10 +26,12 @@ export let currRow: HTMLElement;
 export let prevHandlerWithRound: EventListener | null = null;
 const checkBtn = CHECK_BTN;
 const continueBtn = CONTINUE_BTN;
+export let currAudio: HTMLAudioElement;
+export const AUDIO_PATH_HTTP: string = 'https://raw.githubusercontent.com/rolling-scopes-school/rss-puzzle-data/main/';
 
 function generateGame(level: Level, roundNumber: number): void {
   const round: GameData = level.rounds[roundNumber];
-  GAMEFIELD.style.minHeight = `${level.rounds.length * MULTIPLE_LENGTH_HEIGHT_GAMEFIELD + STATIC_LENGTH}px`;
+  GAMEFIELD.style.minHeight = `${round.words.length * MULTIPLE_LENGTH_HEIGHT_GAMEFIELD + STATIC_LENGTH}px`;
   const handlerWithRound = gamefieldWordsContainerClickHandlerWithRound(round);
   localStorage.setItem(LOCALSTORAGE_KEY_LEVEL_ROUND_NUMBER, roundNumber.toString());
 
@@ -38,6 +41,7 @@ function generateGame(level: Level, roundNumber: number): void {
   currRow = generateGamefieldRow(round, START_GAME_ZERO);
   GAMEFIELD.append(currRow);
 
+  currAudio = new Audio(`${AUDIO_PATH_HTTP}${round.words[START_GAME_ZERO].audioExample}`);
   const gamefieldWords = generateGamefieldWords(round, START_GAME_ZERO);
   GAMEFIELD_WORDS_CONTAINER.append(gamefieldWords);
   currRow.removeEventListener('click', handleCurrRowClick);
@@ -47,6 +51,10 @@ function generateGame(level: Level, roundNumber: number): void {
 
   localStorage.setItem(LOCALSTORAGE_KEY_ROUND, JSON.stringify(round));
   createHintContainer();
+
+  createHintAudioIco();
+
+  AUDIO_ICO_CONTAINER.addEventListener('click', playAudio);
 
   GAMEFIELD_WORDS_CONTAINER.addEventListener('click', handlerWithRound as EventListener);
   prevHandlerWithRound = handlerWithRound as EventListener;
@@ -185,6 +193,10 @@ export function setCurrentRowNumber(value: number) {
 
 export function setCurrRow(row: HTMLElement | null) {
   if (row) currRow = row;
+}
+
+export function setCurrAudio(newAudio: HTMLAudioElement) {
+  if (newAudio) currAudio = newAudio;
 }
 
 export function setPrevHandlerWithRound(handler: EventListener | null) {

@@ -16,8 +16,8 @@
 .hint-container._open {
   grid-template-rows: 1fr;
   opacity: 1;
-  padding: 20px 0;
-  margin-bottom: 30px;
+  padding: 15px;
+  margin-bottom: 0px;
 }
 
 .hint-inner {

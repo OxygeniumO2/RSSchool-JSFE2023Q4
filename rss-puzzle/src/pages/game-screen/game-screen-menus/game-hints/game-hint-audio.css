@@ -1,0 +1,31 @@
+.audio__ico-container {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition:
+    grid-template-rows 0.3s ease,
+    opacity 0.3s ease,
+    padding 0.3s ease,
+    margin 0.3s ease,
+    opacity 0.3s ease;
+  background-color: #d3dfe9;
+  width: 5%;
+  opacity: 0;
+  margin: 0 auto;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.audio__ico-container._open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.audio__ico {
+  width: 30px;
+  height: 30px;
+  overflow: hidden;
+  transition: opacity 0.3s ease;
+  margin: 0 auto;
+}

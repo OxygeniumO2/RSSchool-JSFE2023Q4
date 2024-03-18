@@ -12,13 +12,13 @@ import {
 } from '../../game-screen';
 import { container } from '../../../../app-container/container';
 import { MENU } from '../menu-container/menu-container';
-import { BTN_HINT_TEXT, HINT_CONTAINER } from '../game-hint/game-hint';
-import { HINT_BTN } from '../game-btns-container/game-btns-container';
+import { BTN_HINT_TEXT, HINT_CONTAINER } from '../game-hints/game-hint-text';
+import { CHECK_BTN, CONTINUE_BTN, HINT_BTN } from '../game-btns-container/game-btns-container';
 
 const LOGOUT_BTN_TEXT: string = 'Logout';
 
 function generateLogout(): HTMLElement {
-  const logoutBtn = createElem({ tag: 'button', classesCss: ['btn'], textContent: LOGOUT_BTN_TEXT });
+  const logoutBtn = createElem({ tag: 'button', classesCss: ['btn', 'logout-btn'], textContent: LOGOUT_BTN_TEXT });
   logoutBtn.addEventListener('click', logout);
   return logoutBtn;
 }
@@ -36,6 +36,10 @@ function logout() {
   HINT_CONTAINER.classList.add('_open');
   HINT_BTN.textContent = BTN_HINT_TEXT;
   HINT_BTN.classList.remove('_off');
+  CHECK_BTN.classList.remove('btn_active');
+  CHECK_BTN.classList.add('btn_wrong');
+  CONTINUE_BTN.classList.add('btn_wrong');
+  CONTINUE_BTN.classList.remove('btn_active');
   setTimeout(() => {
     container.innerHTML = '';
     createLoginScreen();

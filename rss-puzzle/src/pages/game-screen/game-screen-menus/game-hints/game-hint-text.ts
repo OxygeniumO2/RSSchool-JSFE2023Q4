@@ -1,4 +1,4 @@
-import './game-hint.css';
+import './game-hint-text.css';
 // import { container } from '../../../../app-container/container';
 import { createElem } from '../../../../utils/createElem';
 import GameData from '../../../../interfaces/game-data-interface';
@@ -6,8 +6,8 @@ import { getDataRoundFromLS } from '../../../../utils/getDataRoundLS';
 import { GAMEFIELD } from '../../game-screen';
 import { HINT_BTN } from '../game-btns-container/game-btns-container';
 
-export const BTN_HINT_TEXT = 'Hint-ON';
-export const BTN_HINT_TEXT_OFF = 'Hint-OFF';
+export const BTN_HINT_TEXT = 'Hint Text - ON';
+export const BTN_HINT_TEXT_OFF = 'Hint Text - OFF';
 export const HINT_CONTAINER = createElem({ tag: 'div', classesCss: ['hint-container', '_open'] });
 const HINT_INNER_DIV = createElem({ tag: 'div', classesCss: ['hint-inner'] });
 

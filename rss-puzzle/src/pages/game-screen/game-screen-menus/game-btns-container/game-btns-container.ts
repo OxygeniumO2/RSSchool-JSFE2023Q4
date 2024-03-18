@@ -4,7 +4,7 @@ import { container } from '../../../../app-container/container';
 import createContinueBtn from '../game-btns/continue-btn';
 import { createCheckBtn } from '../game-btns/check-btn';
 import { createCompleteBtn } from '../game-btns/auto-complete-btn';
-import { createHintBtn } from '../game-hint/game-hint';
+import { createHintBtn } from '../game-hints/game-hint-text';
 
 export const CONTINUE_BTN = createContinueBtn();
 export const CHECK_BTN = createCheckBtn();

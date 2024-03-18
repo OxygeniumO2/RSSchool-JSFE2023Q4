@@ -1,6 +1,6 @@
 .menu__container {
-  padding-top: 20px;
-  margin-bottom: 30px;
+  padding-top: 10px;
+  margin-bottom: 10px;
   display: flex;
   justify-content: end;
 }
