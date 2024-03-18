@@ -10,12 +10,14 @@ export function createHintAudioIco() {
   HINT_CONTAINER.insertAdjacentElement('afterend', AUDIO_ICO_CONTAINER);
 }
 
-export function playAudio(this: HTMLElement) {
-  console.log(this, 'sas');
+export function playAudio() {
   const currAudioToPlay = currAudio;
-  console.log(currAudioToPlay);
   if (currAudioToPlay) {
     currAudioToPlay.currentTime = 0;
     currAudioToPlay.play();
+    AUDIO_ICO.classList.add('_audioPlaying');
+    currAudioToPlay.addEventListener('ended', () => {
+      AUDIO_ICO.classList.remove('_audioPlaying');
+    });
   }
 }
