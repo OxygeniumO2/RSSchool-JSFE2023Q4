@@ -16,6 +16,8 @@ import { MENU } from './game-screen-menus/menu-container/menu-container';
 import { HINT_CONTAINER, createHintContainer, generateHint } from './game-screen-menus/game-hints/game-hint-text';
 import { AUDIO_ICO_CONTAINER, createHintAudioIco, playAudio } from './game-screen-menus/game-hints/game-hint-audio';
 
+let wordNoBefore: string;
+let wordNoAfter: string;
 const MULTIPLE_LENGTH_HEIGHT_GAMEFIELD: number = 50;
 const STATIC_LENGTH: number = 24;
 export const START_GAME_ZERO: number = 0;
@@ -69,9 +71,6 @@ export function generateGamefieldRow(round: GameData, rowNumber: number): HTMLDi
   for (let i = 0; i < currRowWords.length; i += 1) {
     const gamefieldRowItem = createElem({ tag: 'div', classesCss: ['gamefield__row__item'] });
     gamefieldRow.append(gamefieldRowItem);
-    // setTimeout(() => {
-    //   gamefieldRowItem.classList.add('_appearing'); // Добавляем класс для запуска анимации
-    // }, i * 100);
   }
   return gamefieldRow as HTMLDivElement;
 }
@@ -91,9 +90,15 @@ export function generateGamefieldWords(round: GameData, rowNumber: number): Docu
     });
     if (i === 0) {
       gamefieldItem.classList.add('_noPseudoAfter');
+      if (gamefieldItem.textContent) {
+        wordNoAfter = gamefieldItem.textContent;
+      }
     }
     if (i === gamefieldItems.length - 1) {
       gamefieldItem.classList.add('_noPseudoBefore');
+      if (gamefieldItem.textContent) {
+        wordNoBefore = gamefieldItem.textContent;
+      }
     }
     elementsArr.push(gamefieldItem);
   }
@@ -160,6 +165,14 @@ export function moveWordFromRow(currRowItem: HTMLElement, words: HTMLElement[]) 
       if (!words[i].textContent) {
         words[i].textContent = currRowItem.textContent;
         words[i].classList.remove('_zeroWidth');
+        words[i].classList.remove('_noPseudoAfter');
+        words[i].classList.remove('_noPseudoBefore');
+        if (words[i].textContent === wordNoAfter) {
+          words[i].classList.add('_noPseudoAfter');
+        }
+        if (words[i].textContent === wordNoBefore) {
+          words[i].classList.add('_noPseudoBefore');
+        }
         break;
       }
     }
