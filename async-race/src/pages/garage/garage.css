@@ -1,0 +1,13 @@
+.pages__btns__switch-container,
+.add__update__cars-container {
+  display: flex;
+  gap: 30px;
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
+
+.add__update__cars-container {
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 20px;
+}
