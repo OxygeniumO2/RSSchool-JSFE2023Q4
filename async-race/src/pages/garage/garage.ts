@@ -1,15 +1,13 @@
 import './garage.css';
 import { APP_CONTAINER } from '../../app-container/app-container';
 import createElem from '../../utils/create-elem';
-import baseUrl from '../../utils/base-url';
-import buildCars from './build-cars';
-import GarageCars from './garage-interfaces';
+// import baseUrl, { GARAGE_PATH } from '../../utils/base-url';
+// import buildCars from './build-cars';
+// import GarageCars from './garage-interfaces';
+import addCar from './add-car';
+// import buildGaragePage from './build-garage-page';
 
-const GARAGE_PATH = '/garage';
-// let PAGE_NUMBER = 2;
-// const LIMIT_CARS_BY_PAGE = 7;
-
-async function buildGaragePage() {
+export function buildGarageControls(): void {
   const garage = createElem({ tag: 'div', classesCss: ['garage'] });
   const addCarsContainer = createElem({
     tag: 'form',
@@ -19,9 +17,16 @@ async function buildGaragePage() {
     tag: 'input',
     type: 'text',
     required: true,
+  }) as HTMLInputElement;
+  const inputColorAddCar = createElem({
+    tag: 'input',
+    type: 'color',
+  }) as HTMLInputElement;
+  const createCarBtn = createElem({
+    tag: 'button',
+    type: 'submit',
+    textContent: 'Create Car',
   });
-  const inputColorAddCar = createElem({ tag: 'input', type: 'color' });
-  const createCarBtn = createElem({ tag: 'button', textContent: 'Create Car' });
   addCarsContainer.append(inputCarAddName, inputColorAddCar, createCarBtn);
 
   const updateCarsContainer = createElem({
@@ -63,35 +68,13 @@ async function buildGaragePage() {
   });
   raceControlContainer.append(raceBtn, resetRaceBtn, generateCarsBtn);
 
-  const garageTitle = createElem({ tag: 'span', textContent: 'Garage' });
-  const garageResponse: Response = await fetch(`${baseUrl}${GARAGE_PATH}`);
-  // const garageResponseByPageAndLimit: Response = await fetch(
-  //   `${baseUrl}/garage?_page=${page}&_limit=${limit}`,
-  // );
-  const garageCars: GarageCars[] = await garageResponse.json();
+  garage.append(addCarsContainer, updateCarsContainer, raceControlContainer);
 
-  console.log('sas', garageCars);
-
-  const garageNumberOfCarsElem = createElem({
-    tag: 'span',
-    textContent: ` (${garageCars.length})`,
+  addCarsContainer.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    await addCar(inputCarAddName.value, inputColorAddCar.value);
   });
-
-  const garagePageText = createElem({ tag: 'div', textContent: 'Page # 1' });
-
-  const allCarsContainer: HTMLElement = createElem({ tag: 'div' });
-  buildCars(garageCars, allCarsContainer);
-
-  garage.append(
-    addCarsContainer,
-    updateCarsContainer,
-    raceControlContainer,
-    garageTitle,
-    garageNumberOfCarsElem,
-    garagePageText,
-  );
-
   APP_CONTAINER.append(garage);
 }
 
-export default buildGaragePage;
+export default buildGarageControls;

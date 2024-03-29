@@ -1,7 +1,7 @@
 import { APP_CONTAINER } from '../../app-container/app-container';
 import createElem from '../../utils/create-elem';
 
-function buildChangePageContainer() {
+function buildChangePageContainer(): void {
   const containerPages = createElem({
     tag: 'div',
     classesCss: ['pages__btns__switch-container'],

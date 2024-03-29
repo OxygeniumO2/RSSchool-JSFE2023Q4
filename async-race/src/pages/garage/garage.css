@@ -11,3 +11,13 @@
   align-items: center;
   margin-bottom: 20px;
 }
+
+.car {
+  background-color: aqua;
+  width: 30px;
+  height: 30px;
+}
+
+.car__control__container {
+  display: flex;
+}

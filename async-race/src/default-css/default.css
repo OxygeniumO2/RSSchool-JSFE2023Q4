@@ -10,8 +10,14 @@ body {
   margin: 0 auto;
 }
 
-.btn {
+.btn,
+.btn_small {
   display: flex;
   justify-content: center;
   padding: 10px 20px;
+}
+
+.btn_small {
+  display: inline-block;
+  padding: 5px 10px;
 }
