@@ -39,6 +39,7 @@ async function buildGaragePage(): Promise<void> {
 
   const garagePageText = createElem({
     tagName: 'div',
+    classNames: ['garage__page'],
     textContent: `Page #${PAGE_NUMBER}`,
   });
 

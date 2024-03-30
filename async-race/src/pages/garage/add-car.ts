@@ -6,6 +6,7 @@ async function addCar(nameValue: string, colorValue: string): Promise<void> {
     name: nameValue,
     color: colorValue,
   };
+
   await fetch(`${baseUrl}${GARAGE_PATH}`, {
     method: 'POST',
     headers: {
@@ -13,6 +14,7 @@ async function addCar(nameValue: string, colorValue: string): Promise<void> {
     },
     body: JSON.stringify(newCar),
   });
+
   await buildGaragePage();
 }
 

@@ -3,13 +3,16 @@ import { APP_CONTAINER } from '../../app-container/app-container';
 import createElem from '../../utils/create-elem';
 import addCar from './add-car';
 import generateCars from './generate-cars';
+import updateCar from './update-car';
 
 export function buildGarageControls(): void {
   const garage = createElem({ tagName: 'div', classNames: ['garage'] });
+
   const addCarsContainer = createElem({
     tagName: 'form',
-    classNames: ['add__update__cars-container'],
+    classNames: ['add__cars-container'],
   });
+
   const inputCarAddName = createElem({
     tagName: 'input',
     attributes: [
@@ -17,6 +20,7 @@ export function buildGarageControls(): void {
       ['required', true],
     ],
   }) as HTMLInputElement;
+
   const inputColorAddCar = createElem({
     tagName: 'input',
     attributes: [['type', 'color']],
@@ -26,26 +30,36 @@ export function buildGarageControls(): void {
     attributes: [['type', 'submit']],
     textContent: 'Create Car',
   });
+
   addCarsContainer.append(inputCarAddName, inputColorAddCar, createCarBtn);
 
   const updateCarsContainer = createElem({
     tagName: 'form',
-    classNames: ['add__update__cars-container'],
+    classNames: ['update__cars-container'],
   });
+
   const inputCarUpdateName = createElem({
     tagName: 'input',
     attributes: [
       ['type', 'text'],
       ['required', true],
+      ['disabled', true],
     ],
-  });
+  }) as HTMLInputElement;
+
   const inputColorUpdateCar = createElem({
     tagName: 'input',
     attributes: [['type', 'color']],
-  });
+  }) as HTMLInputElement;
+
   const updateCarBtn = createElem({
     tagName: 'button',
     textContent: 'Update Car',
+    attributes: [
+      ['type', 'text'],
+      ['required', true],
+      ['disabled', true],
+    ],
   });
 
   updateCarsContainer.append(
@@ -56,18 +70,21 @@ export function buildGarageControls(): void {
 
   const raceControlContainer = createElem({
     tagName: 'div',
-    classNames: ['add__update__cars-container'],
+    classNames: ['race__cars-container'],
   });
+
   const raceBtn = createElem({
     tagName: 'button',
     classNames: ['btn'],
     textContent: 'Race',
   });
+
   const resetRaceBtn = createElem({
     tagName: 'button',
     classNames: ['btn'],
     textContent: 'Reset Race',
   });
+
   const generateCarsBtn = createElem({
     tagName: 'button',
     classNames: ['btn'],
@@ -84,6 +101,19 @@ export function buildGarageControls(): void {
     event.preventDefault();
     await addCar(inputCarAddName.value, inputColorAddCar.value);
   });
+
+  updateCarsContainer.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const currCarId = localStorage.getItem('carId') as string;
+    const currCarIdParsed = parseInt(currCarId, 10);
+
+    await updateCar(
+      inputCarUpdateName.value,
+      inputColorUpdateCar.value,
+      currCarIdParsed,
+    );
+  });
+
   APP_CONTAINER.append(garage);
 }
 

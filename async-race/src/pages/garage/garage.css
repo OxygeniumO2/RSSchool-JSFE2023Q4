@@ -1,23 +1,62 @@
 .pages__btns__switch-container,
-.add__update__cars-container {
+.add__cars-container,
+.update__cars-container,
+.race__cars-container {
   display: flex;
   gap: 30px;
   margin-top: 20px;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 }
 
-.add__update__cars-container {
+.add__cars-container,
+.update__cars-container,
+.race__cars-container {
   gap: 10px;
   align-items: center;
   margin-bottom: 20px;
 }
 
 .car {
-  background-color: aqua;
-  width: 30px;
-  height: 30px;
+  width: 100px;
+  height: 100%;
 }
 
 .car__control__container {
   display: flex;
+  align-items: center;
+  gap: 10px;
+  border-top: 2px dashed black;
+}
+
+.car__control__container._active {
+  background-color: #cccccc;
+}
+
+.drive__car {
+  background-color: green;
+}
+
+.stop__car {
+  background-color: red;
+}
+
+.engine__container {
+  display: flex;
+  gap: 5px;
+}
+
+.control__name__car-container {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.car-container {
+  margin-bottom: 40px;
+  border-bottom: 2px dashed black;
+}
+
+.garage__page {
+  margin: 10px 0 20px 0;
 }
