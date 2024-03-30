@@ -1,47 +1,53 @@
 import createElem from '../../utils/create-elem';
-import GarageCars from './garage-interfaces';
+import GarageCar from './garage-interfaces';
+// eslint-disable-next-line import/no-cycle
+import removeCar from './remove-car';
 
 function buildCars(
-  cars: GarageCars[],
+  cars: GarageCar[],
   carsContainer: HTMLElement,
   garageNumberOfCars: HTMLElement,
   garageTotalLength: number,
 ): void {
   cars.forEach((car) => {
-    console.log('sas', car);
-    const carContainer = createElem({ tag: 'div' });
-    const carNameAndBtnsContainer = createElem({ tag: 'div' });
+    const carId = car.id;
+    const carContainer = createElem({ tagName: 'div' });
+    const carNameAndBtnsContainer = createElem({ tagName: 'div' });
     const removeCarBtn = createElem({
-      tag: 'button',
-      classesCss: ['btn_small'],
+      tagName: 'button',
+      classNames: ['btn_small'],
       textContent: 'Remove Car',
     });
+
+    removeCarBtn.addEventListener('click', () => {
+      removeCar(carId);
+    });
     const selectCarBtn = createElem({
-      tag: 'button',
-      classesCss: ['btn_small'],
+      tagName: 'button',
+      classNames: ['btn_small'],
       textContent: 'Select Car',
     });
-    const carName = createElem({ tag: 'span', textContent: `${car.name}` });
+    const carName = createElem({ tagName: 'span', textContent: `${car.name}` });
     carNameAndBtnsContainer.append(removeCarBtn, selectCarBtn, carName);
 
     const carControlContainerWithImg = createElem({
-      tag: 'div',
-      classesCss: ['car__control__container'],
+      tagName: 'div',
+      classNames: ['car__control__container'],
     });
-    const carControlContainer = createElem({ tag: 'div' });
+    const carControlContainer = createElem({ tagName: 'div' });
     const carStartBtn = createElem({
-      tag: 'button',
-      classesCss: ['btn_small'],
+      tagName: 'button',
+      classNames: ['btn_small'],
       textContent: 'DRV',
     });
     const carStopBtn = createElem({
-      tag: 'button',
-      classesCss: ['btn_small'],
+      tagName: 'button',
+      classNames: ['btn_small'],
       textContent: 'RST',
     });
     carControlContainer.append(carStartBtn, carStopBtn);
 
-    const carImg = createElem({ tag: 'div', classesCss: ['car'] });
+    const carImg = createElem({ tagName: 'div', classNames: ['car'] });
 
     carControlContainerWithImg.append(carControlContainer, carImg);
 

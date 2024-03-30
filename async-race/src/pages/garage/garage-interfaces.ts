@@ -1,7 +1,7 @@
-interface GarageCars {
+interface GarageCar {
   color: string;
-  id: number;
   name: string;
+  id: number;
 }
 
-export default GarageCars;
+export default GarageCar;

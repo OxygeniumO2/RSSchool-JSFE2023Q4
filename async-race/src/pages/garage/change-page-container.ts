@@ -3,17 +3,17 @@ import createElem from '../../utils/create-elem';
 
 function buildChangePageContainer(): void {
   const containerPages = createElem({
-    tag: 'div',
-    classesCss: ['pages__btns__switch-container'],
+    tagName: 'div',
+    classNames: ['pages__btns__switch-container'],
   });
   const toGaragePageBtn = createElem({
-    tag: 'button',
-    classesCss: ['btn'],
+    tagName: 'button',
+    classNames: ['btn'],
     textContent: 'To Garage',
   });
   const toWinnersPageBtn = createElem({
-    tag: 'button',
-    classesCss: ['btn'],
+    tagName: 'button',
+    classNames: ['btn'],
     textContent: 'To Winners',
   });
   containerPages.append(toGaragePageBtn, toWinnersPageBtn);
