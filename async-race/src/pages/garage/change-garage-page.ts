@@ -26,7 +26,7 @@ async function changeGaragePage(
     nextPage = currPage === 1 ? totalPages : currPage - 1;
   }
 
-  buildGaragePage(nextPage);
+  await buildGaragePage(nextPage);
 }
 
 export default changeGaragePage;

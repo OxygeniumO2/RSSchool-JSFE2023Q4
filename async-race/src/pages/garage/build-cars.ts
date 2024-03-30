@@ -1,9 +1,12 @@
 import createElem from '../../utils/create-elem';
+import getCurrPage from '../../utils/getPageFromLs';
+// eslint-disable-next-line import/no-cycle
+import buildGaragePage from './build-garage-page';
 import carSvg from './car-svg-content';
 import GarageCar from './garage-interfaces';
 // eslint-disable-next-line import/no-cycle
 import removeCar from './remove-car';
-import { selectCar } from './select-car';
+import selectCar from './select-car';
 
 function buildCars(
   cars: GarageCar[],
@@ -30,8 +33,12 @@ function buildCars(
       textContent: 'Remove Car',
     });
 
-    removeCarBtn.addEventListener('click', () => {
-      removeCar(carId);
+    removeCarBtn.addEventListener('click', async () => {
+      await removeCar(carId);
+
+      const currPage = getCurrPage();
+
+      await buildGaragePage(currPage);
     });
 
     const selectCarBtn = createElem({

@@ -1,5 +1,7 @@
 import { carManufacturer, carModel } from '../../utils/carNames';
+import getCurrPage from '../../utils/getPageFromLs';
 import addCar from './add-car';
+import buildGaragePage from './build-garage-page';
 
 const NUMBER_OF_GENERATED_CARS = 100;
 
@@ -28,12 +30,15 @@ function generateRandomCarName(): string {
   return `${manufacturer} ${model}`;
 }
 
-function generateCars() {
+async function generateCars() {
   for (let i = 0; i < NUMBER_OF_GENERATED_CARS; i += 1) {
     const randomCarName = generateRandomCarName();
     const randomCarColor = generateRandomColor();
     addCar(randomCarName, randomCarColor);
   }
+  const currPage = getCurrPage();
+
+  await buildGaragePage(currPage);
 }
 
 export default generateCars;

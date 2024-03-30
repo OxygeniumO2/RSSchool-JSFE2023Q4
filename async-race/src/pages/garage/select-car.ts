@@ -1,14 +1,4 @@
-function setUpdateToNewState(state: boolean) {
-  const updateCarContainer = document.querySelector('.update__cars-container');
-  const updateCarAllItems = Array.from(updateCarContainer!.children) as
-    | HTMLInputElement[]
-    | HTMLButtonElement[];
-
-  updateCarAllItems.forEach((item) => {
-    const currentItem = item;
-    currentItem.disabled = !state;
-  });
-}
+import setUpdateToNewState from '../../utils/setUpdateToNewState';
 
 function selectCar(index: number): void {
   const allCarsElements = Array.from(
@@ -24,4 +14,4 @@ function selectCar(index: number): void {
   setUpdateToNewState(true);
 }
 
-export { selectCar, setUpdateToNewState };
+export default selectCar;
