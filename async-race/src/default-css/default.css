@@ -4,6 +4,18 @@ body {
   transition: opacity 0.5s ease;
 }
 
+button {
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+}
+
+@media (any-hover: hover) {
+  button:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    transform: scale(1.05);
+  }
+}
+
 .container {
   max-width: 1600px;
   padding: 0 20px;
@@ -15,9 +27,17 @@ body {
   display: flex;
   justify-content: center;
   padding: 5px 10px;
-  cursor: pointer;
+  font-size: 1rem;
 }
 
 .btn_small {
   display: inline-block;
+}
+
+.btn_color_1 {
+  background-color: #8bbbbb;
+}
+
+.btn_color_2 {
+  background-color: #b0db57;
 }

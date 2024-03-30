@@ -1,4 +1,5 @@
 import baseUrl, { GARAGE_PATH } from '../../utils/base-url';
+import getCurrPage from '../../utils/getPageFromLs';
 import buildGaragePage from './build-garage-page';
 
 async function addCar(nameValue: string, colorValue: string): Promise<void> {
@@ -15,7 +16,9 @@ async function addCar(nameValue: string, colorValue: string): Promise<void> {
     body: JSON.stringify(newCar),
   });
 
-  await buildGaragePage();
+  const currPage = getCurrPage();
+
+  await buildGaragePage(currPage);
 }
 
 export default addCar;

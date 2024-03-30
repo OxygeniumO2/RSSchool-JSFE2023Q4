@@ -8,15 +8,20 @@ import {
 import buildCars from './build-cars';
 import GarageCar from './garage-interfaces';
 
-const PAGE_NUMBER: number = 1;
+const PAGE_NUMBER_DEFAULT: number = 1;
 const LIMIT_CARS_BY_PAGE = 7;
 
-async function buildGaragePage(): Promise<void> {
+async function buildGaragePage(
+  pageNumber: number = PAGE_NUMBER_DEFAULT,
+  limit: number = LIMIT_CARS_BY_PAGE,
+): Promise<void> {
   const garageTotalPageAndCarsContainer = createElem({
     tagName: 'div',
     classNames: ['garage__page__cars-container'],
   });
   const garageTitle = createElem({ tagName: 'span', textContent: 'Garage' });
+
+  localStorage.setItem('garagePageOxy', pageNumber.toString());
 
   const garageTotal: GarageCar[] = await garageAllCarsPromise(
     baseUrl,
@@ -28,8 +33,8 @@ async function buildGaragePage(): Promise<void> {
     await garageRespByPageAndLimitPromise(
       baseUrl,
       GARAGE_PATH,
-      PAGE_NUMBER,
-      LIMIT_CARS_BY_PAGE,
+      pageNumber,
+      limit,
     );
 
   const garageNumberOfCarsElem: HTMLElement = createElem({
@@ -40,7 +45,7 @@ async function buildGaragePage(): Promise<void> {
   const garagePageText = createElem({
     tagName: 'div',
     classNames: ['garage__page'],
-    textContent: `Page #${PAGE_NUMBER}`,
+    textContent: `Page #${pageNumber}`,
   });
 
   const allCarsContainer: HTMLElement = createElem({ tagName: 'div' });

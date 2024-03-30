@@ -4,6 +4,9 @@ import createElem from '../../utils/create-elem';
 import addCar from './add-car';
 import generateCars from './generate-cars';
 import updateCar from './update-car';
+import changeGaragePage from './change-garage-page';
+
+const DEFAULT_LIMIT: number = 7;
 
 export function buildGarageControls(): void {
   const garage = createElem({ tagName: 'div', classNames: ['garage'] });
@@ -75,19 +78,19 @@ export function buildGarageControls(): void {
 
   const raceBtn = createElem({
     tagName: 'button',
-    classNames: ['btn'],
+    classNames: ['btn', 'btn_color_1'],
     textContent: 'Race',
   });
 
   const resetRaceBtn = createElem({
     tagName: 'button',
-    classNames: ['btn'],
+    classNames: ['btn', 'btn_color_1'],
     textContent: 'Reset Race',
   });
 
   const generateCarsBtn = createElem({
     tagName: 'button',
-    classNames: ['btn'],
+    classNames: ['btn', 'btn_color_1'],
     textContent: 'Generate Cars',
   });
 
@@ -95,7 +98,43 @@ export function buildGarageControls(): void {
 
   raceControlContainer.append(raceBtn, resetRaceBtn, generateCarsBtn);
 
-  garage.append(addCarsContainer, updateCarsContainer, raceControlContainer);
+  const changePageContainer = createElem({
+    tagName: 'div',
+    classNames: ['change__page-container'],
+  });
+  const prevPageBtn = createElem({
+    tagName: 'button',
+    classNames: ['btn', 'btn_color_2'],
+    textContent: 'Prev Page',
+  });
+  const nextPageBtn = createElem({
+    tagName: 'button',
+    classNames: ['btn', 'btn_color_2'],
+    textContent: 'Next Page',
+  });
+
+  prevPageBtn.addEventListener(
+    'click',
+    function handleClickPrevPage(this: HTMLElement) {
+      changeGaragePage.call(this, prevPageBtn, DEFAULT_LIMIT);
+    },
+  );
+
+  nextPageBtn.addEventListener(
+    'click',
+    function handleClickNextPage(this: HTMLElement) {
+      changeGaragePage.call(this, nextPageBtn, DEFAULT_LIMIT);
+    },
+  );
+
+  changePageContainer.append(prevPageBtn, nextPageBtn);
+
+  garage.append(
+    addCarsContainer,
+    updateCarsContainer,
+    raceControlContainer,
+    changePageContainer,
+  );
 
   addCarsContainer.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -104,7 +143,7 @@ export function buildGarageControls(): void {
 
   updateCarsContainer.addEventListener('submit', async (event) => {
     event.preventDefault();
-    const currCarId = localStorage.getItem('carId') as string;
+    const currCarId = localStorage.getItem('carIdOxy') as string;
     const currCarIdParsed = parseInt(currCarId, 10);
 
     await updateCar(

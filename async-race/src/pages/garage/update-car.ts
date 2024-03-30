@@ -1,4 +1,5 @@
 import baseUrl, { GARAGE_PATH } from '../../utils/base-url';
+import getCurrPage from '../../utils/getPageFromLs';
 import buildGaragePage from './build-garage-page';
 import { setUpdateToNewState } from './select-car';
 
@@ -22,7 +23,9 @@ async function updateCar(
 
   setUpdateToNewState(false);
 
-  await buildGaragePage();
+  const currPage = getCurrPage();
+
+  await buildGaragePage(currPage);
 }
 
 export default updateCar;

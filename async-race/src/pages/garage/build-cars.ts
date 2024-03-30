@@ -42,7 +42,7 @@ function buildCars(
 
     selectCarBtn.addEventListener('click', () => {
       selectCar(index);
-      localStorage.setItem('carId', car.id.toString());
+      localStorage.setItem('carIdOxy', car.id.toString());
     });
 
     const carName = createElem({ tagName: 'span', textContent: `${car.name}` });
