@@ -1,10 +1,9 @@
+import carSvg from '../../utils/car-svg-content';
 import createElem from '../../utils/create-elem';
-import getCurrPage from '../../utils/getPageFromLs';
+import getCurrPage from '../../utils/get-page-from-ls';
 // eslint-disable-next-line import/no-cycle
 import buildGaragePage from './build-garage-page';
-import carSvg from './car-svg-content';
 import GarageCar from './garage-interfaces';
-// eslint-disable-next-line import/no-cycle
 import removeCar from './remove-car';
 import selectCar from './select-car';
 

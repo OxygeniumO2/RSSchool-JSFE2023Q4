@@ -5,8 +5,9 @@ import addCar from './add-car';
 import generateCars from './generate-cars';
 import updateCar from './update-car';
 import changeGaragePage from './change-garage-page';
-import getCurrPage from '../../utils/getPageFromLs';
+import getCurrPage from '../../utils/get-page-from-ls';
 import buildGaragePage from './build-garage-page';
+import { Car, createCar } from '../../utils/create-car';
 
 const DEFAULT_LIMIT: number = 7;
 
@@ -140,7 +141,11 @@ export function buildGarageControls(): void {
 
   addCarsContainer.addEventListener('submit', async (event) => {
     event.preventDefault();
-    await addCar(inputCarAddName.value, inputColorAddCar.value);
+    const newCar: Car = createCar(
+      inputCarAddName.value,
+      inputColorAddCar.value,
+    );
+    await addCar(newCar);
     const currPage = getCurrPage();
 
     await buildGaragePage(currPage);

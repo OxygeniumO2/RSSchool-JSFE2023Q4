@@ -1,4 +1,5 @@
 const baseUrl: string = 'http://127.0.0.1:3000';
-export const GARAGE_PATH = '/garage';
+const GARAGE_PATH: string = '/garage';
+const WINNERS_PATH: string = '/winners';
 
-export default baseUrl;
+export { baseUrl, GARAGE_PATH, WINNERS_PATH };

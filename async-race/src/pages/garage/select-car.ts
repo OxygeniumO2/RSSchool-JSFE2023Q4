@@ -1,4 +1,4 @@
-import setUpdateToNewState from '../../utils/setUpdateToNewState';
+import setUpdateToNewState from '../../utils/set-update-to-new-state';
 
 function selectCar(index: number): void {
   const allCarsElements = Array.from(

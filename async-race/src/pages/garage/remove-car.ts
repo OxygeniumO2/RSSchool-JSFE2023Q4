@@ -1,9 +1,6 @@
-import baseUrl, { GARAGE_PATH } from '../../utils/base-url';
-// import getCurrPage from '../../utils/getPageFromLs';
-import setUpdateToNewState from '../../utils/setUpdateToNewState';
-
-// eslint-disable-next-line import/no-cycle
-// import buildGaragePage from './build-garage-page';
+import { GARAGE_PATH, WINNERS_PATH, baseUrl } from '../../utils/base-url';
+import setUpdateToNewState from '../../utils/set-update-to-new-state';
+import buildWinnersPage from '../winners/build-winners-page';
 
 async function removeCar(carId: number): Promise<void> {
   await fetch(`${baseUrl}${GARAGE_PATH}/${carId}`, {
@@ -11,6 +8,18 @@ async function removeCar(carId: number): Promise<void> {
   });
 
   setUpdateToNewState(false);
+
+  try {
+    const response = await fetch(`${baseUrl}${WINNERS_PATH}/${carId}`, {
+      method: 'DELETE',
+    });
+
+    if (response.ok) {
+      await buildWinnersPage();
+    }
+  } catch (error) {
+    /* empty */
+  }
 }
 
 export default removeCar;

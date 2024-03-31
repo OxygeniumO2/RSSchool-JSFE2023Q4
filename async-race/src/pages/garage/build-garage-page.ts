@@ -1,9 +1,10 @@
-import baseUrl, { GARAGE_PATH } from '../../utils/base-url';
+import { GARAGE_PATH, baseUrl } from '../../utils/base-url';
 import createElem from '../../utils/create-elem';
 import {
   garageAllCarsPromise,
   garageRespByPageAndLimitPromise,
-} from '../../utils/fetchResp';
+} from '../../utils/fetch-resp';
+import removeElementsByClass from '../../utils/remove-elem-by-class';
 // eslint-disable-next-line import/no-cycle
 import buildCars from './build-cars';
 import GarageCar from './garage-interfaces';
@@ -65,13 +66,8 @@ async function buildGaragePage(
 
   const garage = document.querySelector('.garage') as HTMLElement;
 
-  const garageChildren = Array.from(garage.children);
-  garageChildren.forEach((children, index) => {
-    if (children.classList.contains('garage__page__cars-container')) {
-      const garageToDelete = garage.children[index];
-      garage.removeChild(garageToDelete);
-    }
-  });
+  removeElementsByClass(garage, 'garage__page__cars-container');
+
   garage.append(garageTotalPageAndCarsContainer);
 }
 

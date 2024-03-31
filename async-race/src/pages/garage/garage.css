@@ -1,3 +1,7 @@
+.garage._hidden {
+  display: none;
+}
+
 .pages__btns__switch-container,
 .add__cars-container,
 .update__cars-container,

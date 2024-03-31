@@ -1,4 +1,5 @@
 import GarageCar from '../pages/garage/garage-interfaces';
+import Winner from '../pages/winners/winners-interfaces';
 
 async function garageAllCarsPromise(
   url: string,
@@ -22,4 +23,14 @@ async function garageRespByPageAndLimitPromise(
   return garageCarsOnOnePage;
 }
 
-export { garageAllCarsPromise, garageRespByPageAndLimitPromise };
+async function allWinnersPromise(url: string, path: string): Promise<Winner[]> {
+  const winnerResponse = await fetch(`${url}${path}`);
+  const winnerTotal: Winner[] = await winnerResponse.json();
+  return winnerTotal;
+}
+
+export {
+  garageAllCarsPromise,
+  garageRespByPageAndLimitPromise,
+  allWinnersPromise,
+};

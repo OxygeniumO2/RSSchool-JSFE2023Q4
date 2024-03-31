@@ -1,7 +1,5 @@
-import baseUrl, { GARAGE_PATH } from '../../utils/base-url';
-// import getCurrPage from '../../utils/getPageFromLs';
-import setUpdateToNewState from '../../utils/setUpdateToNewState';
-// import buildGaragePage from './build-garage-page';
+import { GARAGE_PATH, baseUrl } from '../../utils/base-url';
+import setUpdateToNewState from '../../utils/set-update-to-new-state';
 
 async function updateCar(
   carName: string,
