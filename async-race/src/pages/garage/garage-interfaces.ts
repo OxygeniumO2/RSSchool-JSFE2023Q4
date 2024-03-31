@@ -2,6 +2,12 @@ interface GarageCar {
   color: string;
   name: string;
   id: number;
+  status?: string;
 }
 
-export default GarageCar;
+interface CarTravelData {
+  velocity: number;
+  distance: number;
+}
+
+export { GarageCar, CarTravelData };

@@ -1,6 +1,6 @@
 body {
   background-color: #f0f0f0;
-  font-size: 1.1rem;
+  font-size: 1rem;
   transition: opacity 0.5s ease;
 }
 
@@ -13,6 +13,11 @@ button {
   button:hover {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     transform: scale(1.05);
+  }
+  button:disabled {
+    cursor: auto;
+    box-shadow: none;
+    transform: none;
   }
 }
 
@@ -27,11 +32,16 @@ button {
   display: flex;
   justify-content: center;
   padding: 5px 10px;
-  font-size: 1rem;
+  font-size: 0.8rem;
 }
 
 .btn_small {
   display: inline-block;
+}
+
+.btn_very_small {
+  padding: 2px 7px;
+  font-size: 0.8rem;
 }
 
 .btn_color_1 {

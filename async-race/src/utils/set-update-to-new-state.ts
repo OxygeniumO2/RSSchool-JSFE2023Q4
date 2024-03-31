@@ -1,4 +1,4 @@
-function setUpdateToNewState(state: boolean) {
+function setUpdateToNewState(state: boolean): void {
   const updateCarContainer = document.querySelector('.update__cars-container');
   const updateCarAllItems = Array.from(updateCarContainer!.children) as
     | HTMLInputElement[]

@@ -12,7 +12,6 @@ async function generateCars() {
     addCar(newRandomCar);
   }
   const currPage = getCurrPage();
-
   await buildGaragePage(currPage);
 }
 

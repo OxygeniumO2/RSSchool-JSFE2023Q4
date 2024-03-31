@@ -2,6 +2,21 @@
   display: none;
 }
 
+@keyframes moveCar {
+  from {
+    left: 70px;
+  }
+  to {
+    left: calc(100% - 85px);
+  }
+}
+
+.car-moving {
+  animation-name: moveCar;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
 .pages__btns__switch-container,
 .add__cars-container,
 .update__cars-container,
@@ -23,22 +38,28 @@
 }
 
 .car {
-  width: 100px;
+  position: absolute;
+  left: 70px;
+  bottom: -9px;
+  width: 70px;
   height: 100%;
-  transform: translateY(10px);
+  transition: all 0.2s linear;
 }
 
 .car__control__container {
+  position: relative;
+  height: 40px;
   display: flex;
   align-items: center;
   gap: 10px;
   background-image: url('../../assets/img/flag.png');
   background-repeat: no-repeat;
+  background-size: 40px;
   background-position: right 70px bottom -5px;
 }
 
 .car__control__container._active {
-  background-color: #cccccc;
+  background-color: #dbdada;
 }
 
 .drive__car {
@@ -46,7 +67,11 @@
 }
 
 .stop__car {
-  background-color: red;
+  background-color: #db1313;
+}
+
+.stop__car:disabled {
+  background-color: #955e5e;
 }
 
 .engine__container {

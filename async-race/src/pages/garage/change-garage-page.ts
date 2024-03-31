@@ -2,7 +2,7 @@ import { GARAGE_PATH, baseUrl } from '../../utils/base-url';
 import { garageAllCarsPromise } from '../../utils/fetch-resp';
 import getCurrPage from '../../utils/get-page-from-ls';
 import buildGaragePage from './build-garage-page';
-import GarageCar from './garage-interfaces';
+import { GarageCar } from './garage-interfaces';
 
 const NEXT_PAGE: string = 'Next Page';
 

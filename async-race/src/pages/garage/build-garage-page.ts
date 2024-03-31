@@ -7,7 +7,7 @@ import {
 import removeElementsByClass from '../../utils/remove-elem-by-class';
 // eslint-disable-next-line import/no-cycle
 import buildCars from './build-cars';
-import GarageCar from './garage-interfaces';
+import { GarageCar } from './garage-interfaces';
 
 const PAGE_NUMBER_DEFAULT: number = 1;
 const LIMIT_CARS_BY_PAGE = 7;

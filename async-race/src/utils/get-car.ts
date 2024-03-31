@@ -1,4 +1,4 @@
-import GarageCar from '../pages/garage/garage-interfaces';
+import { GarageCar } from '../pages/garage/garage-interfaces';
 
 async function getCar(
   url: string,

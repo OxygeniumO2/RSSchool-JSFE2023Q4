@@ -2,9 +2,37 @@
   display: none;
 }
 
-.winners-container {
-  width: 70%;
+.winners__title,
+.winners__page {
+  display: inline-block;
+  margin-bottom: 20px;
+  margin-right: 5px;
+}
+
+.winners__page {
+  display: block;
+}
+
+.winners-container,
+.winners__table {
+  width: 80%;
   display: grid;
   grid-template-columns: 1fr 1fr 2.5fr 1fr 1.5fr;
   gap: 5px;
+  padding: 5px;
+  align-items: center;
+}
+
+.winners-container {
+  background-color: #7cc6c6;
+}
+
+.winners__car__img-container {
+  width: 70px;
+}
+
+@media screen and (max-width: 768px) {
+  .winners__car__img-container {
+    width: 60px;
+  }
 }

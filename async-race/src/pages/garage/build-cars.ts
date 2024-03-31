@@ -1,9 +1,13 @@
+import { ENGINE_PATH, baseUrl } from '../../utils/base-url';
 import carSvg from '../../utils/car-svg-content';
 import createElem from '../../utils/create-elem';
+import getCarTravelData from '../../utils/get-car-travel-data';
 import getCurrPage from '../../utils/get-page-from-ls';
+import setUpdateToNewState from '../../utils/set-update-to-new-state';
 // eslint-disable-next-line import/no-cycle
 import buildGaragePage from './build-garage-page';
-import GarageCar from './garage-interfaces';
+import changeEngineStatePromise from './engine-state';
+import { GarageCar } from './garage-interfaces';
 import removeCar from './remove-car';
 import selectCar from './select-car';
 
@@ -28,7 +32,7 @@ function buildCars(
 
     const removeCarBtn = createElem({
       tagName: 'button',
-      classNames: ['btn_small'],
+      classNames: ['btn_very_small'],
       textContent: 'Remove Car',
     });
 
@@ -42,7 +46,7 @@ function buildCars(
 
     const selectCarBtn = createElem({
       tagName: 'button',
-      classNames: ['btn_small'],
+      classNames: ['btn_very_small'],
       textContent: 'Select Car',
     });
 
@@ -67,15 +71,16 @@ function buildCars(
 
     const carStartBtn = createElem({
       tagName: 'button',
-      classNames: ['btn_small', 'drive__car'],
+      classNames: ['btn_very_small', 'drive__car'],
       textContent: 'D',
-    });
+    }) as HTMLButtonElement;
 
     const carStopBtn = createElem({
       tagName: 'button',
-      classNames: ['btn_small', 'stop__car'],
+      classNames: ['btn_very_small', 'stop__car'],
       textContent: 'S',
-    });
+      attributes: [['disabled', true]],
+    }) as HTMLButtonElement;
 
     carControlContainer.append(carStartBtn, carStopBtn);
 
@@ -88,8 +93,48 @@ function buildCars(
 
     carContainer.append(carNameAndBtnsContainer, carControlContainerWithImg);
 
+    carStartBtn.addEventListener('click', async () => {
+      carStartBtn.disabled = true;
+      carStopBtn.disabled = false;
+
+      const changedEngine = changeEngineStatePromise(
+        baseUrl,
+        ENGINE_PATH,
+        carId,
+        'started',
+      );
+      const totalTime = await getCarTravelData(changedEngine);
+
+      carImg.style.animationDuration = `${totalTime}ms`;
+      carImg.classList.add('car-moving');
+      const carDriveResp = await changeEngineStatePromise(
+        baseUrl,
+        ENGINE_PATH,
+        carId,
+        'drive',
+      );
+      if (!carDriveResp.ok) {
+        const carImgParent = carImg.parentElement;
+        const carOffsetFromParent =
+          carImg.offsetLeft - carImgParent!.offsetLeft + 5;
+        carImg.style.left = `${carOffsetFromParent}px`;
+        carImg.classList.remove('car-moving');
+      }
+    });
+
+    carStopBtn.addEventListener('click', async () => {
+      carStopBtn.disabled = true;
+
+      await changeEngineStatePromise(baseUrl, ENGINE_PATH, carId, 'stopped');
+      carImg.removeAttribute('style');
+      carImg.classList.remove('car-moving');
+      carStartBtn.disabled = false;
+    });
+
     carsContainer.append(carContainer);
   });
+
+  setUpdateToNewState(false);
 
   const internalGarageNumberOfCars = garageNumberOfCars;
   internalGarageNumberOfCars.textContent = ` (${garageTotalLength})`;
