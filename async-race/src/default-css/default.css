@@ -12,7 +12,7 @@ button {
 
 @media (any-hover: hover) {
   button:hover {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 10px rgb(166 122 122);
     transform: scale(1.05);
   }
   button:disabled {
