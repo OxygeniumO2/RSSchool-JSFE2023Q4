@@ -29,7 +29,10 @@ export function buildGarageControls(): void {
 
   const inputColorAddCar = createElem({
     tagName: 'input',
-    attributes: [['type', 'color']],
+    attributes: [
+      ['type', 'color'],
+      ['value', '#FFFFFF'],
+    ],
   }) as HTMLInputElement;
   const createCarBtn = createElem({
     tagName: 'button',
@@ -55,7 +58,10 @@ export function buildGarageControls(): void {
 
   const inputColorUpdateCar = createElem({
     tagName: 'input',
-    attributes: [['type', 'color']],
+    attributes: [
+      ['type', 'color'],
+      ['value', '#FFFFFF'],
+    ],
   }) as HTMLInputElement;
 
   const updateCarBtn = createElem({

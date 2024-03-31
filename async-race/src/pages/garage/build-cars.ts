@@ -114,7 +114,7 @@ function buildCars(
         'drive',
       );
       if (!carDriveResp.ok) {
-        await changeEngineStatePromise(baseUrl, ENGINE_PATH, carId, 'stopped');
+        // await changeEngineStatePromise(baseUrl, ENGINE_PATH, carId, 'stopped');
         carImg.style.animationPlayState = 'paused';
       }
     });

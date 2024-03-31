@@ -9,6 +9,16 @@ const carManufacturer = [
   'Mercedes-Benz',
   'Audi',
   'Hyundai',
+  'Lexus',
+  'Subaru',
+  'Jeep',
+  'Kia',
+  'Mazda',
+  'Volvo',
+  'Porsche',
+  'Tesla',
+  'Ferrari',
+  'Mitsubishi',
 ];
 
 const carModel = [
@@ -22,6 +32,16 @@ const carModel = [
   'E-Class',
   'A4',
   'Elantra',
+  'RX',
+  'Outback',
+  'Wrangler',
+  'Soul',
+  'CX-5',
+  'S60',
+  '911',
+  'Model S',
+  '488',
+  'Lancer',
 ];
 
 export { carManufacturer, carModel };
