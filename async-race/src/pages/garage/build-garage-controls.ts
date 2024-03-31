@@ -8,6 +8,10 @@ import changeGaragePage from './change-garage-page';
 import getCurrPage from '../../utils/get-page-from-ls';
 import buildGaragePage from './build-garage-page';
 import { Car, createCar } from '../../utils/create-car';
+// import { garageRespByPageAndLimitPromise } from '../../utils/fetch-resp';
+// import { GARAGE_PATH, baseUrl } from '../../utils/base-url';
+import startRace from './start-race';
+import resetRace from './reset-race';
 
 const DEFAULT_LIMIT: number = 7;
 
@@ -36,6 +40,7 @@ export function buildGarageControls(): void {
   }) as HTMLInputElement;
   const createCarBtn = createElem({
     tagName: 'button',
+    classNames: ['btn'],
     attributes: [['type', 'submit']],
     textContent: 'Create Car',
   });
@@ -66,6 +71,7 @@ export function buildGarageControls(): void {
 
   const updateCarBtn = createElem({
     tagName: 'button',
+    classNames: ['btn'],
     textContent: 'Update Car',
     attributes: [
       ['type', 'text'],
@@ -93,7 +99,8 @@ export function buildGarageControls(): void {
 
   const resetRaceBtn = createElem({
     tagName: 'button',
-    classNames: ['btn', 'btn_color_1'],
+    classNames: ['btn', 'btn_color_1', 'reset__race-btn'],
+    attributes: [['disabled', true]],
     textContent: 'Reset Race',
   });
 
@@ -104,6 +111,9 @@ export function buildGarageControls(): void {
   });
 
   generateCarsBtn.addEventListener('click', generateCars);
+
+  raceBtn.addEventListener('click', startRace);
+  resetRaceBtn.addEventListener('click', resetRace);
 
   raceControlContainer.append(raceBtn, resetRaceBtn, generateCarsBtn);
 

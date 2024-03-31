@@ -32,7 +32,7 @@ function buildCars(
 
     const removeCarBtn = createElem({
       tagName: 'button',
-      classNames: ['btn_very_small'],
+      classNames: ['btn', 'btn_very_small'],
       textContent: 'Remove Car',
     });
 
@@ -46,7 +46,7 @@ function buildCars(
 
     const selectCarBtn = createElem({
       tagName: 'button',
-      classNames: ['btn_very_small'],
+      classNames: ['btn', 'btn_very_small'],
       textContent: 'Select Car',
     });
 
@@ -71,13 +71,13 @@ function buildCars(
 
     const carStartBtn = createElem({
       tagName: 'button',
-      classNames: ['btn_very_small', 'drive__car'],
+      classNames: ['btn', 'btn_very_small', 'drive__car'],
       textContent: 'D',
     }) as HTMLButtonElement;
 
     const carStopBtn = createElem({
       tagName: 'button',
-      classNames: ['btn_very_small', 'stop__car'],
+      classNames: ['btn', 'btn_very_small', 'stop__car'],
       textContent: 'S',
       attributes: [['disabled', true]],
     }) as HTMLButtonElement;
@@ -85,6 +85,8 @@ function buildCars(
     carControlContainer.append(carStartBtn, carStopBtn);
 
     const carImg = createElem({ tagName: 'div', classNames: ['car'] });
+
+    carImg.dataset.carName = car.name;
 
     carImg.innerHTML = carSvg;
     carImg.children[0].setAttribute('fill', car.color);

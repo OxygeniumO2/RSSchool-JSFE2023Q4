@@ -1,0 +1,16 @@
+.winner__modal {
+  opacity: 0;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -100%);
+  font-size: 1.5rem;
+  background-color: #386363b8;
+  border-radius: 10px;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+.winner__modal._active {
+  opacity: 1;
+}

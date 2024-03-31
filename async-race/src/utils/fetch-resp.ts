@@ -10,7 +10,7 @@ async function garageAllCarsPromise(
   return garageTotal;
 }
 
-async function garageRespByPageAndLimitPromise(
+async function garageCarsByPageAndLimitPromise(
   url: string,
   path: string,
   pageNumber: number,
@@ -31,6 +31,6 @@ async function allWinnersPromise(url: string, path: string): Promise<Winner[]> {
 
 export {
   garageAllCarsPromise,
-  garageRespByPageAndLimitPromise,
+  garageCarsByPageAndLimitPromise,
   allWinnersPromise,
 };

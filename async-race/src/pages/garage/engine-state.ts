@@ -1,5 +1,3 @@
-// import { CarTravelData } from './garage-interfaces';
-
 async function changeEngineStatePromise(
   url: string,
   path: string,

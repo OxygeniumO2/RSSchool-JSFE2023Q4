@@ -2,7 +2,7 @@ import { GARAGE_PATH, baseUrl } from '../../utils/base-url';
 import createElem from '../../utils/create-elem';
 import {
   garageAllCarsPromise,
-  garageRespByPageAndLimitPromise,
+  garageCarsByPageAndLimitPromise,
 } from '../../utils/fetch-resp';
 import removeElementsByClass from '../../utils/remove-elem-by-class';
 // eslint-disable-next-line import/no-cycle
@@ -31,7 +31,7 @@ async function buildGaragePage(
   const garageTotalLength: number = garageTotal.length;
 
   const garageCarsOnOnePage: GarageCar[] =
-    await garageRespByPageAndLimitPromise(
+    await garageCarsByPageAndLimitPromise(
       baseUrl,
       GARAGE_PATH,
       pageNumber,
