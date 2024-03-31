@@ -114,11 +114,8 @@ function buildCars(
         'drive',
       );
       if (!carDriveResp.ok) {
-        const carImgParent = carImg.parentElement;
-        const carOffsetFromParent =
-          carImg.offsetLeft - carImgParent!.offsetLeft + 5;
-        carImg.style.left = `${carOffsetFromParent}px`;
-        carImg.classList.remove('car-moving');
+        await changeEngineStatePromise(baseUrl, ENGINE_PATH, carId, 'stopped');
+        carImg.style.animationPlayState = 'paused';
       }
     });
 
