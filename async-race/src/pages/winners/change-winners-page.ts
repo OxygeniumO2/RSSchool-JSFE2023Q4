@@ -11,18 +11,22 @@ const NEXT_PAGE: string = 'Next Page';
 async function changeWinnersPage(
   btn: HTMLElement,
   defaultLimit: number,
+  order: string,
+  sort: string,
 ): Promise<void> {
   const currPage = getCurrWinnerPage();
 
-  const allWinners: Winner[] = await allWinnersPromise(baseUrl, WINNERS_PATH);
-
-  console.log('thiiis', allWinners, allWinners.length);
+  const allWinners: Winner[] = await allWinnersPromise(
+    baseUrl,
+    WINNERS_PATH,
+    order,
+    sort,
+  );
 
   const allWinnersLength = allWinners.length;
 
   const totalPages = Math.ceil(allWinnersLength / defaultLimit);
 
-  console.log(allWinnersLength, defaultLimit);
   let nextPage = currPage;
 
   if (btn.textContent === NEXT_PAGE) {
@@ -31,7 +35,7 @@ async function changeWinnersPage(
     nextPage = currPage === 1 ? totalPages : currPage - 1;
   }
 
-  await buildWinnersPage(nextPage);
+  await buildWinnersPage(nextPage, order, sort);
 }
 
 export default changeWinnersPage;

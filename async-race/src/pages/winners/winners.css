@@ -21,8 +21,12 @@
   display: grid;
   grid-template-columns: 1fr 1fr 2.5fr 1fr 1.5fr;
   gap: 5px;
-  padding: 5px;
+  /* padding: 5px; */
   align-items: center;
+}
+
+.winners__table > div {
+  padding: 5px;
 }
 
 .winners-container {
@@ -36,10 +40,22 @@
 .winners__controls__title {
   color: #1a1a1a;
   font-weight: 600;
+  padding: 5px;
+}
+
+.sort__item-container {
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 @media screen and (max-width: 768px) {
   .winners__car__img-container {
     width: 60px;
+  }
+}
+
+@media (any-hover: hover) {
+  .sort__item-container:hover {
+    background-color: #5a93c5;
   }
 }

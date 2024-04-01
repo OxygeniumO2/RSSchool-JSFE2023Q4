@@ -24,14 +24,32 @@ function buildChangePages() {
   prevPageBtn.addEventListener(
     'click',
     function handleClickPrevPage(this: HTMLElement) {
-      changeWinnersPage.call(this, prevPageBtn, WINNERS_DEFAULT_LIMIT);
+      const order = localStorage.getItem('winnersOrderBy') as string;
+      const sort = localStorage.getItem('winnersSortedBy') as string;
+
+      changeWinnersPage.call(
+        this,
+        prevPageBtn,
+        WINNERS_DEFAULT_LIMIT,
+        order,
+        sort,
+      );
     },
   );
 
   nextPageBtn.addEventListener(
     'click',
     function handleClickNextPage(this: HTMLElement) {
-      changeWinnersPage.call(this, nextPageBtn, WINNERS_DEFAULT_LIMIT);
+      const order = localStorage.getItem('winnersOrderBy') as string;
+      const sort = localStorage.getItem('winnersSortedBy') as string;
+
+      changeWinnersPage.call(
+        this,
+        nextPageBtn,
+        WINNERS_DEFAULT_LIMIT,
+        order,
+        sort,
+      );
     },
   );
 

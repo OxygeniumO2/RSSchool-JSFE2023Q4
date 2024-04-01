@@ -1,4 +1,9 @@
 import createElem from '../../utils/create-elem';
+// eslint-disable-next-line import/no-cycle
+import { AllowedSortValue, sortWinnersByValue } from './sort-by-value';
+
+const SORT_BY_WINS: AllowedSortValue = 'wins';
+const SORT_BY_TIME: AllowedSortValue = 'time';
 
 function buildWinnersControls(): HTMLElement {
   const winnersElemsContainer = createElem({
@@ -23,13 +28,20 @@ function buildWinnersControls(): HTMLElement {
   });
   const winnersWins = createElem({
     tagName: 'div',
-    classNames: ['winners__controls__title'],
+    classNames: ['winners__controls__title', 'sort__item-container'],
     textContent: 'Wins',
   });
   const winnersBestTime = createElem({
     tagName: 'div',
-    classNames: ['winners__controls__title'],
+    classNames: ['winners__controls__title', 'sort__item-container'],
     textContent: 'Best time (sec)',
+  });
+
+  winnersWins.addEventListener('click', () => {
+    sortWinnersByValue(SORT_BY_WINS);
+  });
+  winnersBestTime.addEventListener('click', () => {
+    sortWinnersByValue(SORT_BY_TIME);
   });
 
   winnersElemsContainer.append(

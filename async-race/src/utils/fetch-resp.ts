@@ -28,16 +28,46 @@ async function winnersByPageAndLimitPromise(
   path: string,
   pageNumber: number,
   limit: number,
+  order: string = 'ASC',
+  sort: string = '',
 ): Promise<Winner[]> {
-  const winnersResponseByPageAndLimit = await fetch(
-    `${url}${path}?_page=${pageNumber}&_limit=${limit}&_order='ASC'`,
-  );
-  const winnersCarsOnOnePage = await winnersResponseByPageAndLimit.json();
+  let winnersResponseByPageAndLimit;
+
+  if (order) {
+    winnersResponseByPageAndLimit = await fetch(
+      `${url}${path}?_page=${pageNumber}&_limit=${limit}&_order=${order}`,
+    );
+  }
+
+  if (sort) {
+    winnersResponseByPageAndLimit = await fetch(
+      `${url}${path}?_page=${pageNumber}&_limit=${limit}&_sort=${sort}`,
+    );
+  }
+
+  if (sort && order) {
+    winnersResponseByPageAndLimit = await fetch(
+      `${url}${path}?_page=${pageNumber}&_limit=${limit}&_order=${order}&_sort=${sort}`,
+    );
+  }
+  const winnersCarsOnOnePage = await winnersResponseByPageAndLimit!.json();
   return winnersCarsOnOnePage;
 }
 
-async function allWinnersPromise(url: string, path: string): Promise<Winner[]> {
-  const winnerResponse = await fetch(`${url}${path}`);
+async function allWinnersPromise(
+  url: string,
+  path: string,
+  order: string = 'ASC',
+  sort: string = '',
+): Promise<Winner[]> {
+  let winnerResponse;
+
+  if (sort) {
+    winnerResponse = await fetch(`${url}${path}?_order=${order}&_sort=${sort}`);
+  } else {
+    winnerResponse = await fetch(`${url}${path}?_order=${order}`);
+  }
+
   const winnerTotal: Winner[] = await winnerResponse.json();
   return winnerTotal;
 }

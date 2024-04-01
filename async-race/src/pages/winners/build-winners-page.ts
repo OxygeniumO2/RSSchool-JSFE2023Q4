@@ -9,6 +9,7 @@ import { WINNERS_PATH, baseUrl } from '../../utils/base-url';
 import Winner from './winners-interfaces';
 import buildWinners from './build-winners';
 import removeElementsByClass from '../../utils/remove-elem-by-class';
+// eslint-disable-next-line import/no-cycle
 import buildWinnersControls from './build-winners-controls';
 // eslint-disable-next-line import/no-cycle
 import buildChangePages from './build-winners-change-pages';
@@ -18,7 +19,8 @@ const LIMIT_WINNERS_BY_PAGE: number = 10;
 
 async function buildWinnersPage(
   pageNumber: number = PAGE_NUMBER_DEFAULT,
-  limit: number = LIMIT_WINNERS_BY_PAGE,
+  order: string = 'ASC',
+  sort: string = '',
 ): Promise<void> {
   const winners = createElem({
     tagName: 'div',
@@ -30,19 +32,28 @@ async function buildWinnersPage(
   });
 
   localStorage.setItem('winnersPageOxy', pageNumber.toString());
+  localStorage.setItem('winnersOrderBy', order);
+  localStorage.setItem('winnersSortedBy', sort);
 
-  const myWinners: Winner[] = await allWinnersPromise(baseUrl, WINNERS_PATH);
+  const allWinners = await allWinnersPromise(baseUrl, WINNERS_PATH);
 
-  console.log(myWinners);
-
-  const myWinnersLength = myWinners.length;
-
-  const winnersCarsOnOnePage: Winner[] = await winnersByPageAndLimitPromise(
+  const myWinners: Winner[] = await winnersByPageAndLimitPromise(
     baseUrl,
     WINNERS_PATH,
     pageNumber,
-    limit,
+    LIMIT_WINNERS_BY_PAGE,
+    order,
+    sort,
   );
+
+  const allWinnersLength = allWinners.length;
+
+  // const winnersCarsOnOnePage: Winner[] = await winnersByPageAndLimitPromise(
+  //   baseUrl,
+  //   WINNERS_PATH,
+  //   pageNumber,
+  //   LIMIT_WINNERS_BY_PAGE,
+  // );
 
   const winnersTitle = createElem({
     tagName: 'span',
@@ -52,7 +63,7 @@ async function buildWinnersPage(
 
   const winnersCountElem = createElem({
     tagName: 'span',
-    textContent: `(${myWinnersLength})`,
+    textContent: `(${allWinnersLength})`,
   });
 
   const winnersPageText = createElem({
@@ -64,10 +75,10 @@ async function buildWinnersPage(
   const allWinnersContainer = createElem({ tagName: 'div' });
 
   await buildWinners(
-    winnersCarsOnOnePage,
+    myWinners,
     allWinnersContainer,
     winnersCountElem,
-    myWinnersLength,
+    allWinnersLength,
   );
 
   const winnersControlsContainer = buildWinnersControls();
@@ -86,8 +97,6 @@ async function buildWinnersPage(
   removeElementsByClass(APP_CONTAINER, 'winners');
 
   APP_CONTAINER.append(winners);
-
-  console.log(limit);
 }
 
 export default buildWinnersPage;
