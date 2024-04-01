@@ -1,5 +1,7 @@
 .winners._hidden {
-  display: none;
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
 }
 
 .winners__title,

@@ -10,7 +10,7 @@ function buildChangePageContainer(): void {
 
   const toGaragePageBtn = createElem({
     tagName: 'button',
-    classNames: ['btn'],
+    classNames: ['btn', 'to__garage-btn'],
     textContent: 'To Garage',
   });
 
@@ -23,7 +23,7 @@ function buildChangePageContainer(): void {
 
   const toWinnersPageBtn = createElem({
     tagName: 'button',
-    classNames: ['btn'],
+    classNames: ['btn', 'to__winners-btn'],
     textContent: 'To Winners',
   });
 

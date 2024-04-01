@@ -97,7 +97,6 @@ function buildCars(
 
     carStartBtn.addEventListener('click', async () => {
       carStartBtn.disabled = true;
-      carStopBtn.disabled = false;
 
       const changedEngine = changeEngineStatePromise(
         baseUrl,
@@ -106,6 +105,8 @@ function buildCars(
         'started',
       );
       const totalTime = await getCarTravelData(changedEngine);
+
+      carStopBtn.disabled = false;
 
       carImg.style.animationDuration = `${totalTime}ms`;
       carImg.classList.add('car-moving');
@@ -116,18 +117,21 @@ function buildCars(
         'drive',
       );
       if (!carDriveResp.ok) {
-        // await changeEngineStatePromise(baseUrl, ENGINE_PATH, carId, 'stopped');
         carImg.style.animationPlayState = 'paused';
+        await changeEngineStatePromise(baseUrl, ENGINE_PATH, carId, 'stopped');
       }
     });
 
     carStopBtn.addEventListener('click', async () => {
       carStopBtn.disabled = true;
-
-      await changeEngineStatePromise(baseUrl, ENGINE_PATH, carId, 'stopped');
       carImg.removeAttribute('style');
       carImg.classList.remove('car-moving');
+
+      await changeEngineStatePromise(baseUrl, ENGINE_PATH, carId, 'stopped');
+
       carStartBtn.disabled = false;
+      // setStateStartRaceBtn(true);
+      // setNewStateToControlBtns(true);
     });
 
     carsContainer.append(carContainer);

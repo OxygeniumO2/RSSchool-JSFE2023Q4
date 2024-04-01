@@ -9,11 +9,11 @@ async function removeCar(carId: number): Promise<void> {
 
   setUpdateToNewState(false);
 
-  const response = await fetch(`${baseUrl}${WINNERS_PATH}/${carId}`, {
+  const removeWinnerResp = await fetch(`${baseUrl}${WINNERS_PATH}/${carId}`, {
     method: 'DELETE',
   });
 
-  if (response.ok) {
+  if (removeWinnerResp.ok) {
     await buildWinnersPage();
   }
 }

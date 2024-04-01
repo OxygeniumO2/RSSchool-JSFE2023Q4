@@ -1,10 +1,15 @@
 import { ENGINE_PATH, GARAGE_PATH, baseUrl } from '../../utils/base-url';
 import changeStateBtns from '../../utils/change-state-btns';
+import setStateMainPagesBtns from '../../utils/change-state-main-pages-btns';
+import { createCarWinner } from '../../utils/create-car-winner';
 import { garageCarsByPageAndLimitPromise } from '../../utils/fetch-resp';
 import getCarTravelData from '../../utils/get-car-travel-data';
 import getCurrPage from '../../utils/get-page-from-ls';
 import removeActiveStateFromCars from '../../utils/remove-active-state-from-cars';
 import { MODAL_WINNER } from '../winner-modal/winner-modal';
+import addOrUpdateWinnerToTable from '../winners/add-winner';
+import buildWinnersPage from '../winners/build-winners-page';
+import Winner from '../winners/winners-interfaces';
 import changeEngineStatePromise from './engine-state';
 
 async function startRace() {
@@ -60,7 +65,19 @@ async function startRace() {
           if (carDriveResp.status === 200 && isWinner) {
             isWinner = false;
             MODAL_WINNER.classList.add('_active');
-            MODAL_WINNER.textContent = `${currCar.dataset.carName} went first in ${totalTime / 1000} sec`;
+
+            const totalTimeInSec = totalTime / 1000;
+            MODAL_WINNER.textContent = `${currCar.dataset.carName} went first in ${totalTimeInSec} sec`;
+            const wins = 1;
+
+            const carWinner: Winner = createCarWinner(
+              result.value.carId,
+              wins,
+              totalTimeInSec,
+            );
+            await addOrUpdateWinnerToTable(carWinner);
+            await buildWinnersPage();
+            setStateMainPagesBtns(true);
           }
           finishedCarsCount += 1;
         }
@@ -70,6 +87,7 @@ async function startRace() {
     if (finishedCarsCount === 0) {
       MODAL_WINNER.classList.add('_active');
       MODAL_WINNER.textContent = `No one gets to the finish`;
+      setStateMainPagesBtns(true);
     }
 
     const resetRaceBtn = document.querySelector(

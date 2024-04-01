@@ -1,5 +1,6 @@
 .winner__modal {
   opacity: 0;
+  height: 0;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -8,9 +9,10 @@
   background-color: #386363b8;
   border-radius: 10px;
   padding: 20px;
-  transition: all 0.3s ease;
+  transition: opacity 0.3s ease;
 }
 
 .winner__modal._active {
   opacity: 1;
+  height: auto;
 }

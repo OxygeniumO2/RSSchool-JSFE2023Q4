@@ -23,6 +23,19 @@ async function garageCarsByPageAndLimitPromise(
   return garageCarsOnOnePage;
 }
 
+async function winnersByPageAndLimitPromise(
+  url: string,
+  path: string,
+  pageNumber: number,
+  limit: number,
+): Promise<Winner[]> {
+  const winnersResponseByPageAndLimit = await fetch(
+    `${url}${path}?_page=${pageNumber}&_limit=${limit}&_order='ASC'`,
+  );
+  const winnersCarsOnOnePage = await winnersResponseByPageAndLimit.json();
+  return winnersCarsOnOnePage;
+}
+
 async function allWinnersPromise(url: string, path: string): Promise<Winner[]> {
   const winnerResponse = await fetch(`${url}${path}`);
   const winnerTotal: Winner[] = await winnerResponse.json();
@@ -33,4 +46,5 @@ export {
   garageAllCarsPromise,
   garageCarsByPageAndLimitPromise,
   allWinnersPromise,
+  winnersByPageAndLimitPromise,
 };
