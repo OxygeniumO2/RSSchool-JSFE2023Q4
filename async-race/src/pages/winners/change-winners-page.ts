@@ -25,7 +25,8 @@ async function changeWinnersPage(
 
   const allWinnersLength = allWinners.length;
 
-  const totalPages = Math.ceil(allWinnersLength / defaultLimit);
+  const totalPages =
+    allWinnersLength > 0 ? Math.ceil(allWinnersLength / defaultLimit) : 1;
 
   let nextPage = currPage;
 

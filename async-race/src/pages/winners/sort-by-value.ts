@@ -2,7 +2,7 @@ import getCurrWinnerPage from '../../utils/get-winner-page-from-ls';
 // eslint-disable-next-line import/no-cycle
 import buildWinnersPage from './build-winners-page';
 
-type AllowedSortValue = 'wins' | 'time';
+type AllowedSortValue = 'wins' | 'time' | 'id';
 
 function sortWinnersByValue(value: AllowedSortValue) {
   const sortByValue = value;

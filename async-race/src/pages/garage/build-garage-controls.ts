@@ -10,6 +10,8 @@ import buildGaragePage from './build-garage-page';
 import { Car, createCar } from '../../utils/create-car';
 import startRace from './start-race';
 import resetRace from './reset-race';
+import buildWinnersPage from '../winners/build-winners-page';
+import getCurrWinnerPage from '../../utils/get-winner-page-from-ls';
 
 const DEFAULT_LIMIT: number = 7;
 
@@ -69,7 +71,7 @@ export function buildGarageControls(): void {
 
   const updateCarBtn = createElem({
     tagName: 'button',
-    classNames: ['btn'],
+    classNames: ['btn', 'update__car-btn'],
     textContent: 'Update Car',
     attributes: [
       ['type', 'text'],
@@ -175,10 +177,16 @@ export function buildGarageControls(): void {
       inputColorUpdateCar.value,
       currCarIdParsed,
     );
-
     const currPage = getCurrPage();
+    const currWinnerPage = getCurrWinnerPage();
+    const winnersOrderBy = localStorage.getItem('winnersOrderBy') as string;
+    const winnersSortedBy = localStorage.getItem('winnersSortedBy') as string;
 
     await buildGaragePage(currPage);
+    await buildWinnersPage(currWinnerPage, winnersOrderBy, winnersSortedBy);
+
+    const winners = document.querySelector('.winners');
+    winners?.classList.add('_hidden');
   });
 
   APP_CONTAINER.append(garage);

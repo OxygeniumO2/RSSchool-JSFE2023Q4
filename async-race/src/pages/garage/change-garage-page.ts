@@ -16,7 +16,8 @@ async function changeGaragePage(
 
   const allCarsLength = allCars.length;
 
-  const totalPages = Math.ceil(allCarsLength / defaultLimit);
+  const totalPages =
+    allCarsLength > 0 ? Math.ceil(allCarsLength / defaultLimit) : 1;
 
   let nextPage = currPage;
 

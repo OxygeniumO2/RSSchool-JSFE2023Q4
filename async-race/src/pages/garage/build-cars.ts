@@ -1,5 +1,9 @@
 import { ENGINE_PATH, baseUrl } from '../../utils/base-url';
 import carSvg from '../../utils/car-svg-content';
+import changeStateBtns from '../../utils/change-state-btns';
+import changeStateBtnWhileDriving from '../../utils/change-state-btns-while-driving';
+import setStateMainPagesBtns from '../../utils/change-state-main-pages-btns';
+import changeStateRaceStopBtns from '../../utils/change-state-race-stop-btns';
 import createElem from '../../utils/create-elem';
 import getCarTravelData from '../../utils/get-car-travel-data';
 import getCurrPage from '../../utils/get-page-from-ls';
@@ -17,6 +21,23 @@ function buildCars(
   garageNumberOfCars: HTMLElement,
   garageTotalLength: number,
 ): void {
+  const finishedCars: number[] = [];
+
+  function isAllCarsFinished(): boolean {
+    return finishedCars.length === 0;
+  }
+
+  function addFinishedCar(carId: number) {
+    finishedCars.push(carId);
+  }
+
+  function removeFinishedCar(carId: number) {
+    const index = finishedCars.indexOf(carId);
+    if (index !== -1) {
+      finishedCars.splice(index, 1);
+    }
+  }
+
   cars.forEach((car, index) => {
     const carId = car.id;
 
@@ -96,7 +117,12 @@ function buildCars(
     carContainer.append(carNameAndBtnsContainer, carControlContainerWithImg);
 
     carStartBtn.addEventListener('click', async () => {
+      changeStateBtnWhileDriving(false);
+      setStateMainPagesBtns(true);
+
       carStartBtn.disabled = true;
+
+      addFinishedCar(car.id);
 
       const changedEngine = changeEngineStatePromise(
         baseUrl,
@@ -128,10 +154,14 @@ function buildCars(
       carImg.classList.remove('car-moving');
 
       await changeEngineStatePromise(baseUrl, ENGINE_PATH, carId, 'stopped');
+      removeFinishedCar(car.id);
+
+      if (isAllCarsFinished()) {
+        changeStateBtns(true);
+        changeStateRaceStopBtns(false);
+      }
 
       carStartBtn.disabled = false;
-      // setStateStartRaceBtn(true);
-      // setNewStateToControlBtns(true);
     });
 
     carsContainer.append(carContainer);

@@ -67,16 +67,21 @@ async function startRace() {
             MODAL_WINNER.classList.add('_active');
 
             const totalTimeInSec = totalTime / 1000;
-            MODAL_WINNER.textContent = `${currCar.dataset.carName} went first in ${totalTimeInSec} sec`;
+            const totalTimeInSecToFixed = Number(totalTimeInSec.toFixed(2));
+            MODAL_WINNER.textContent = `${currCar.dataset.carName} went first in ${totalTimeInSecToFixed} sec`;
             const wins = 1;
 
             const carWinner: Winner = createCarWinner(
               result.value.carId,
               wins,
-              totalTimeInSec,
+              totalTimeInSecToFixed,
             );
             await addOrUpdateWinnerToTable(carWinner);
             await buildWinnersPage();
+
+            const winnersContainer = document.querySelector('.winners');
+            winnersContainer?.classList.add('_hidden');
+
             setStateMainPagesBtns(true);
           }
           finishedCarsCount += 1;

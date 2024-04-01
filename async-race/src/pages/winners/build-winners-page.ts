@@ -20,7 +20,7 @@ const LIMIT_WINNERS_BY_PAGE: number = 10;
 async function buildWinnersPage(
   pageNumber: number = PAGE_NUMBER_DEFAULT,
   order: string = 'ASC',
-  sort: string = '',
+  sort: string = 'id',
 ): Promise<void> {
   const winners = createElem({
     tagName: 'div',

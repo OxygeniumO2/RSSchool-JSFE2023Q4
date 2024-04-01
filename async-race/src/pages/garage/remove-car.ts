@@ -15,6 +15,8 @@ async function removeCar(carId: number): Promise<void> {
 
   if (removeWinnerResp.ok) {
     await buildWinnersPage();
+    const winners = document.querySelector('.winners');
+    winners?.classList.add('_hidden');
   }
 }
 
