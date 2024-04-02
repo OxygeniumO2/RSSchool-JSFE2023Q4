@@ -39,6 +39,12 @@
   margin-bottom: 20px;
 }
 
+.car-preview {
+  width: 70px;
+  height: 100%;
+  transform: translateY(3px);
+}
+
 .car {
   position: absolute;
   left: 70px;

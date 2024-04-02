@@ -12,6 +12,7 @@ import startRace from './start-race';
 import resetRace from './reset-race';
 import buildWinnersPage from '../winners/build-winners-page';
 import getCurrWinnerPage from '../../utils/get-winner-page-from-ls';
+import carSvg from '../../utils/car-svg-content';
 
 const DEFAULT_LIMIT: number = 7;
 
@@ -80,10 +81,24 @@ export function buildGarageControls(): void {
     ],
   });
 
+  const carPreview = createElem({
+    tagName: 'div',
+    classNames: ['car-preview'],
+  });
+
+  carPreview.innerHTML = carSvg;
+  carPreview.children[0].setAttribute('fill', '#FFFFFF');
+
+  inputColorUpdateCar.addEventListener('input', () => {
+    const currCarColor = inputColorUpdateCar.value;
+    carPreview.children[0].setAttribute('fill', currCarColor);
+  });
+
   updateCarsContainer.append(
     inputCarUpdateName,
     inputColorUpdateCar,
     updateCarBtn,
+    carPreview,
   );
 
   const raceControlContainer = createElem({
