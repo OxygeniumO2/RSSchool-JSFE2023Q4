@@ -1,7 +1,5 @@
 import './game-btn.css';
-// import GameData from '../../../../interfaces/game-data-interface';
-import { createElem } from '../../../../utils/createElem';
-// import { LOCALSTORAGE_KEY_ROUND, LOCALSTORAGE_KEY_ROUND_NUMBER } from '../../../../utils/localStorageKeys';
+import createElem from '../../../../utils/createElem';
 import { currRow } from '../../game-screen';
 import { RoundDataFromLS, getDataRoundFromLS } from '../../../../utils/getDataRoundLS';
 
@@ -9,8 +7,8 @@ const BTN_CHECK_TEXT = 'Check';
 
 export function createCheckBtn(): HTMLElement {
   const btn = createElem({
-    tag: 'button',
-    classesCss: ['btn', 'btn_wrong'],
+    tagName: 'button',
+    classNames: ['btn', 'btn_wrong'],
     textContent: BTN_CHECK_TEXT,
   });
   btn.addEventListener('click', checkCorrectWords);

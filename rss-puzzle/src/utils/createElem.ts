@@ -1,81 +1,35 @@
 interface CreateElemProps {
-  tag: string;
-  classesCss?: string[];
+  tagName: string;
+  classNames?: string[];
   textContent?: string;
-  src?: string;
-  alt?: string;
-  type?: string;
-  required?: boolean;
-  minLength?: number;
-  pattern?: string;
-  placeholder?: string;
-  title?: string;
+  attributes?: [string, string | boolean | number][];
 }
 
 type CreateElem = (props: CreateElemProps) => HTMLElement | HTMLInputElement;
 
-export const createElem: CreateElem = ({
-  tag,
-  classesCss,
+const createElem: CreateElem = ({
+  tagName,
+  classNames,
   textContent,
-  src,
-  alt,
-  type,
-  required,
-  minLength,
-  pattern,
-  placeholder,
-  title,
+  attributes,
 }: CreateElemProps): HTMLElement | HTMLInputElement => {
-  const elem = document.createElement(tag);
+  const elem = document.createElement(tagName);
 
-  if (classesCss) {
-    elem.classList.add(...classesCss);
+  if (classNames) {
+    elem.classList.add(...classNames);
   }
 
   if (textContent) {
     elem.textContent = textContent;
   }
 
-  if (src) {
-    elem.setAttribute('src', src);
-  }
-
-  if (alt) {
-    elem.setAttribute('alt', alt);
-  }
-
-  if (type) {
-    elem.setAttribute('type', type);
-  }
-
-  if (required) {
-    if (tag === 'input') {
-      (elem as HTMLInputElement).required = required;
-    }
-  }
-
-  if (minLength) {
-    if (tag === 'input') {
-      (elem as HTMLInputElement).minLength = minLength;
-    }
-  }
-
-  if (pattern) {
-    if (tag === 'input') {
-      (elem as HTMLInputElement).pattern = pattern;
-    }
-  }
-
-  if (placeholder) {
-    if (tag === 'input') {
-      (elem as HTMLInputElement).placeholder = placeholder;
-    }
-  }
-
-  if (title) {
-    elem.title = title;
+  if (attributes) {
+    attributes.forEach(([key, value]) => {
+      elem.setAttribute(key, String(value));
+    });
   }
 
   return elem;
 };
+
+export default createElem;

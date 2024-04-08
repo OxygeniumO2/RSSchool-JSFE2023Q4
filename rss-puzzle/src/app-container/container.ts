@@ -1,6 +1,6 @@
-import { createElem } from '../utils/createElem';
+import createElem from '../utils/createElem';
 
-const container = createElem({ tag: 'div', classesCss: ['container'] });
+const container = createElem({ tagName: 'div', classNames: ['container'] });
 
 function addContainerToBody() {
   document.body.append(container);

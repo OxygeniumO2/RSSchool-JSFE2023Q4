@@ -1,4 +1,4 @@
-import { createElem } from '../../../../utils/createElem';
+import createElem from '../../../../utils/createElem';
 import { RoundDataFromLS, getDataRoundFromLS } from '../../../../utils/getDataRoundLS';
 import { GAMEFIELD_WORDS_CONTAINER, currRow } from '../../game-screen';
 import { CHECK_BTN, CONTINUE_BTN, fromInnactiveToActiveBtn } from '../game-btns-container/game-btns-container';
@@ -8,8 +8,8 @@ const BTN_COMPLETE_TEXT = 'Auto-Complete';
 
 export function createCompleteBtn(): HTMLElement {
   const btn = createElem({
-    tag: 'button',
-    classesCss: ['btn', 'btn_active'],
+    tagName: 'button',
+    classNames: ['btn', 'btn_active'],
     textContent: BTN_COMPLETE_TEXT,
   });
   btn.addEventListener('click', completeCurrRow);

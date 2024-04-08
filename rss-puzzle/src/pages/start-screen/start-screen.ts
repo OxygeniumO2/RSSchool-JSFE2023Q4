@@ -1,6 +1,6 @@
 import './start-screen.css';
 import { container } from '../../app-container/container';
-import { createElem } from '../../utils/createElem';
+import createElem from '../../utils/createElem';
 import {
   LOCALSTORAGE_KEY_LASTNAME,
   LOCALSTORAGE_KEY_NAME,
@@ -19,13 +19,13 @@ const START_ROUND_NUMBER_DEFAULT_STRING: string = '0';
 const START_ROUND_DEFAULT_NUMBER: number = 0;
 
 function generateStartScreen() {
-  const startScreen = createElem({ tag: 'div', classesCss: ['start__screen'] });
+  const startScreen = createElem({ tagName: 'div', classNames: ['start__screen'] });
   const startScreenTitle = createElem({
-    tag: 'h1',
-    classesCss: ['start__screen__title'],
+    tagName: 'h1',
+    classNames: ['start__screen__title'],
     textContent: START_SCREEN_TITLE,
   });
-  const startScreenDesc = createElem({ tag: 'p', classesCss: ['start__screen__desc'], textContent: START_SCREEN_DESC });
+  const startScreenDesc = createElem({ tagName: 'p', classNames: ['start__screen__desc'], textContent: START_SCREEN_DESC });
 
   const userNameFromLS = localStorage.getItem(LOCALSTORAGE_KEY_NAME);
   const userLastNameFromLS = localStorage.getItem(LOCALSTORAGE_KEY_LASTNAME);
@@ -33,14 +33,14 @@ function generateStartScreen() {
   const userDataGreeting = `Welcome, ${userNameFromLS} ${userLastNameFromLS}`;
 
   const welcomeUserElem = createElem({
-    tag: 'p',
-    classesCss: ['start__screen__userinfo'],
+    tagName: 'p',
+    classNames: ['start__screen__userinfo'],
     textContent: userDataGreeting,
   });
 
   const startButton = createElem({
-    tag: 'button',
-    classesCss: ['btn', 'start__screen__btn'],
+    tagName: 'button',
+    classNames: ['btn', 'start__screen__btn'],
     textContent: START_SCREEN_BTN_TEXT,
   });
 

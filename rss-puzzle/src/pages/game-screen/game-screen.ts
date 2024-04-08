@@ -1,5 +1,5 @@
 import './game-screen.css';
-import { createElem } from '../../utils/createElem';
+import createElem from '../../utils/createElem';
 import GameData, { Level } from '../../interfaces/game-data-interface';
 import {
   CHECK_BTN,
@@ -22,8 +22,8 @@ const MULTIPLE_LENGTH_HEIGHT_GAMEFIELD: number = 50;
 const STATIC_LENGTH: number = 24;
 export const START_GAME_ZERO: number = 0;
 let currentRowNumber: number = START_GAME_ZERO;
-export const GAMEFIELD = createElem({ tag: 'div', classesCss: ['gamefield'] });
-export const GAMEFIELD_WORDS_CONTAINER = createElem({ tag: 'div', classesCss: ['gamefield__words-container'] });
+export const GAMEFIELD = createElem({ tagName: 'div', classNames: ['gamefield'] });
+export const GAMEFIELD_WORDS_CONTAINER = createElem({ tagName: 'div', classNames: ['gamefield__words-container'] });
 export let currRow: HTMLElement;
 export let prevHandlerWithRound: EventListener | null = null;
 const checkBtn = CHECK_BTN;
@@ -66,10 +66,10 @@ function generateGame(level: Level, roundNumber: number): void {
 }
 
 export function generateGamefieldRow(round: GameData, rowNumber: number): HTMLDivElement {
-  const gamefieldRow = createElem({ tag: 'div', classesCss: ['gamefield__row'] });
+  const gamefieldRow = createElem({ tagName: 'div', classNames: ['gamefield__row'] });
   const currRowWords = round.words[rowNumber].textExample.split(' ');
   for (let i = 0; i < currRowWords.length; i += 1) {
-    const gamefieldRowItem = createElem({ tag: 'div', classesCss: ['gamefield__row__item'] });
+    const gamefieldRowItem = createElem({ tagName: 'div', classNames: ['gamefield__row__item'] });
     gamefieldRow.append(gamefieldRowItem);
   }
   return gamefieldRow as HTMLDivElement;
@@ -84,8 +84,8 @@ export function generateGamefieldWords(round: GameData, rowNumber: number): Docu
 
   for (let i = 0; i < gamefieldItems.length; i += 1) {
     const gamefieldItem = createElem({
-      tag: 'div',
-      classesCss: ['gamefield__words__item'],
+      tagName: 'div',
+      classNames: ['gamefield__words__item'],
       textContent: gamefieldItems[i],
     });
     if (i === 0) {

@@ -1,5 +1,5 @@
 import './login-screen.css';
-import { createElem } from '../../utils/createElem';
+import createElem from '../../utils/createElem';
 import { container } from '../../app-container/container';
 import { LOCALSTORAGE_KEY_LASTNAME, LOCALSTORAGE_KEY_NAME } from '../../utils/localStorageKeys';
 import generateStartScreen from '../start-screen/start-screen';
@@ -19,43 +19,43 @@ const saveUserInfoInLocalStorage: SaveUserInfoInLocalStorage = (name, lastName) 
 };
 
 function createLoginScreen() {
-  const loginScreen = createElem({ tag: 'div', classesCss: ['login__screen'] });
-  const loginScreenFormContainer = createElem({ tag: 'form', classesCss: ['login__screen__form-container'] });
+  const loginScreen = createElem({ tagName: 'div', classNames: ['login__screen'] });
+  const loginScreenFormContainer = createElem({ tagName: 'form', classNames: ['login__screen__form-container'] });
   loginScreen.append(loginScreenFormContainer);
 
-  const labelFirstName = createElem({ tag: 'label' });
-  const firstNameSpan = createElem({ tag: 'span', textContent: 'First name' });
+  const labelFirstName = createElem({ tagName: 'label' });
+  const firstNameSpan = createElem({ tagName: 'span', textContent: 'First name' });
   const firstNameInput = createElem({
-    tag: 'input',
-    type: 'text',
-    required: true,
-    minLength: MINIMUM_FIRSTNAME_LENGTH,
-    pattern: INPUT_REGEX,
-    placeholder: INPUT_PLACEHOLDER_DEFAULT,
-    title: INPUT_TITLE_FIRSTNAME_DEFAULT,
+    tagName: 'input',
+    attributes: [ ['type', 'text'],
+     ['required', true],
+     ['minLength', MINIMUM_FIRSTNAME_LENGTH],
+     ['pattern',INPUT_REGEX],
+     ['placeholder', INPUT_PLACEHOLDER_DEFAULT],
+     ['title', INPUT_TITLE_FIRSTNAME_DEFAULT] ]
   }) as HTMLInputElement;
 
   labelFirstName.append(firstNameSpan, firstNameInput);
 
-  const labelLastName = createElem({ tag: 'label' });
-  const lastNameSpan = createElem({ tag: 'span', textContent: 'Surname' });
+  const labelLastName = createElem({ tagName: 'label' });
+  const lastNameSpan = createElem({ tagName: 'span', textContent: 'Surname' });
   const lastNameInput = createElem({
-    tag: 'input',
-    type: 'text',
-    required: true,
-    minLength: MINIMUM_LASTNAME_LENGTH,
-    pattern: INPUT_REGEX,
-    placeholder: INPUT_PLACEHOLDER_DEFAULT,
-    title: INPUT_TITLE_LASTNAME_DEFAULT,
+    tagName: 'input',
+    attributes: [ ['type', 'text'],
+     ['required', true],
+     ['minLength', MINIMUM_LASTNAME_LENGTH],
+     ['pattern',INPUT_REGEX],
+     ['placeholder', INPUT_PLACEHOLDER_DEFAULT],
+     ['title', INPUT_TITLE_LASTNAME_DEFAULT] ]
   }) as HTMLInputElement;
 
   labelLastName.append(lastNameSpan, lastNameInput);
 
   const loginScreenBtn = createElem({
-    tag: 'button',
-    classesCss: ['btn', 'login__screen__form-btn'],
-    type: 'submit',
+    tagName: 'button',
+    classNames: ['btn', 'login__screen__form-btn'],
     textContent: 'Login',
+    attributes: [ ['type', 'submit']],
   });
 
   loginScreenFormContainer.append(labelFirstName, labelLastName, loginScreenBtn);

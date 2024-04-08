@@ -1,5 +1,5 @@
 import './game-btns-container.css';
-import { createElem } from '../../../../utils/createElem';
+import createElem from '../../../../utils/createElem';
 import { container } from '../../../../app-container/container';
 import createContinueBtn from '../game-btns/continue-btn';
 import { createCheckBtn } from '../game-btns/check-btn';
@@ -14,7 +14,7 @@ export const HINT_BTN = createHintBtn();
 export const HINT_AUDIO_BTN = createAudioHintBtn();
 
 function createGameBtnsContainer() {
-  const gameBtnsContainer = createElem({ tag: 'div', classesCss: ['game__btns-container'] });
+  const gameBtnsContainer = createElem({ tagName: 'div', classNames: ['game__btns-container'] });
   gameBtnsContainer.append(HINT_AUDIO_BTN, HINT_BTN, CHECK_BTN, COMPLETE_BTN, CONTINUE_BTN);
   container.append(gameBtnsContainer);
 }

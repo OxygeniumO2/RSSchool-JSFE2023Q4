@@ -1,5 +1,5 @@
 import './game-btn.css';
-import { createElem } from '../../../../utils/createElem';
+import createElem from '../../../../utils/createElem';
 import { LOCALSTORAGE_KEY_ROUND_NUMBER, LOCALSTORAGE_KEY_LEVEL_ROUND_NUMBER } from '../../../../utils/localStorageKeys';
 import generateGame, {
   START_GAME_ZERO,
@@ -24,8 +24,8 @@ import GameData from '../../../../interfaces/game-data-interface';
 const BTN_CONTINUE_TEXT = 'Continue';
 function createContinueBtn(): HTMLElement {
   const btn = createElem({
-    tag: 'button',
-    classesCss: ['btn', 'btn_wrong'],
+    tagName: 'button',
+    classNames: ['btn', 'btn_wrong'],
     textContent: BTN_CONTINUE_TEXT,
   });
   btn.addEventListener('click', () => {

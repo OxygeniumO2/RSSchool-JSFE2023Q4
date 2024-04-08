@@ -1,5 +1,5 @@
 import './logout.css';
-import { createElem } from '../../../../utils/createElem';
+import createElem from '../../../../utils/createElem';
 import createLoginScreen from '../../../login-screen/login-screen';
 import {
   GAMEFIELD_WORDS_CONTAINER,
@@ -19,7 +19,7 @@ import { AUDIO_ICO, AUDIO_ICO_CONTAINER, HINT_AUDIO_TEXT } from '../game-hints/g
 const LOGOUT_BTN_TEXT: string = 'Logout';
 
 function generateLogout(): HTMLElement {
-  const logoutBtn = createElem({ tag: 'button', classesCss: ['btn', 'logout-btn'], textContent: LOGOUT_BTN_TEXT });
+  const logoutBtn = createElem({ tagName: 'button', classNames: ['btn', 'logout-btn'], textContent: LOGOUT_BTN_TEXT });
   logoutBtn.addEventListener('click', logout);
   return logoutBtn;
 }
