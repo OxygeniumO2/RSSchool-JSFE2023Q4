@@ -1,3 +1,5 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable import/extensions */
 import './game-btns-container.css';
 import createElem from '../../../../utils/createElem';
 import { container } from '../../../../app-container/container';

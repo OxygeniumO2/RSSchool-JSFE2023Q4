@@ -1,3 +1,8 @@
+/* eslint-disable comma-dangle */
+/* eslint-disable no-param-reassign */
+/* eslint-disable indent */
+/* eslint-disable implicit-arrow-linebreak */
+/* eslint-disable operator-linebreak */
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
 import createElem from '../../../../utils/createElem';
@@ -12,19 +17,20 @@ function completeCurrRow() {
   const currRoundFromLS: RoundDataFromLS = getDataRoundFromLS();
   const currRowItems = Array.from(currRow.children) as HTMLElement[];
   if (currRoundFromLS.currRound) {
-    const correctRowArr: string[] = currRoundFromLS.currRound?.words[currRoundFromLS.localStorageRoundNumber].textExample.split(' ');
+    const correctRowArr: string[] =
+      currRoundFromLS.currRound?.words[currRoundFromLS.localStorageRoundNumber].textExample.split(' ');
     currRowItems.map(
       (item, index) =>
         new Promise<void>((resolve) => {
-        setTimeout(() => {
-          item.textContent = correctRowArr[index];
-          item.classList.remove('word_correct');
-          item.classList.remove('word_incorrect');
-          item.classList.add('_autoWidth');
-          item.classList.add('_appearing');
-          resolve();
-        }, index * 40);
-      })
+          setTimeout(() => {
+            item.textContent = correctRowArr[index];
+            item.classList.remove('word_correct');
+            item.classList.remove('word_incorrect');
+            item.classList.add('_autoWidth');
+            item.classList.add('_appearing');
+            resolve();
+          }, index * 40);
+        })
     );
     const gamefieldWordsItems = Array.from(GAMEFIELD_WORDS_CONTAINER.children) as HTMLElement[];
     gamefieldWordsItems.forEach((item) => {

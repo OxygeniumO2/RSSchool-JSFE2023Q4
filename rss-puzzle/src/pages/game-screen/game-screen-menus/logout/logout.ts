@@ -1,3 +1,7 @@
+/* eslint-disable object-curly-newline */
+/* eslint-disable no-undef */
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
 import './logout.css';
 import createElem from '../../../../utils/createElem';
 import createLoginScreen from '../../../login-screen/login-screen';
@@ -17,12 +21,6 @@ import { CHECK_BTN, CONTINUE_BTN, HINT_AUDIO_BTN, HINT_BTN } from '../game-btns-
 import { AUDIO_ICO, AUDIO_ICO_CONTAINER, HINT_AUDIO_TEXT } from '../game-hints/game-hint-audio';
 
 const LOGOUT_BTN_TEXT: string = 'Logout';
-
-function generateLogout(): HTMLElement {
-  const logoutBtn = createElem({ tagName: 'button', classNames: ['btn', 'logout-btn'], textContent: LOGOUT_BTN_TEXT });
-  logoutBtn.addEventListener('click', logout);
-  return logoutBtn;
-}
 
 function logout() {
   localStorage.clear();
@@ -50,6 +48,12 @@ function logout() {
     createLoginScreen();
     document.body.style.opacity = '1';
   }, 400);
+}
+
+function generateLogout(): HTMLElement {
+  const logoutBtn = createElem({ tagName: 'button', classNames: ['btn', 'logout-btn'], textContent: LOGOUT_BTN_TEXT });
+  logoutBtn.addEventListener('click', logout);
+  return logoutBtn;
 }
 
 export default generateLogout;

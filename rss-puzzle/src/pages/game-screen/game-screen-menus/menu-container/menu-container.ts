@@ -1,3 +1,5 @@
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
 import './menu-container.css';
 import createElem from '../../../../utils/createElem';
 import { container } from '../../../../app-container/container';

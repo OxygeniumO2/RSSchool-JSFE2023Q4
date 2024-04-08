@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 interface CreateElemProps {
   tagName: string;
   classNames?: string[];

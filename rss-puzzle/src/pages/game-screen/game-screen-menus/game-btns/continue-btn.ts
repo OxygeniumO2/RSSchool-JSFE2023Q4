@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
 import './game-btn.css';
@@ -23,23 +24,6 @@ import { checkCorrectWords } from './check-btn';
 import { RoundDataFromLS, getDataRoundFromLS } from '../../../../utils/getDataRoundLS';
 import { checkIfHintDisabledDontShowHint, generateHint, hintInnerOpacityChange } from '../game-hints/game-hint-text';
 import GameData from '../../../../interfaces/game-data-interface';
-
-const BTN_CONTINUE_TEXT = 'Continue';
-function createContinueBtn(): HTMLElement {
-  const btn = createElem({
-    tagName: 'button',
-    classNames: ['btn', 'btn_wrong'],
-    textContent: BTN_CONTINUE_TEXT,
-  });
-  btn.addEventListener('click', () => {
-    changeRowOrRound();
-    if (btn.classList.contains('btn_active')) {
-      btn.classList.add('btn_wrong');
-      btn.classList.remove('btn_active');
-    }
-  });
-  return btn;
-}
 
 function changeRowOrRound() {
   const checkBtn = CHECK_BTN;
@@ -92,4 +76,20 @@ function changeRowOrRound() {
   }
 }
 
+const BTN_CONTINUE_TEXT = 'Continue';
+function createContinueBtn(): HTMLElement {
+  const btn = createElem({
+    tagName: 'button',
+    classNames: ['btn', 'btn_wrong'],
+    textContent: BTN_CONTINUE_TEXT,
+  });
+  btn.addEventListener('click', () => {
+    changeRowOrRound();
+    if (btn.classList.contains('btn_active')) {
+      btn.classList.add('btn_wrong');
+      btn.classList.remove('btn_active');
+    }
+  });
+  return btn;
+}
 export default createContinueBtn;

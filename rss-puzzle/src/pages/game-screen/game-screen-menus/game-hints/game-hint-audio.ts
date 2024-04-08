@@ -1,3 +1,5 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable import/extensions */
 import './game-hint-audio.css';
 import createElem from '../../../../utils/createElem';
 import { HINT_CONTAINER } from './game-hint-text';
@@ -35,12 +37,7 @@ export function playAudio() {
   }
 }
 
-export function createAudioHintBtn() {
-  const btn = createElem({ tagName: 'button', classNames: ['btn', 'hint-btn'], textContent: HINT_AUDIO_TEXT });
-  btn.addEventListener('click', toggleAudioHint);
-  return btn;
-}
-
+// eslint-disable-next-line no-unused-vars
 function toggleAudioHint(this: HTMLElement) {
   this.classList.toggle('_off');
   if (this.textContent === HINT_AUDIO_TEXT) {
@@ -52,4 +49,10 @@ function toggleAudioHint(this: HTMLElement) {
     AUDIO_ICO_CONTAINER.classList.add('_open');
     AUDIO_ICO.classList.remove('_hidden');
   }
+}
+
+export function createAudioHintBtn() {
+  const btn = createElem({ tagName: 'button', classNames: ['btn', 'hint-btn'], textContent: HINT_AUDIO_TEXT });
+  btn.addEventListener('click', toggleAudioHint);
+  return btn;
 }

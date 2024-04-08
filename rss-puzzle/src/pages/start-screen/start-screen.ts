@@ -1,3 +1,5 @@
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
 import './start-screen.css';
 import { container } from '../../app-container/container';
 import createElem from '../../utils/createElem';

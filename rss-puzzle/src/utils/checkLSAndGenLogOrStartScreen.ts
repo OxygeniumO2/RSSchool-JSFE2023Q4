@@ -1,3 +1,6 @@
+/* eslint-disable max-len */
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
 import { LOCALSTORAGE_KEY_LASTNAME, LOCALSTORAGE_KEY_NAME } from './localStorageKeys';
 import createLoginScreen from '../pages/login-screen/login-screen';
 import generateStartScreen from '../pages/start-screen/start-screen';

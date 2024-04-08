@@ -1,3 +1,10 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-shadow */
+/* eslint-disable no-undef */
+/* eslint-disable no-use-before-define */
+/* eslint-disable import/no-mutable-exports */
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
 import './game-screen.css';
 import createElem from '../../utils/createElem';
 import GameData, { Level } from '../../interfaces/game-data-interface';
@@ -25,6 +32,7 @@ let currentRowNumber: number = START_GAME_ZERO;
 export const GAMEFIELD = createElem({ tagName: 'div', classNames: ['gamefield'] });
 export const GAMEFIELD_WORDS_CONTAINER = createElem({ tagName: 'div', classNames: ['gamefield__words-container'] });
 export let currRow: HTMLElement;
+// eslint-disable-next-line no-undef
 export let prevHandlerWithRound: EventListener | null = null;
 const checkBtn = CHECK_BTN;
 const continueBtn = CONTINUE_BTN;
