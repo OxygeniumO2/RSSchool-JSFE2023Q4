@@ -1,4 +1,7 @@
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
 import './game-btn.css';
+
 import createElem from '../../../../utils/createElem';
 import { LOCALSTORAGE_KEY_ROUND_NUMBER, LOCALSTORAGE_KEY_LEVEL_ROUND_NUMBER } from '../../../../utils/localStorageKeys';
 import generateGame, {

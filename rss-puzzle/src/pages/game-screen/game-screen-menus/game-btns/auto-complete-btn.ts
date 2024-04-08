@@ -1,3 +1,5 @@
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
 import createElem from '../../../../utils/createElem';
 import { RoundDataFromLS, getDataRoundFromLS } from '../../../../utils/getDataRoundLS';
 import { GAMEFIELD_WORDS_CONTAINER, currRow } from '../../game-screen';
@@ -6,24 +8,14 @@ import { HINT_CONTAINER } from '../game-hints/game-hint-text';
 
 const BTN_COMPLETE_TEXT = 'Auto-Complete';
 
-export function createCompleteBtn(): HTMLElement {
-  const btn = createElem({
-    tagName: 'button',
-    classNames: ['btn', 'btn_active'],
-    textContent: BTN_COMPLETE_TEXT,
-  });
-  btn.addEventListener('click', completeCurrRow);
-  return btn;
-}
-
 function completeCurrRow() {
   const currRoundFromLS: RoundDataFromLS = getDataRoundFromLS();
   const currRowItems = Array.from(currRow.children) as HTMLElement[];
   if (currRoundFromLS.currRound) {
-    const correctRowArr: string[] =
-      currRoundFromLS.currRound?.words[currRoundFromLS.localStorageRoundNumber].textExample.split(' ');
-    currRowItems.map((item, index) => {
-      return new Promise<void>((resolve) => {
+    const correctRowArr: string[] = currRoundFromLS.currRound?.words[currRoundFromLS.localStorageRoundNumber].textExample.split(' ');
+    currRowItems.map(
+      (item, index) =>
+        new Promise<void>((resolve) => {
         setTimeout(() => {
           item.textContent = correctRowArr[index];
           item.classList.remove('word_correct');
@@ -32,8 +24,8 @@ function completeCurrRow() {
           item.classList.add('_appearing');
           resolve();
         }, index * 40);
-      });
-    });
+      })
+    );
     const gamefieldWordsItems = Array.from(GAMEFIELD_WORDS_CONTAINER.children) as HTMLElement[];
     gamefieldWordsItems.forEach((item) => {
       item.classList.add('_zeroWidth');
@@ -45,4 +37,15 @@ function completeCurrRow() {
     fromInnactiveToActiveBtn(checkBtn);
     HINT_CONTAINER.classList.add('_open');
   }
+}
+
+// eslint-disable-next-line import/prefer-default-export
+export function createCompleteBtn(): HTMLElement {
+  const btn = createElem({
+    tagName: 'button',
+    classNames: ['btn', 'btn_active'],
+    textContent: BTN_COMPLETE_TEXT,
+  });
+  btn.addEventListener('click', completeCurrRow);
+  return btn;
 }

@@ -136,7 +136,7 @@ function moveWordToRow(word: HTMLElement, currRow: HTMLElement) {
     if (!item.textContent) {
       word.style.pointerEvents = 'none';
       item.textContent = wordText;
-      item.style.width = Math.floor(item.scrollWidth / 2) + 'px';
+      item.style.width = `${Math.floor(item.scrollWidth / 2)}px`;
       item.classList.add('_appearing');
       item.addEventListener('transitionend', function transitionEndHandler() {
         item.removeAttribute('style');
@@ -178,7 +178,7 @@ export function moveWordFromRow(currRowItem: HTMLElement, words: HTMLElement[]) 
     }
     currRowItem.classList.remove('_autoWidth');
     currRowItem.textContent = '';
-    currRowItem.style.width = Math.floor(currRowItem.scrollWidth / 10) + 'px';
+    currRowItem.style.width = `${Math.floor(currRowItem.scrollWidth / 10)}px`;
     currRowItem.classList.remove('word_correct');
     currRowItem.classList.remove('word_incorrect');
     currRowItem.classList.remove('_appearing');
@@ -218,10 +218,8 @@ export function setPrevHandlerWithRound(handler: EventListener | null) {
   prevHandlerWithRound = handler;
 }
 
-const gamefieldWordsContainerClickHandlerWithRound = (round: GameData) => {
-  return (event: MouseEvent) => {
-    handleGamefieldWordsContainerClick(event, round);
-  };
+const gamefieldWordsContainerClickHandlerWithRound = (round: GameData) => (event: MouseEvent) => {
+  handleGamefieldWordsContainerClick(event, round);
 };
 
 function handleGamefieldWordsContainerClick(event: MouseEvent, round: GameData) {

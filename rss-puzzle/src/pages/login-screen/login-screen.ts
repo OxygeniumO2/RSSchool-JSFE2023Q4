@@ -27,12 +27,14 @@ function createLoginScreen() {
   const firstNameSpan = createElem({ tagName: 'span', textContent: 'First name' });
   const firstNameInput = createElem({
     tagName: 'input',
-    attributes: [ ['type', 'text'],
-     ['required', true],
-     ['minLength', MINIMUM_FIRSTNAME_LENGTH],
-     ['pattern',INPUT_REGEX],
-     ['placeholder', INPUT_PLACEHOLDER_DEFAULT],
-     ['title', INPUT_TITLE_FIRSTNAME_DEFAULT] ]
+    attributes: [
+      ['type', 'text'],
+      ['required', true],
+      ['minLength', MINIMUM_FIRSTNAME_LENGTH],
+      ['pattern', INPUT_REGEX],
+      ['placeholder', INPUT_PLACEHOLDER_DEFAULT],
+      ['title', INPUT_TITLE_FIRSTNAME_DEFAULT],
+    ],
   }) as HTMLInputElement;
 
   labelFirstName.append(firstNameSpan, firstNameInput);
@@ -41,12 +43,14 @@ function createLoginScreen() {
   const lastNameSpan = createElem({ tagName: 'span', textContent: 'Surname' });
   const lastNameInput = createElem({
     tagName: 'input',
-    attributes: [ ['type', 'text'],
-     ['required', true],
-     ['minLength', MINIMUM_LASTNAME_LENGTH],
-     ['pattern',INPUT_REGEX],
-     ['placeholder', INPUT_PLACEHOLDER_DEFAULT],
-     ['title', INPUT_TITLE_LASTNAME_DEFAULT] ]
+    attributes: [
+      ['type', 'text'],
+      ['required', true],
+      ['minLength', MINIMUM_LASTNAME_LENGTH],
+      ['pattern', INPUT_REGEX],
+      ['placeholder', INPUT_PLACEHOLDER_DEFAULT],
+      ['title', INPUT_TITLE_LASTNAME_DEFAULT],
+    ],
   }) as HTMLInputElement;
 
   labelLastName.append(lastNameSpan, lastNameInput);
@@ -55,7 +59,7 @@ function createLoginScreen() {
     tagName: 'button',
     classNames: ['btn', 'login__screen__form-btn'],
     textContent: 'Login',
-    attributes: [ ['type', 'submit']],
+    attributes: [['type', 'submit']],
   });
 
   loginScreenFormContainer.append(labelFirstName, labelLastName, loginScreenBtn);

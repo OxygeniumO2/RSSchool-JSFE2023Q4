@@ -7,9 +7,14 @@ export const HINT_AUDIO_TEXT = 'Audio Hint - ON';
 const HINT_AUDIO_TEXT_OFF = 'Audio Hint - OFF';
 
 export const AUDIO_ICO_CONTAINER = createElem({ tagName: 'div', classNames: ['audio__ico-container', '_open'] });
-export const AUDIO_ICO = createElem({ tagName: 'img', classNames: ['audio__ico'],
-attributes: [ ['src', './img/audio.svg'],
- ['alt', 'sound'] ]});
+export const AUDIO_ICO = createElem({
+  tagName: 'img',
+  classNames: ['audio__ico'],
+  attributes: [
+    ['src', './img/audio.svg'],
+    ['alt', 'sound'],
+  ],
+});
 
 export function createHintAudioIco() {
   AUDIO_ICO_CONTAINER.append(AUDIO_ICO);

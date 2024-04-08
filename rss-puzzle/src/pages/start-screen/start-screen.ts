@@ -25,7 +25,11 @@ function generateStartScreen() {
     classNames: ['start__screen__title'],
     textContent: START_SCREEN_TITLE,
   });
-  const startScreenDesc = createElem({ tagName: 'p', classNames: ['start__screen__desc'], textContent: START_SCREEN_DESC });
+  const startScreenDesc = createElem({
+    tagName: 'p',
+    classNames: ['start__screen__desc'],
+    textContent: START_SCREEN_DESC,
+  });
 
   const userNameFromLS = localStorage.getItem(LOCALSTORAGE_KEY_NAME);
   const userLastNameFromLS = localStorage.getItem(LOCALSTORAGE_KEY_LASTNAME);
