@@ -4,8 +4,8 @@ import createElem from '../utils/createElem';
 
 const container = createElem({ tagName: 'div', classNames: ['container'] });
 
-function addContainerToBody() {
+function appendRoot() {
   document.body.append(container);
 }
 
-export { container, addContainerToBody };
+export { container, appendRoot };
