@@ -15,7 +15,7 @@ export const COMPLETE_BTN = createCompleteBtn();
 export const HINT_BTN = createHintBtn();
 export const HINT_AUDIO_BTN = createAudioHintBtn();
 
-function createGameBtnsContainer() {
+export function createGameBtnsContainer() {
   const gameBtnsContainer = createElem({ tagName: 'div', classNames: ['game__btns-container'] });
   gameBtnsContainer.append(HINT_AUDIO_BTN, HINT_BTN, CHECK_BTN, COMPLETE_BTN, CONTINUE_BTN);
   container.append(gameBtnsContainer);
@@ -30,5 +30,3 @@ export function fromActiveToInnactiveBtn(btn: HTMLElement): void {
   btn.classList.remove('btn_active');
   btn.classList.add('btn_wrong');
 }
-
-export default createGameBtnsContainer;

@@ -11,8 +11,8 @@ import {
 import generateGame from '../game-screen/game-screen';
 import { Level } from '../../interfaces/game-data-interface';
 import createMenuContainer from '../game-screen/game-screen-menus/menu-container/menu-container';
-import createGameBtnsContainer from '../game-screen/game-screen-menus/game-buttons/game-buttons';
 import level from '../../data/words-levels/wordCollectionLevel';
+import { createGameBtnsContainer } from '../game-screen/game-screen-menus/game-buttons/game-buttons';
 
 const START_SCREEN_TITLE: string = 'RSS PUZZLE';
 const START_SCREEN_DESC: string = 'You can learn English by clicking on words';
