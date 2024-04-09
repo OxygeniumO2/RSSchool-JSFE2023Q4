@@ -2,10 +2,10 @@
 /* eslint-disable import/no-unresolved */
 import './game-hint-text.css';
 import createElem from '../../../../utils/createElem';
-import GameData from '../../../../interfaces/game-data-interface';
 import { getDataRoundFromLS } from '../../../../utils/getDataRoundLS';
 import { GAMEFIELD } from '../../game-screen';
 import { HINT_BTN } from '../game-btns-container/game-btns-container';
+import { Round } from '../../../../interfaces/game-data-interface';
 
 export const BTN_HINT_TEXT = 'Hint Text - ON';
 export const BTN_HINT_TEXT_OFF = 'Hint Text - OFF';
@@ -35,7 +35,7 @@ export function createHintContainer() {
   GAMEFIELD.insertAdjacentElement('afterend', HINT_CONTAINER);
 }
 
-export function generateHint(round: GameData) {
+export function generateHint(round: Round) {
   const currDataRound = getDataRoundFromLS();
   const hintText: string = round.words[currDataRound.localStorageRoundNumber].textExampleTranslate;
   HINT_INNER_DIV.textContent = hintText;

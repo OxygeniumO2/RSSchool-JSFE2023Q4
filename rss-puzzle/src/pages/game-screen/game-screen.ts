@@ -7,7 +7,6 @@
 /* eslint-disable import/no-unresolved */
 import './game-screen.css';
 import createElem from '../../utils/createElem';
-import GameData, { Level } from '../../interfaces/game-data-interface';
 import {
   CHECK_BTN,
   CONTINUE_BTN,
@@ -22,6 +21,7 @@ import {
 import { MENU } from './game-screen-menus/menu-container/menu-container';
 import { HINT_CONTAINER, createHintContainer, generateHint } from './game-screen-menus/game-hints/game-hint-text';
 import { AUDIO_ICO_CONTAINER, createHintAudioIco, playAudio } from './game-screen-menus/game-hints/game-hint-audio';
+import { Level, Round } from '../../interfaces/game-data-interface';
 
 let wordNoBefore: string;
 let wordNoAfter: string;
@@ -40,7 +40,7 @@ export let currAudio: HTMLAudioElement;
 export const AUDIO_PATH_HTTP: string = 'https://raw.githubusercontent.com/rolling-scopes-school/rss-puzzle-data/main/';
 
 function generateGame(level: Level, roundNumber: number): void {
-  const round: GameData = level.rounds[roundNumber];
+  const round: Round = level.rounds[roundNumber];
   GAMEFIELD.style.minHeight = `${round.words.length * MULTIPLE_LENGTH_HEIGHT_GAMEFIELD + STATIC_LENGTH}px`;
   const handlerWithRound = gamefieldWordsContainerClickHandlerWithRound(round);
   localStorage.setItem(LOCALSTORAGE_KEY_LEVEL_ROUND_NUMBER, roundNumber.toString());
@@ -73,7 +73,7 @@ function generateGame(level: Level, roundNumber: number): void {
   generateHint(round);
 }
 
-export function generateGamefieldRow(round: GameData, rowNumber: number): HTMLDivElement {
+export function generateGamefieldRow(round: Round, rowNumber: number): HTMLDivElement {
   const gamefieldRow = createElem({ tagName: 'div', classNames: ['gamefield__row'] });
   const currRowWords = round.words[rowNumber].textExample.split(' ');
   for (let i = 0; i < currRowWords.length; i += 1) {
@@ -83,7 +83,7 @@ export function generateGamefieldRow(round: GameData, rowNumber: number): HTMLDi
   return gamefieldRow as HTMLDivElement;
 }
 
-export function generateGamefieldWords(round: GameData, rowNumber: number): DocumentFragment {
+export function generateGamefieldWords(round: Round, rowNumber: number): DocumentFragment {
   const fragment = document.createDocumentFragment();
 
   const gamefieldItems = round.words[rowNumber].textExample.split(' ');
@@ -198,7 +198,7 @@ export function moveWordFromRow(currRowItem: HTMLElement, words: HTMLElement[]) 
   }
 }
 
-function isCurrRowRight(row: HTMLElement, round: GameData) {
+function isCurrRowRight(row: HTMLElement, round: Round) {
   const rowItems: HTMLElement[] = Array.from(row.children) as HTMLElement[];
   const rowItemsContent: string = rowItems.map((item) => item.textContent).join('');
   const correctSentence: string = round.words[currentRowNumber].textExample.split(' ').join('');
@@ -226,11 +226,11 @@ export function setPrevHandlerWithRound(handler: EventListener | null) {
   prevHandlerWithRound = handler;
 }
 
-const gamefieldWordsContainerClickHandlerWithRound = (round: GameData) => (event: MouseEvent) => {
+const gamefieldWordsContainerClickHandlerWithRound = (round: Round) => (event: MouseEvent) => {
   handleGamefieldWordsContainerClick(event, round);
 };
 
-function handleGamefieldWordsContainerClick(event: MouseEvent, round: GameData) {
+function handleGamefieldWordsContainerClick(event: MouseEvent, round: Round) {
   const currWord = event.target as HTMLElement;
   if (currWord) {
     if (currWord.parentElement === GAMEFIELD_WORDS_CONTAINER) {

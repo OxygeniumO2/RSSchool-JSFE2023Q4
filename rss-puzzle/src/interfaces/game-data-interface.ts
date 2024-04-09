@@ -16,17 +16,11 @@ export interface Words {
   wordTranslate: string;
 }
 
-interface GameData {
+export interface Round {
   levelData: LevelData;
   words: Words[];
 }
-
 export interface Level {
-  rounds: {
-    levelData: LevelData;
-    words: Words[];
-  }[];
+  rounds: Round[];
   roundsCount: number;
 }
-
-export default GameData;

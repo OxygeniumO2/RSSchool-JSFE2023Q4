@@ -23,7 +23,7 @@ import { CHECK_BTN, fromActiveToInnactiveBtn } from '../game-btns-container/game
 import { checkCorrectWords } from './check-btn';
 import { RoundDataFromLS, getDataRoundFromLS } from '../../../../utils/getDataRoundLS';
 import { checkIfHintDisabledDontShowHint, generateHint, hintInnerOpacityChange } from '../game-hints/game-hint-text';
-import GameData from '../../../../interfaces/game-data-interface';
+import { Round } from '../../../../interfaces/game-data-interface';
 
 function changeRowOrRound() {
   const checkBtn = CHECK_BTN;
@@ -55,7 +55,7 @@ function changeRowOrRound() {
       setCurrRow(newRow);
       hintInnerOpacityChange();
       setTimeout(() => {
-        generateHint(currRoundFromLS.currRound as GameData);
+        generateHint(currRoundFromLS.currRound as Round);
       }, 300);
       checkIfHintDisabledDontShowHint();
       const newAudio = new Audio(`${AUDIO_PATH_HTTP}${currRoundFromLS.currRound.words[currRowNumber].audioExample}`);

@@ -13,7 +13,7 @@ export function checkCorrectWords() {
   const currRowChildren = currRow.children;
   const currRowWordsArr = Array.from(currRowChildren).map((item) => item.textContent);
   const correctRow = currRoundFromLS.currRound?.words[currRoundFromLS.localStorageRoundNumber].textExample.split(' ');
-  correctRow?.forEach((item, index) => {
+  correctRow?.forEach((item: string, index: number) => {
     if (item === currRowWordsArr[index]) {
       currRowChildren[index].classList.add('word_correct');
     } else {
