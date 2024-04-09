@@ -3,9 +3,9 @@
 import './game-btns-container.css';
 import createElem from '../../../../utils/createElem';
 import { container } from '../../../../app-container/container';
-import createContinueBtn from '../game-btns/continue-btn';
-import { createCheckBtn } from '../game-btns/check-btn';
-import { createCompleteBtn } from '../game-btns/auto-complete-btn';
+import createContinueBtn from '../buttons/continue-btn';
+import { createCheckBtn } from '../buttons/check-btn';
+import { createCompleteBtn } from '../buttons/auto-complete-btn';
 import { createHintBtn } from '../game-hints/game-hint-text';
 import { createAudioHintBtn } from '../game-hints/game-hint-audio';
 

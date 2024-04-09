@@ -19,7 +19,7 @@ import generateGame, {
   setCurrAudio,
 } from '../../game-screen';
 import level from '../../../../data/words-levels/wordCollectionLevel';
-import { CHECK_BTN, fromActiveToInnactiveBtn } from '../game-btns-container/game-btns-container';
+import { CHECK_BTN, fromActiveToInnactiveBtn } from '../game-buttons/game-buttons';
 import { checkCorrectWords } from './check-btn';
 import { RoundDataFromLS, getDataRoundFromLS } from '../../../../utils/getDataRoundLS';
 import { checkIfHintDisabledDontShowHint, generateHint, hintInnerOpacityChange } from '../game-hints/game-hint-text';

@@ -4,7 +4,7 @@ import './game-hint-text.css';
 import createElem from '../../../../utils/createElem';
 import { getDataRoundFromLS } from '../../../../utils/getDataRoundLS';
 import { GAMEFIELD } from '../../game-screen';
-import { HINT_BTN } from '../game-btns-container/game-btns-container';
+import { HINT_BTN } from '../game-buttons/game-buttons';
 import { Round } from '../../../../interfaces/game-data-interface';
 
 export const BTN_HINT_TEXT = 'Hint Text - ON';

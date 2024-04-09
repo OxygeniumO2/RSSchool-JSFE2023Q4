@@ -12,7 +12,7 @@ import {
   CONTINUE_BTN,
   fromActiveToInnactiveBtn,
   fromInnactiveToActiveBtn,
-} from './game-screen-menus/game-btns-container/game-btns-container';
+} from './game-screen-menus/game-buttons/game-buttons';
 import {
   LOCALSTORAGE_KEY_LEVEL_ROUND_NUMBER,
   LOCALSTORAGE_KEY_RANDOM_WORD_GEN,

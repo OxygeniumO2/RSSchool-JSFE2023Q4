@@ -17,7 +17,7 @@ import {
 import { container } from '../../../../app-container/container';
 import { MENU } from '../menu-container/menu-container';
 import { BTN_HINT_TEXT, HINT_CONTAINER } from '../game-hints/game-hint-text';
-import { CHECK_BTN, CONTINUE_BTN, HINT_AUDIO_BTN, HINT_BTN } from '../game-btns-container/game-btns-container';
+import { CHECK_BTN, CONTINUE_BTN, HINT_AUDIO_BTN, HINT_BTN } from '../game-buttons/game-buttons';
 import { AUDIO_ICO, AUDIO_ICO_CONTAINER, HINT_AUDIO_TEXT } from '../game-hints/game-hint-audio';
 
 const LOGOUT_BTN_TEXT: string = 'Logout';

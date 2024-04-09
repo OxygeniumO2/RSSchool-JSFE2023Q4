@@ -11,7 +11,7 @@ import {
 import generateGame from '../game-screen/game-screen';
 import { Level } from '../../interfaces/game-data-interface';
 import createMenuContainer from '../game-screen/game-screen-menus/menu-container/menu-container';
-import createGameBtnsContainer from '../game-screen/game-screen-menus/game-btns-container/game-btns-container';
+import createGameBtnsContainer from '../game-screen/game-screen-menus/game-buttons/game-buttons';
 import level from '../../data/words-levels/wordCollectionLevel';
 
 const START_SCREEN_TITLE: string = 'RSS PUZZLE';
