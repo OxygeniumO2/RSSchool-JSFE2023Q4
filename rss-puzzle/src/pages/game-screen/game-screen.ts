@@ -249,11 +249,9 @@ function handleGameFieldWordsContainerClick(event: MouseEvent, round: Round) {
 
 export function handleCurrRowClick(event: MouseEvent) {
   const currRowItem = event.target as HTMLElement;
-  if (currRowItem) {
-    if (currRowItem.classList.contains('gamefield__row__item')) {
-      const words = Array.from(GAMEFIELD_WORDS_CONTAINER.children) as HTMLElement[];
-      moveWordFromRow(currRowItem, words);
-    }
+  if (currRowItem && currRowItem.classList.contains('gamefield__row__item')) {
+    const words = Array.from(GAMEFIELD_WORDS_CONTAINER.children) as HTMLElement[];
+    moveWordFromRow(currRowItem, words);
   }
 }
 
