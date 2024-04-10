@@ -24,6 +24,7 @@ import { checkCorrectWords } from './check-btn';
 import { RoundDataFromLS, getDataRoundFromLS } from '../../../../utils/getDataRoundLS';
 import { checkIfHintDisabledDontShowHint, generateHint, hintInnerOpacityChange } from '../game-hints/game-hint-text';
 import { Round } from '../../../../interfaces/game-data-interface';
+import { currLevelInfo } from '../../choose-level';
 
 function changeRowOrRound() {
   const checkBtn = CHECK_BTN;
@@ -72,6 +73,7 @@ function changeRowOrRound() {
       hintInnerOpacityChange();
       fromActiveToInnactiveBtn(checkBtn);
       checkIfHintDisabledDontShowHint();
+      currLevelInfo.textContent = `Current level - ${levelRoundNumber + 1}`;
     }
   }
 }

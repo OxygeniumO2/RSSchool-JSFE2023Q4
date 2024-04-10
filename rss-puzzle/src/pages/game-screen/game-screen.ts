@@ -32,7 +32,6 @@ let currentRowNumber: number = START_GAME_ZERO;
 export const GAMEFIELD = createElem({ tagName: 'div', classNames: ['gamefield'] });
 export const GAMEFIELD_WORDS_CONTAINER = createElem({ tagName: 'div', classNames: ['gamefield__words-container'] });
 export let currRow: HTMLElement;
-// eslint-disable-next-line no-undef
 export let prevHandlerWithRound: EventListener | null = null;
 const checkBtn = CHECK_BTN;
 const continueBtn = CONTINUE_BTN;

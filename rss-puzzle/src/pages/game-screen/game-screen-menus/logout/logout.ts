@@ -2,7 +2,6 @@
 /* eslint-disable no-undef */
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
-import './logout.css';
 import createElem from '../../../../utils/createElem';
 import createLoginScreen from '../../../login-screen/login-screen';
 import {
@@ -51,7 +50,7 @@ function logout() {
 }
 
 function generateLogout(): HTMLElement {
-  const logoutBtn = createElem({ tagName: 'button', classNames: ['btn', 'logout-btn'], textContent: LOGOUT_BTN_TEXT });
+  const logoutBtn = createElem({ tagName: 'button', classNames: ['btn', 'btn_small'], textContent: LOGOUT_BTN_TEXT });
   logoutBtn.addEventListener('click', logout);
   return logoutBtn;
 }
