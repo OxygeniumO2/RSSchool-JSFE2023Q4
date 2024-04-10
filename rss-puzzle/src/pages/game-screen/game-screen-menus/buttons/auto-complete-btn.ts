@@ -24,10 +24,8 @@ function completeCurrRow() {
         new Promise<void>((resolve) => {
           setTimeout(() => {
             item.textContent = correctRowArr[index];
-            item.classList.remove('word_correct');
-            item.classList.remove('word_incorrect');
-            item.classList.add('_autoWidth');
-            item.classList.add('_appearing');
+            item.classList.remove('word_correct', 'word_incorrect');
+            item.classList.add('_autoWidth', '_appearing');
             resolve();
           }, index * 40);
         })

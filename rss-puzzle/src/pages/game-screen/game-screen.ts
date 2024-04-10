@@ -207,7 +207,7 @@ export function moveWordFromRow(currRowItem: HTMLElement, words: HTMLElement[]) 
 function isCurrRowRight(row: HTMLElement, round: Round) {
   const rowItems: HTMLElement[] = Array.from(row.children) as HTMLElement[];
   const rowItemsContent: string = rowItems.map((item) => item.textContent).join('');
-  const correctSentence: string = round.words[currentRowNumber].textExample.replace(' ', '');
+  const correctSentence: string = round.words[currentRowNumber].textExample.replace(/\s/g, '');
 
   if (rowItemsContent === correctSentence) {
     const continueBtn = CONTINUE_BTN;
