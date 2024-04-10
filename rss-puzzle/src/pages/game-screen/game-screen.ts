@@ -239,11 +239,9 @@ const gameFieldWordsContainerClickHandlerWithRound = (round: Round) => (event: M
 
 function handleGameFieldWordsContainerClick(event: MouseEvent, round: Round) {
   const currWord = event.target as HTMLElement;
-  if (currWord) {
-    if (currWord.parentElement === GAMEFIELD_WORDS_CONTAINER) {
-      moveWordToRow(currWord, currRow);
-      isCurrRowRight(currRow, round);
-    }
+  if (currWord && currWord.parentElement === GAMEFIELD_WORDS_CONTAINER) {
+    moveWordToRow(currWord, currRow);
+    isCurrRowRight(currRow, round);
   }
 }
 
