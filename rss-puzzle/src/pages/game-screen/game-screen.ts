@@ -209,6 +209,11 @@ function isCurrRowRight(row: HTMLElement, round: Round) {
   const rowItemsContent: string = rowItems.map((item) => item.textContent).join('');
   const correctSentence: string = round.words[currentRowNumber].textExample.replace(/\s/g, '');
 
+  console.log(currentRowNumber);
+
+  console.log(rowItemsContent, '!!!!row items');
+  console.log(correctSentence, '!!!!correct sentence');
+
   if (rowItemsContent === correctSentence) {
     const continueBtn = CONTINUE_BTN;
     fromInnactiveToActiveBtn(continueBtn);
