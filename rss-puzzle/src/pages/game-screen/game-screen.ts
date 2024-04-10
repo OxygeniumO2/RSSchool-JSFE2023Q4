@@ -48,6 +48,7 @@ function generateGame(level: Level, roundNumber: number): void {
   if (prevHandlerWithRound) {
     GAMEFIELD_WORDS_CONTAINER.removeEventListener('click', prevHandlerWithRound);
   }
+
   currRow = generateGamefieldRow(round, START_GAME_ZERO);
   GAMEFIELD.append(currRow);
 
@@ -76,10 +77,12 @@ function generateGame(level: Level, roundNumber: number): void {
 export function generateGamefieldRow(round: Round, rowNumber: number): HTMLDivElement {
   const gamefieldRow = createElem({ tagName: 'div', classNames: ['gamefield__row'] });
   const currRowWords = round.words[rowNumber].textExample.split(' ');
+
   for (let i = 0; i < currRowWords.length; i += 1) {
     const gamefieldRowItem = createElem({ tagName: 'div', classNames: ['gamefield__row__item'] });
     gamefieldRow.append(gamefieldRowItem);
   }
+
   return gamefieldRow as HTMLDivElement;
 }
 
@@ -96,18 +99,21 @@ export function generateGamefieldWords(round: Round, rowNumber: number): Documen
       classNames: ['gamefield__words__item'],
       textContent: gamefieldItems[i],
     });
+
     if (i === 0) {
       gamefieldItem.classList.add('_noPseudoAfter');
       if (gamefieldItem.textContent) {
         wordNoAfter = gamefieldItem.textContent;
       }
     }
+
     if (i === gamefieldItems.length - 1) {
       gamefieldItem.classList.add('_noPseudoBefore');
       if (gamefieldItem.textContent) {
         wordNoBefore = gamefieldItem.textContent;
       }
     }
+
     elementsArr.push(gamefieldItem);
   }
 
@@ -151,6 +157,7 @@ function moveWordToRow(word: HTMLElement, currRow: HTMLElement) {
         item.classList.add('_autoWidth');
         item.removeEventListener('transitionend', transitionEndHandler);
       });
+
       word.classList.add('_zeroWidth');
       word.addEventListener('transitionend', function transitionEndHandler() {
         word.textContent = '';
@@ -185,11 +192,14 @@ export function moveWordFromRow(currRowItem: HTMLElement, words: HTMLElement[]) 
         break;
       }
     }
+
     currRowItem.classList.remove('_autoWidth', 'word_correct', 'word_incorrect', '_appearing');
     currRowItem.textContent = '';
     currRowItem.style.width = `${Math.floor(currRowItem.scrollWidth / 10)}px`;
   }
+
   const checkFillWithContent: boolean = words.every((item) => item.textContent);
+
   if (!checkFillWithContent) {
     fromActiveToInnactiveBtn(checkBtn);
     fromActiveToInnactiveBtn(continueBtn);
@@ -200,6 +210,7 @@ function isCurrRowRight(row: HTMLElement, round: Round) {
   const rowItems: HTMLElement[] = Array.from(row.children) as HTMLElement[];
   const rowItemsContent: string = rowItems.map((item) => item.textContent).join('');
   const correctSentence: string = round.words[currentRowNumber].textExample.replace(' ', '');
+
   if (rowItemsContent === correctSentence) {
     const continueBtn = CONTINUE_BTN;
     fromInnactiveToActiveBtn(continueBtn);
