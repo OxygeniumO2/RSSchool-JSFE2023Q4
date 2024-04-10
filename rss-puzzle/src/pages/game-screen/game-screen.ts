@@ -117,17 +117,16 @@ export function generateGameFieldWords(round: Round, rowNumber: number): Documen
     elementsArr.push(gameFieldItem);
   }
 
-  const shuffledElements: HTMLElement[] = shuffleArray(elementsArr) as HTMLElement[];
-  const strFromWords = shuffledElements.map((item) => item.textContent).join('');
-  const strFromLS = localStorage.getItem(LOCALSTORAGE_KEY_RANDOM_WORD_GEN);
+  let shuffledElements: HTMLElement[] = shuffleArray(elementsArr) as HTMLElement[];
+  let strFromWords: string = shuffledElements.map((item) => item.textContent).join('');
+  const strFromLS: string = localStorage.getItem(LOCALSTORAGE_KEY_RANDOM_WORD_GEN) as string;
 
   if (strFromLS === strFromWords) {
-    const shuffledElements: HTMLElement[] = shuffleArray(elementsArr) as HTMLElement[];
-    const strFromWords = shuffledElements.map((item) => item.textContent).join('');
-    localStorage.setItem(LOCALSTORAGE_KEY_RANDOM_WORD_GEN, strFromWords);
-  } else {
-    localStorage.setItem(LOCALSTORAGE_KEY_RANDOM_WORD_GEN, strFromWords);
+    shuffledElements = shuffleArray(elementsArr) as HTMLElement[];
+    strFromWords = shuffledElements.map((item) => item.textContent).join('');
   }
+
+  localStorage.setItem(LOCALSTORAGE_KEY_RANDOM_WORD_GEN, strFromWords);
 
   shuffledElements.forEach((item) => fragment.append(item));
 
