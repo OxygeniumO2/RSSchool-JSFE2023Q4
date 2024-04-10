@@ -15,7 +15,7 @@ export const COMPLETE_BTN = createCompleteBtn();
 export const HINT_BTN = createHintBtn();
 export const HINT_AUDIO_BTN = createAudioHintBtn();
 
-export function createGameBtnsContainer() {
+export function appendGameButtons() {
   const gameBtnsContainer = createElem({ tagName: 'div', classNames: ['game__btns-container'] });
   gameBtnsContainer.append(HINT_AUDIO_BTN, HINT_BTN, CHECK_BTN, COMPLETE_BTN, CONTINUE_BTN);
   container.append(gameBtnsContainer);
