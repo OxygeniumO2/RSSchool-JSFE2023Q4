@@ -42,19 +42,19 @@ export const AUDIO_PATH_HTTP: string = 'https://raw.githubusercontent.com/rollin
 function generateGame(level: Level, roundNumber: number): void {
   const round: Round = level.rounds[roundNumber];
   GAMEFIELD.style.minHeight = `${round.words.length * MULTIPLE_LENGTH_HEIGHT_GAMEFIELD + STATIC_LENGTH}px`;
-  const handlerWithRound = gamefieldWordsContainerClickHandlerWithRound(round);
+  const handlerWithRound = gameFieldWordsContainerClickHandlerWithRound(round);
   localStorage.setItem(LOCALSTORAGE_KEY_LEVEL_ROUND_NUMBER, roundNumber.toString());
 
   if (prevHandlerWithRound) {
     GAMEFIELD_WORDS_CONTAINER.removeEventListener('click', prevHandlerWithRound);
   }
 
-  currRow = generateGamefieldRow(round, START_GAME_ZERO);
+  currRow = generateGameFieldRow(round, START_GAME_ZERO);
   GAMEFIELD.append(currRow);
 
   currAudio = new Audio(`${AUDIO_PATH_HTTP}${round.words[START_GAME_ZERO].audioExample}`);
-  const gamefieldWords = generateGamefieldWords(round, START_GAME_ZERO);
-  GAMEFIELD_WORDS_CONTAINER.append(gamefieldWords);
+  const gameFieldWords = generateGameFieldWords(round, START_GAME_ZERO);
+  GAMEFIELD_WORDS_CONTAINER.append(gameFieldWords);
   currRow.removeEventListener('click', handleCurrRowClick);
 
   MENU.insertAdjacentElement('afterend', GAMEFIELD);
@@ -74,47 +74,47 @@ function generateGame(level: Level, roundNumber: number): void {
   generateHint(round);
 }
 
-export function generateGamefieldRow(round: Round, rowNumber: number): HTMLDivElement {
-  const gamefieldRow = createElem({ tagName: 'div', classNames: ['gamefield__row'] });
+export function generateGameFieldRow(round: Round, rowNumber: number): HTMLDivElement {
+  const gameFieldRow = createElem({ tagName: 'div', classNames: ['gamefield__row'] });
   const currRowWords = round.words[rowNumber].textExample.split(' ');
 
   for (let i = 0; i < currRowWords.length; i += 1) {
-    const gamefieldRowItem = createElem({ tagName: 'div', classNames: ['gamefield__row__item'] });
-    gamefieldRow.append(gamefieldRowItem);
+    const gameFieldRowItem = createElem({ tagName: 'div', classNames: ['gamefield__row__item'] });
+    gameFieldRow.append(gameFieldRowItem);
   }
 
-  return gamefieldRow as HTMLDivElement;
+  return gameFieldRow as HTMLDivElement;
 }
 
-export function generateGamefieldWords(round: Round, rowNumber: number): DocumentFragment {
+export function generateGameFieldWords(round: Round, rowNumber: number): DocumentFragment {
   const fragment = document.createDocumentFragment();
 
-  const gamefieldItems = round.words[rowNumber].textExample.split(' ');
+  const gameFieldItems = round.words[rowNumber].textExample.split(' ');
 
   const elementsArr: HTMLElement[] = [];
 
-  for (let i = 0; i < gamefieldItems.length; i += 1) {
-    const gamefieldItem = createElem({
+  for (let i = 0; i < gameFieldItems.length; i += 1) {
+    const gameFieldItem = createElem({
       tagName: 'div',
       classNames: ['gamefield__words__item'],
-      textContent: gamefieldItems[i],
+      textContent: gameFieldItems[i],
     });
 
     if (i === 0) {
-      gamefieldItem.classList.add('_noPseudoAfter');
-      if (gamefieldItem.textContent) {
-        wordNoAfter = gamefieldItem.textContent;
+      gameFieldItem.classList.add('_noPseudoAfter');
+      if (gameFieldItem.textContent) {
+        wordNoAfter = gameFieldItem.textContent;
       }
     }
 
-    if (i === gamefieldItems.length - 1) {
-      gamefieldItem.classList.add('_noPseudoBefore');
-      if (gamefieldItem.textContent) {
-        wordNoBefore = gamefieldItem.textContent;
+    if (i === gameFieldItems.length - 1) {
+      gameFieldItem.classList.add('_noPseudoBefore');
+      if (gameFieldItem.textContent) {
+        wordNoBefore = gameFieldItem.textContent;
       }
     }
 
-    elementsArr.push(gamefieldItem);
+    elementsArr.push(gameFieldItem);
   }
 
   const shuffledElements: HTMLElement[] = shuffleArray(elementsArr) as HTMLElement[];
@@ -235,11 +235,11 @@ export function setPrevHandlerWithRound(handler: EventListener | null) {
   prevHandlerWithRound = handler;
 }
 
-const gamefieldWordsContainerClickHandlerWithRound = (round: Round) => (event: MouseEvent) => {
-  handleGamefieldWordsContainerClick(event, round);
+const gameFieldWordsContainerClickHandlerWithRound = (round: Round) => (event: MouseEvent) => {
+  handleGameFieldWordsContainerClick(event, round);
 };
 
-function handleGamefieldWordsContainerClick(event: MouseEvent, round: Round) {
+function handleGameFieldWordsContainerClick(event: MouseEvent, round: Round) {
   const currWord = event.target as HTMLElement;
   if (currWord) {
     if (currWord.parentElement === GAMEFIELD_WORDS_CONTAINER) {

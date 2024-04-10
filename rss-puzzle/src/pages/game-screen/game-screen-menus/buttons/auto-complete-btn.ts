@@ -32,8 +32,8 @@ function completeCurrRow() {
           }, index * 40);
         })
     );
-    const gamefieldWordsItems = Array.from(GAMEFIELD_WORDS_CONTAINER.children) as HTMLElement[];
-    gamefieldWordsItems.forEach((item) => {
+    const gameFieldWordsItems = Array.from(GAMEFIELD_WORDS_CONTAINER.children) as HTMLElement[];
+    gameFieldWordsItems.forEach((item) => {
       item.classList.add('_zeroWidth');
       item.textContent = '';
     });

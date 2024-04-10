@@ -8,8 +8,8 @@ import { LOCALSTORAGE_KEY_ROUND_NUMBER, LOCALSTORAGE_KEY_LEVEL_ROUND_NUMBER } fr
 import generateGame, {
   START_GAME_ZERO,
   GAMEFIELD,
-  generateGamefieldRow,
-  generateGamefieldWords,
+  generateGameFieldRow,
+  generateGameFieldWords,
   GAMEFIELD_WORDS_CONTAINER,
   setCurrentRowNumber,
   handleCurrRowClick,
@@ -45,11 +45,11 @@ function changeRowOrRound() {
       completedRows.forEach((item) => {
         item.classList.add('completed-row');
       });
-      const newRow = generateGamefieldRow(currRoundFromLS.currRound, currRowNumber);
+      const newRow = generateGameFieldRow(currRoundFromLS.currRound, currRowNumber);
       newRow.addEventListener('click', handleCurrRowClick);
       GAMEFIELD.append(newRow);
       GAMEFIELD_WORDS_CONTAINER.innerHTML = '';
-      GAMEFIELD_WORDS_CONTAINER.append(generateGamefieldWords(currRoundFromLS.currRound, currRowNumber));
+      GAMEFIELD_WORDS_CONTAINER.append(generateGameFieldWords(currRoundFromLS.currRound, currRowNumber));
       localStorage.setItem(LOCALSTORAGE_KEY_ROUND_NUMBER, currRowNumber.toString());
       fromActiveToInnactiveBtn(checkBtn);
       setCurrRow(newRow);
