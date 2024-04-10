@@ -26,54 +26,80 @@ import { checkIfHintDisabledDontShowHint, generateHint, hintInnerOpacityChange }
 import { Round } from '../../../../interfaces/game-data-interface';
 import { currLevelInfo } from '../../choose-level';
 
+function changeRow(currRowNumber: number, currRoundFromLS: RoundDataFromLS, checkBtn: HTMLElement) {
+  checkCorrectWords();
+  const currRowItems = Array.from(currRow.children) as HTMLElement[];
+
+  currRowItems.forEach((item) => item.classList.add('word_correct'));
+
+  let currRowNumberInner = currRowNumber;
+  currRowNumberInner += 1;
+  setCurrentRowNumber(currRowNumberInner);
+
+  const completedRows = Array.from(GAMEFIELD.children) as HTMLElement[];
+
+  completedRows.forEach((item) => {
+    item.classList.add('completed-row');
+  });
+
+  const newRow = generateGameFieldRow(currRoundFromLS.currRound as Round, currRowNumberInner);
+  newRow.addEventListener('click', handleCurrRowClick);
+
+  GAMEFIELD.append(newRow);
+  GAMEFIELD_WORDS_CONTAINER.innerHTML = '';
+  GAMEFIELD_WORDS_CONTAINER.append(generateGameFieldWords(currRoundFromLS.currRound as Round, currRowNumberInner));
+
+  localStorage.setItem(LOCALSTORAGE_KEY_ROUND_NUMBER, currRowNumberInner.toString());
+
+  fromActiveToInnactiveBtn(checkBtn);
+  setCurrRow(newRow);
+  hintInnerOpacityChange();
+
+  setTimeout(() => {
+    generateHint(currRoundFromLS.currRound as Round);
+  }, 300);
+
+  checkIfHintDisabledDontShowHint();
+  const newAudio = new Audio(`${AUDIO_PATH_HTTP}${currRoundFromLS.currRound!.words[currRowNumberInner].audioExample}`);
+  setCurrAudio(newAudio);
+}
+
+function changeRound(currRowNumber: number, checkBtn: HTMLElement) {
+  let currRowNumberInner = currRowNumber;
+  currRowNumberInner = 0;
+
+  setCurrentRowNumber(currRowNumberInner);
+
+  localStorage.setItem(LOCALSTORAGE_KEY_ROUND_NUMBER, currRowNumberInner.toString());
+  let levelRoundNumber = +localStorage.getItem(LOCALSTORAGE_KEY_LEVEL_ROUND_NUMBER)!;
+
+  levelRoundNumber += 1;
+  GAMEFIELD.innerHTML = '';
+  GAMEFIELD_WORDS_CONTAINER.innerHTML = '';
+
+  generateGame(level, levelRoundNumber);
+  hintInnerOpacityChange();
+  fromActiveToInnactiveBtn(checkBtn);
+  checkIfHintDisabledDontShowHint();
+  currLevelInfo.textContent = `Current level - ${levelRoundNumber + 1}`;
+}
+
 function changeRowOrRound() {
   const checkBtn = CHECK_BTN;
 
   const currRoundFromLS: RoundDataFromLS = getDataRoundFromLS();
 
-  let currRowNumber = currRoundFromLS.localStorageRoundNumber
+  const currRowNumber = currRoundFromLS.localStorageRoundNumber
     ? +currRoundFromLS.localStorageRoundNumber
     : START_GAME_ZERO;
 
   if (currRoundFromLS.currRound) {
-    if (currRoundFromLS.localStorageRoundNumber < currRoundFromLS.currRound.words.length - 1) {
-      checkCorrectWords();
-      const currRowItems = Array.from(currRow.children) as HTMLElement[];
-      currRowItems.forEach((item) => item.classList.add('word_correct'));
-      currRowNumber += 1;
-      setCurrentRowNumber(currRowNumber);
-      const completedRows = Array.from(GAMEFIELD.children) as HTMLElement[];
-      completedRows.forEach((item) => {
-        item.classList.add('completed-row');
-      });
-      const newRow = generateGameFieldRow(currRoundFromLS.currRound, currRowNumber);
-      newRow.addEventListener('click', handleCurrRowClick);
-      GAMEFIELD.append(newRow);
-      GAMEFIELD_WORDS_CONTAINER.innerHTML = '';
-      GAMEFIELD_WORDS_CONTAINER.append(generateGameFieldWords(currRoundFromLS.currRound, currRowNumber));
-      localStorage.setItem(LOCALSTORAGE_KEY_ROUND_NUMBER, currRowNumber.toString());
-      fromActiveToInnactiveBtn(checkBtn);
-      setCurrRow(newRow);
-      hintInnerOpacityChange();
-      setTimeout(() => {
-        generateHint(currRoundFromLS.currRound as Round);
-      }, 300);
-      checkIfHintDisabledDontShowHint();
-      const newAudio = new Audio(`${AUDIO_PATH_HTTP}${currRoundFromLS.currRound.words[currRowNumber].audioExample}`);
-      setCurrAudio(newAudio);
+    const currRowNumberInRound = currRoundFromLS.localStorageRoundNumber < currRoundFromLS.currRound.words.length - 1;
+
+    if (currRowNumberInRound) {
+      changeRow(currRowNumber, currRoundFromLS, checkBtn);
     } else {
-      currRowNumber = 0;
-      setCurrentRowNumber(currRowNumber);
-      localStorage.setItem(LOCALSTORAGE_KEY_ROUND_NUMBER, currRowNumber.toString());
-      let levelRoundNumber = +localStorage.getItem(LOCALSTORAGE_KEY_LEVEL_ROUND_NUMBER)!;
-      levelRoundNumber += 1;
-      GAMEFIELD.innerHTML = '';
-      GAMEFIELD_WORDS_CONTAINER.innerHTML = '';
-      generateGame(level, levelRoundNumber);
-      hintInnerOpacityChange();
-      fromActiveToInnactiveBtn(checkBtn);
-      checkIfHintDisabledDontShowHint();
-      currLevelInfo.textContent = `Current level - ${levelRoundNumber + 1}`;
+      changeRound(currRowNumber, checkBtn);
     }
   }
 }
