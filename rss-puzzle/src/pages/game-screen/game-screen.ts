@@ -172,24 +172,22 @@ export function moveWordFromRow(currRowItem: HTMLElement, words: HTMLElement[]) 
     for (let i = 0; i < words.length; i += 1) {
       if (!words[i].textContent) {
         words[i].textContent = currRowItem.textContent;
-        words[i].classList.remove('_zeroWidth');
-        words[i].classList.remove('_noPseudoAfter');
-        words[i].classList.remove('_noPseudoBefore');
+        words[i].classList.remove('_zeroWidth', '_noPseudoAfter', '_noPseudoBefore');
+
         if (words[i].textContent === wordNoAfter) {
           words[i].classList.add('_noPseudoAfter');
         }
+
         if (words[i].textContent === wordNoBefore) {
           words[i].classList.add('_noPseudoBefore');
         }
+
         break;
       }
     }
-    currRowItem.classList.remove('_autoWidth');
+    currRowItem.classList.remove('_autoWidth', 'word_correct', 'word_incorrect', '_appearing');
     currRowItem.textContent = '';
     currRowItem.style.width = `${Math.floor(currRowItem.scrollWidth / 10)}px`;
-    currRowItem.classList.remove('word_correct');
-    currRowItem.classList.remove('word_incorrect');
-    currRowItem.classList.remove('_appearing');
   }
   const checkFillWithContent: boolean = words.every((item) => item.textContent);
   if (!checkFillWithContent) {
