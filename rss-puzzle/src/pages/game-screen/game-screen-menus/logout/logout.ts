@@ -49,10 +49,10 @@ function logout() {
   }, 400);
 }
 
-function generateLogout(): HTMLElement {
+function getLogoutButton(): HTMLElement {
   const logoutBtn = createElem({ tagName: 'button', classNames: ['btn', 'btn_small'], textContent: LOGOUT_BTN_TEXT });
   logoutBtn.addEventListener('click', logout);
   return logoutBtn;
 }
 
-export default generateLogout;
+export default getLogoutButton;
