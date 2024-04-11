@@ -19,7 +19,7 @@ import generateGame, {
   setCurrAudio,
 } from '../../game-screen';
 import level from '../../../../data/words-levels/wordCollectionLevel';
-import { CHECK_BTN, fromActiveToInnactiveBtn } from '../game-buttons/game-buttons';
+import { CHECK_BTN, fromActiveToInnactiveBtns } from '../game-buttons/game-buttons';
 import { checkCorrectWords } from './check-btn';
 import { RoundDataFromLS, getDataRoundFromLS } from '../../../../utils/getDataRoundLS';
 import { checkIfHintDisabledDontShowHint, generateHint, hintInnerOpacityChange } from '../game-hints/game-hint-text';
@@ -51,7 +51,7 @@ function changeRow(currRowNumber: number, currRoundFromLS: RoundDataFromLS, chec
 
   localStorage.setItem(LOCALSTORAGE_KEY_ROUND_NUMBER, currRowNumberInner.toString());
 
-  fromActiveToInnactiveBtn(checkBtn);
+  fromActiveToInnactiveBtns(checkBtn);
   setCurrRow(newRow);
   hintInnerOpacityChange();
 
@@ -79,7 +79,7 @@ function changeRound(currRowNumber: number, checkBtn: HTMLElement) {
 
   generateGame(level, levelRoundNumber);
   hintInnerOpacityChange();
-  fromActiveToInnactiveBtn(checkBtn);
+  fromActiveToInnactiveBtns(checkBtn);
   checkIfHintDisabledDontShowHint();
   currLevelInfo.textContent = `Current level - ${levelRoundNumber + 1}`;
 }

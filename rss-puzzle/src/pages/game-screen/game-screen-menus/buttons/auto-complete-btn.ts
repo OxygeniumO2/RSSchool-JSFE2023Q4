@@ -8,7 +8,7 @@
 import createElem from '../../../../utils/createElem';
 import { RoundDataFromLS, getDataRoundFromLS } from '../../../../utils/getDataRoundLS';
 import { GAMEFIELD_WORDS_CONTAINER, currRow } from '../../game-screen';
-import { CHECK_BTN, CONTINUE_BTN, fromInnactiveToActiveBtn } from '../game-buttons/game-buttons';
+import { CHECK_BTN, CONTINUE_BTN, fromInnactiveToActiveBtns } from '../game-buttons/game-buttons';
 import { HINT_CONTAINER } from '../game-hints/game-hint-text';
 
 const BTN_COMPLETE_TEXT = 'Auto-Complete';
@@ -37,8 +37,7 @@ function completeCurrRow() {
     });
     const continueBtn = CONTINUE_BTN;
     const checkBtn = CHECK_BTN;
-    fromInnactiveToActiveBtn(continueBtn);
-    fromInnactiveToActiveBtn(checkBtn);
+    fromInnactiveToActiveBtns(continueBtn, checkBtn);
     HINT_CONTAINER.classList.add('_open');
   }
 }

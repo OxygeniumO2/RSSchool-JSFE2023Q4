@@ -10,8 +10,8 @@ import createElem from '../../utils/createElem';
 import {
   CHECK_BTN,
   CONTINUE_BTN,
-  fromActiveToInnactiveBtn,
-  fromInnactiveToActiveBtn,
+  fromActiveToInnactiveBtns,
+  fromInnactiveToActiveBtns,
 } from './game-screen-menus/game-buttons/game-buttons';
 import {
   LOCALSTORAGE_KEY_LEVEL_ROUND_NUMBER,
@@ -168,7 +168,7 @@ function moveWordToRow(word: HTMLElement, currRow: HTMLElement) {
   const checkFillWithContent: boolean = allItemsFromRow.every((item) => item.textContent);
 
   if (checkFillWithContent) {
-    fromInnactiveToActiveBtn(checkBtn);
+    fromInnactiveToActiveBtns(checkBtn);
   }
 }
 
@@ -199,8 +199,7 @@ export function moveWordFromRow(currRowItem: HTMLElement, words: HTMLElement[]) 
   const checkFillWithContent: boolean = words.every((item) => item.textContent);
 
   if (!checkFillWithContent) {
-    fromActiveToInnactiveBtn(checkBtn);
-    fromActiveToInnactiveBtn(continueBtn);
+    fromActiveToInnactiveBtns(checkBtn, continueBtn);
   }
 }
 
@@ -211,7 +210,7 @@ function isCurrRowRight(row: HTMLElement, round: Round) {
 
   if (rowItemsContent === correctSentence) {
     const continueBtn = CONTINUE_BTN;
-    fromInnactiveToActiveBtn(continueBtn);
+    fromInnactiveToActiveBtns(continueBtn);
     const hintContainer = HINT_CONTAINER;
     hintContainer.classList.add('_open');
   }

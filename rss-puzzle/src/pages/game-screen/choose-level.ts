@@ -6,7 +6,7 @@ import level from '../../data/words-levels/wordCollectionLevel';
 import { Level } from '../../interfaces/game-data-interface';
 import { LOCALSTORAGE_KEY_LEVEL_ROUND_NUMBER, LOCALSTORAGE_KEY_ROUND_NUMBER } from '../../utils/localStorageKeys';
 import generateGame, { GAMEFIELD, GAMEFIELD_WORDS_CONTAINER, setCurrentRowNumber } from './game-screen';
-import { CHECK_BTN, CONTINUE_BTN, fromActiveToInnactiveBtn } from './game-screen-menus/game-buttons/game-buttons';
+import { CHECK_BTN, CONTINUE_BTN, fromActiveToInnactiveBtns } from './game-screen-menus/game-buttons/game-buttons';
 
 const roundZero: string = '0';
 
@@ -42,8 +42,7 @@ function createChooseLevelContainer() {
     currLevelInfo.textContent = `Current level - ${roundNumber}`;
     chooseLevelInput.value = '';
     generateGame(currGamelevel, roundNumberCorrect);
-    fromActiveToInnactiveBtn(CHECK_BTN);
-    fromActiveToInnactiveBtn(CONTINUE_BTN);
+    fromActiveToInnactiveBtns(CHECK_BTN, CONTINUE_BTN);
     setCurrentRowNumber(0);
   });
 

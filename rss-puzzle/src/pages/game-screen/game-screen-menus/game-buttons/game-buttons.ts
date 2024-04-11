@@ -21,12 +21,16 @@ export function appendGameButtons() {
   container.append(gameBtnsContainer);
 }
 
-export function fromInnactiveToActiveBtn(btn: HTMLElement): void {
-  btn.classList.remove('btn_wrong');
-  btn.classList.add('btn_active');
+export function fromInnactiveToActiveBtns(...btns: HTMLElement[]): void {
+  btns.forEach((btn) => {
+    btn.classList.remove('btn_wrong');
+    btn.classList.add('btn_active');
+  });
 }
 
-export function fromActiveToInnactiveBtn(btn: HTMLElement): void {
-  btn.classList.remove('btn_active');
-  btn.classList.add('btn_wrong');
+export function fromActiveToInnactiveBtns(...btns: HTMLElement[]): void {
+  btns.forEach((btn) => {
+    btn.classList.remove('btn_active');
+    btn.classList.add('btn_wrong');
+  });
 }
