@@ -13,6 +13,7 @@ module.exports = {
   devServer: {
     open: true,
     host: "localhost",
+    historyApiFallback: true,
   },
   resolve: {
     extensions: ['', '.ts', '.js'],
