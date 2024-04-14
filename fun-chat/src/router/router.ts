@@ -1,7 +1,9 @@
 import APP_CONTAINER from '../app-container/app-container';
 // eslint-disable-next-line import/no-cycle
 import { renderPage } from '../app-container/init-app';
+// eslint-disable-next-line import/no-cycle
 import createAboutPage from '../pages/about-page/about-page';
+// eslint-disable-next-line import/no-cycle
 import createLoginPage from '../pages/login-page/login-page';
 import createWebSocket from '../web-socket/web-socket';
 
@@ -14,6 +16,7 @@ type Routes = {
 
 function loginPageRouteHandler(websocket: WebSocket) {
   const loginContainer = createLoginPage(websocket);
+  window.history.pushState({}, 'Login', '/login');
   renderPage(APP_CONTAINER, loginContainer);
 }
 
@@ -21,8 +24,9 @@ function mainPageRouteHandler() {
   console.log('Main Page');
 }
 
-function aboutPageRouteHandler() {
-  const aboutContainer = createAboutPage();
+function aboutPageRouteHandler(websocket: WebSocket) {
+  const aboutContainer = createAboutPage(websocket);
+  window.history.pushState({}, 'About', '/about');
   renderPage(APP_CONTAINER, aboutContainer);
 }
 
@@ -52,4 +56,4 @@ function router() {
   }
 }
 
-export default router;
+export { router, aboutPageRouteHandler, loginPageRouteHandler };

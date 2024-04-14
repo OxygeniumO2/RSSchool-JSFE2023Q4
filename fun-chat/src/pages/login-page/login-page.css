@@ -1,11 +1,13 @@
 .login__form {
-  padding: 100px;
   display: flex;
   flex-direction: column;
   gap: 10px;
+  margin-bottom: 20px;
 }
 
 .login-container {
   background-color: #89c3f7;
+  padding: 100px;
   border-radius: 10px;
+  text-align: center;
 }

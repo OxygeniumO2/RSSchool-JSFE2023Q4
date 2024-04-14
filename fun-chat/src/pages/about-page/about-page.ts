@@ -1,7 +1,9 @@
 import './about-page.css';
 import createElem from '../../utils/create-elem';
+// eslint-disable-next-line import/no-cycle
+import { loginPageRouteHandler } from '../../router/router';
 
-function createAboutPage() {
+function createAboutPage(websocket: WebSocket): HTMLElement {
   const aboutPageContainer = createElem({
     tagName: 'div',
     classNames: ['about__page'],
@@ -16,7 +18,7 @@ function createAboutPage() {
 
   const aboutPageAuthorLink = createElem({
     tagName: 'a',
-    textContent: 'Author - OxygeniumO2',
+    textContent: 'Author - Alexander',
     attributes: [['href', 'https://github.com/OxygeniumO2']],
   });
 
@@ -26,14 +28,16 @@ function createAboutPage() {
     textContent: 'Back',
   });
 
+  returnToPrevPageBtn.addEventListener('click', () => {
+    loginPageRouteHandler(websocket);
+  });
+
   aboutPageContainer.append(
     aboutPageTitle,
     aboutPageDesc,
     aboutPageAuthorLink,
     returnToPrevPageBtn,
   );
-
-  console.log(aboutPageContainer);
 
   return aboutPageContainer;
 }

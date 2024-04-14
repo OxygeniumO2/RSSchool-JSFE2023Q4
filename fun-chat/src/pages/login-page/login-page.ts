@@ -1,6 +1,8 @@
 import './login-page.css';
 import createElem from '../../utils/create-elem';
 import { UserAuthClient } from '../../web-socket/web-socket-interfaces';
+// eslint-disable-next-line import/no-cycle
+import { aboutPageRouteHandler } from '../../router/router';
 
 function createLoginPage(websocket: WebSocket): HTMLElement {
   const loginContainer = createElem({
@@ -60,7 +62,13 @@ function createLoginPage(websocket: WebSocket): HTMLElement {
     websocket.send(JSON.stringify(userData));
   });
 
-  loginContainer.append(loginForm);
+  const aboutPageBtn = createElem({ tagName: 'button', textContent: 'About' });
+
+  aboutPageBtn.addEventListener('click', () => {
+    aboutPageRouteHandler(websocket);
+  });
+
+  loginContainer.append(loginForm, aboutPageBtn);
 
   return loginContainer;
 }

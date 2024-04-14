@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-cycle
-import router from '../router/router';
+import { router } from '../router/router';
 import removeAllChildren from '../utils/remove-all-children';
 
 function init(container: HTMLElement): void {
