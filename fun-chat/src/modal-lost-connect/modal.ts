@@ -2,7 +2,7 @@ import './modal.css';
 import createElem from '../utils/create-elem';
 import SVG_LOADING_DATA from './modal-svg-data';
 
-function createTryToReconnectModal(): HTMLElement {
+function createReconnectModal(): HTMLElement {
   const modal = createElem({
     tagName: 'div',
     classNames: ['reconnect__modal'],
@@ -31,4 +31,4 @@ function createTryToReconnectModal(): HTMLElement {
   return modal;
 }
 
-export default createTryToReconnectModal;
+export default createReconnectModal;

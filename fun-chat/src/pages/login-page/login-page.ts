@@ -1,7 +1,8 @@
 import './login-page.css';
 import createElem from '../../utils/create-elem';
+import { UserAuthClient } from '../../web-socket/web-socket-interfaces';
 
-function createLoginPage(): HTMLElement {
+function createLoginPage(websocket: WebSocket): HTMLElement {
   const loginContainer = createElem({
     tagName: 'div',
     classNames: ['login-container'],
@@ -19,7 +20,7 @@ function createLoginPage(): HTMLElement {
       ['type', 'text'],
       ['required', true],
     ],
-  });
+  }) as HTMLInputElement;
 
   const loginPassword = createElem({
     tagName: 'input',
@@ -28,7 +29,7 @@ function createLoginPage(): HTMLElement {
       ['type', 'password'],
       ['required', 'true'],
     ],
-  });
+  }) as HTMLInputElement;
 
   const loginBtn = createElem({
     tagName: 'button',
@@ -37,6 +38,27 @@ function createLoginPage(): HTMLElement {
   });
 
   loginForm.append(loginUsername, loginPassword, loginBtn);
+
+  loginForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const randomId = crypto.randomUUID();
+    const userLogin = loginUsername.value;
+    const userPassword = loginPassword.value;
+
+    const userData: UserAuthClient = {
+      id: randomId,
+      type: 'USER_LOGIN',
+      payload: {
+        user: {
+          login: userLogin,
+          password: userPassword,
+        },
+      },
+    };
+
+    websocket.send(JSON.stringify(userData));
+  });
 
   loginContainer.append(loginForm);
 

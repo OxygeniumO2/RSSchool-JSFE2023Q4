@@ -1,13 +1,12 @@
 import APP_CONTAINER from '../app-container/app-container';
-import createTryToReconnectModal from '../modal-lost-connect/modal';
+import createReconnectModal from '../modal-lost-connect/modal';
 
 let isReconnectModalOpen = false;
 
-function createWebSocket() {
+function createWebSocket(): WebSocket {
   const socket = new WebSocket('ws://localhost:4000');
 
   const appContainerLastChild = APP_CONTAINER.lastChild as HTMLElement;
-  console.log(appContainerLastChild);
 
   socket.addEventListener('open', () => {
     if (isReconnectModalOpen) {
@@ -27,11 +26,13 @@ function createWebSocket() {
 
   socket.addEventListener('error', () => {
     if (!isReconnectModalOpen) {
-      const modalReconnect = createTryToReconnectModal();
+      const modalReconnect = createReconnectModal();
       APP_CONTAINER.append(modalReconnect);
       isReconnectModalOpen = true;
     }
   });
+
+  return socket;
 }
 
 export default createWebSocket;

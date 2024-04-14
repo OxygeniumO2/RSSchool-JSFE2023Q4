@@ -1,0 +1,16 @@
+.about__page {
+  text-align: center;
+  background-color: #8ba9c3;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.about__page a {
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.about__page__btn {
+  display: block;
+  margin: 0 auto;
+}

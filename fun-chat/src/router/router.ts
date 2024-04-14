@@ -1,19 +1,19 @@
 import APP_CONTAINER from '../app-container/app-container';
 // eslint-disable-next-line import/no-cycle
 import { renderPage } from '../app-container/init-app';
-// import createTryToReconnectModal from '../modal-lost-connect/modal';
+import createAboutPage from '../pages/about-page/about-page';
 import createLoginPage from '../pages/login-page/login-page';
 import createWebSocket from '../web-socket/web-socket';
 
 type Routes = {
   '/': string;
-  '/login': () => void;
-  '/main': () => void;
-  '/about': () => void;
+  '/login': (websocket: WebSocket) => void;
+  '/main': (websocket: WebSocket) => void;
+  '/about': (websocket: WebSocket) => void;
 };
 
-function loginPageRouteHandler() {
-  const loginContainer = createLoginPage();
+function loginPageRouteHandler(websocket: WebSocket) {
+  const loginContainer = createLoginPage(websocket);
   renderPage(APP_CONTAINER, loginContainer);
 }
 
@@ -22,7 +22,8 @@ function mainPageRouteHandler() {
 }
 
 function aboutPageRouteHandler() {
-  console.log('About Page');
+  const aboutContainer = createAboutPage();
+  renderPage(APP_CONTAINER, aboutContainer);
 }
 
 const ROUTES: Routes = {
@@ -37,14 +38,15 @@ function router() {
 
   if (path === '/') {
     path = '/login';
-    window.location.assign(path);
+    window.history.pushState({}, 'Login', path);
   }
 
   const routeHandler = ROUTES[path];
+  let websocket: WebSocket;
 
   if (routeHandler) {
-    routeHandler();
-    createWebSocket();
+    websocket = createWebSocket();
+    routeHandler(websocket);
   } else {
     console.log('404 - Страница не найдена');
   }
