@@ -1,0 +1,37 @@
+.search__user {
+  margin-bottom: 10px;
+}
+
+.registered__user {
+  position: relative;
+  padding-left: 18px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.registered__user._hidden {
+  display: none;
+}
+
+.registered__user:last-child {
+  margin-bottom: 0;
+}
+
+.registered__user::before {
+  position: absolute;
+  content: '';
+  left: 0;
+  top: 50%;
+  transform: translateY(-42%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.registered__user._online::before {
+  background-color: green;
+}
+
+.registered__user._offline::before {
+  background-color: red;
+}

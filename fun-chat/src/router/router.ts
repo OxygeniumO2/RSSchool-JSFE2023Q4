@@ -5,6 +5,7 @@ import { renderPage } from '../app-container/init-app';
 import createAboutPage from '../pages/about-page/about-page';
 // eslint-disable-next-line import/no-cycle
 import createLoginPage from '../pages/login-page/login-page';
+import createMainPage from '../pages/main-page/main-page';
 import createWebSocket from '../web-socket/web-socket';
 
 type Routes = {
@@ -21,7 +22,9 @@ function loginPageRouteHandler(websocket: WebSocket) {
 }
 
 function mainPageRouteHandler() {
-  console.log('Main Page');
+  const mainContainer = createMainPage();
+  window.history.pushState({}, 'Main', '/main');
+  renderPage(APP_CONTAINER, mainContainer);
 }
 
 function aboutPageRouteHandler(websocket: WebSocket) {
@@ -51,8 +54,6 @@ function router() {
   if (routeHandler) {
     websocket = createWebSocket();
     routeHandler(websocket);
-  } else {
-    console.log('404 - Страница не найдена');
   }
 }
 

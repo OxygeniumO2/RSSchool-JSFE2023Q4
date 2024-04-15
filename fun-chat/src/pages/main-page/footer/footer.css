@@ -1,0 +1,14 @@
+footer {
+  display: flex;
+  padding: 20px;
+  border: 2px solid black;
+  border-radius: 10px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rs__logo {
+  width: 60px;
+  height: 60px;
+  text-decoration: none;
+}
