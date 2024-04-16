@@ -51,8 +51,17 @@ function createUserSection(
     const currUser = event.target as HTMLElement;
 
     if (currUser && currUser.classList.contains('registered__user')) {
-      const chatSectionUserName = chatSectionChildren.userName;
-      chatSectionUserName.textContent = `${currUser.textContent}`;
+      const { userName, userStatus } = chatSectionChildren;
+      userName.textContent = `${currUser.textContent}`;
+
+      const currUserStatus: string = currUser.classList.contains('_online')
+        ? 'online'
+        : 'offline';
+
+      userStatus.textContent = `${currUserStatus}`;
+
+      userStatus.classList.remove('_online', '_offline');
+      userStatus.classList.add(`_${currUserStatus}`);
     }
   });
 

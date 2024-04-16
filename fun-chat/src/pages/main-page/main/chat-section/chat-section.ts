@@ -9,6 +9,7 @@ interface ChatSectionData {
 interface ChatSectionDataChildren {
   userName: HTMLElement;
   userStatus: HTMLElement;
+  chatWindow: HTMLElement;
 }
 
 function createChatSection(): ChatSectionData {
@@ -17,18 +18,27 @@ function createChatSection(): ChatSectionData {
     classNames: ['chat__section'],
   });
 
-  const chatHeader = createElem({ tagName: 'div' });
+  const chatHeader = createElem({
+    tagName: 'div',
+    classNames: ['chat__username__status-container'],
+  });
 
   const chatHeaderUserName = createElem({
     tagName: 'div',
     classNames: ['chat__header__user'],
   });
 
-  const chatHeaderUserStatus = createElem({ tagName: 'div' });
+  const chatHeaderUserStatus = createElem({
+    tagName: 'div',
+    classNames: ['chat__user__status'],
+  });
 
   chatHeader.append(chatHeaderUserName, chatHeaderUserStatus);
 
-  const chatWindow = createElem({ tagName: 'div' });
+  const chatWindow = createElem({
+    tagName: 'div',
+    classNames: ['chat__window'],
+  });
 
   const chatSendMessageForm = createElem({ tagName: 'form' });
   const chatMessageTextInput = createElem({
@@ -54,6 +64,7 @@ function createChatSection(): ChatSectionData {
     sectionChildren: {
       userName: chatHeaderUserName,
       userStatus: chatHeaderUserStatus,
+      chatWindow,
     },
   };
 

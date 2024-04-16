@@ -1,7 +1,11 @@
 import './about-page.css';
 import createElem from '../../utils/create-elem';
 // eslint-disable-next-line import/no-cycle
-import { loginPageRouteHandler } from '../../router/router';
+import {
+  loginPageRouteHandler,
+  mainPageRouteHandler,
+} from '../../router/router';
+import SessionStorageKeys from '../../utils/session-storage-keys';
 
 function createAboutPage(websocket: WebSocket): HTMLElement {
   const aboutPageContainer = createElem({
@@ -29,7 +33,13 @@ function createAboutPage(websocket: WebSocket): HTMLElement {
   });
 
   returnToPrevPageBtn.addEventListener('click', () => {
-    loginPageRouteHandler(websocket);
+    const userFromSS = sessionStorage.getItem(SessionStorageKeys.login);
+
+    if (userFromSS) {
+      mainPageRouteHandler(websocket);
+    } else {
+      loginPageRouteHandler(websocket);
+    }
   });
 
   aboutPageContainer.append(

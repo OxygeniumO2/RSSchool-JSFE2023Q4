@@ -5,7 +5,9 @@ import { renderPage } from '../app-container/init-app';
 import createAboutPage from '../pages/about-page/about-page';
 // eslint-disable-next-line import/no-cycle
 import createLoginPage from '../pages/login-page/login-page';
+// eslint-disable-next-line import/no-cycle
 import createMainPage from '../pages/main-page/main-page';
+import SessionStorageKeys from '../utils/session-storage-keys';
 import createWebSocket from '../web-socket/web-socket';
 
 type Routes = {
@@ -21,8 +23,8 @@ function loginPageRouteHandler(websocket: WebSocket) {
   renderPage(APP_CONTAINER, loginContainer);
 }
 
-function mainPageRouteHandler() {
-  const mainContainer = createMainPage();
+function mainPageRouteHandler(websocket: WebSocket) {
+  const mainContainer = createMainPage(websocket);
   window.history.pushState({}, 'Main', '/main');
   renderPage(APP_CONTAINER, mainContainer);
 }
@@ -45,11 +47,15 @@ function router() {
 
   if (path === '/') {
     path = '/login';
-    window.history.pushState({}, 'Login', path);
   }
 
-  const routeHandler = ROUTES[path];
   let websocket: WebSocket;
+
+  const userFromSS = sessionStorage.getItem(SessionStorageKeys.login);
+
+  path = userFromSS ? '/main' : '/login';
+
+  const routeHandler = ROUTES[path];
 
   if (routeHandler) {
     websocket = createWebSocket();
@@ -57,4 +63,9 @@ function router() {
   }
 }
 
-export { router, aboutPageRouteHandler, loginPageRouteHandler };
+export {
+  router,
+  aboutPageRouteHandler,
+  loginPageRouteHandler,
+  mainPageRouteHandler,
+};
