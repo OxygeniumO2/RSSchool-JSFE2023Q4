@@ -10,6 +10,7 @@ interface ChatSectionDataChildren {
   userName: HTMLElement;
   userStatus: HTMLElement;
   chatWindow: HTMLElement;
+  chatSendMessageForm: HTMLElement;
 }
 
 function createChatSection(): ChatSectionData {
@@ -41,6 +42,7 @@ function createChatSection(): ChatSectionData {
   });
 
   const chatSendMessageForm = createElem({ tagName: 'form' });
+
   const chatMessageTextInput = createElem({
     tagName: 'input',
     attributes: [
@@ -65,6 +67,7 @@ function createChatSection(): ChatSectionData {
       userName: chatHeaderUserName,
       userStatus: chatHeaderUserStatus,
       chatWindow,
+      chatSendMessageForm,
     },
   };
 

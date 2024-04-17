@@ -6,6 +6,8 @@ import getOfflineUsers from './get-offline-users';
 import { UsersServerResp } from '../../../../web-socket/web-socket-interfaces';
 import removeAllChildren from '../../../../utils/remove-all-children';
 import SessionStorageKeys from '../../../../utils/session-storage-keys';
+import getMessagesFromUser from './get-messages-from-user';
+import sendMessageToUser from './send-message';
 
 async function createUserSection(
   websocket: WebSocket,
@@ -100,12 +102,19 @@ async function createUserSection(
     });
   });
 
-  userList.addEventListener('click', (event) => {
+  let userSendMessageTo: string;
+  const messagesToWindowChatElem = createElem({ tagName: 'div' });
+
+  userList.addEventListener('click', async (event) => {
     const currUser = event.target as HTMLElement;
 
     if (currUser && currUser.classList.contains('registered__user')) {
       const { userName, userStatus } = chatSectionChildren;
-      userName.textContent = `${currUser.textContent}`;
+
+      const currUserName = currUser.textContent as string;
+
+      userName.textContent = `${currUserName}`;
+      userSendMessageTo = currUserName;
 
       const currUserStatus: string = currUser.classList.contains('_online')
         ? 'online'
@@ -115,8 +124,34 @@ async function createUserSection(
 
       userStatus.classList.remove('_online', '_offline');
       userStatus.classList.add(`_${currUserStatus}`);
+
+      const allMessages = await getMessagesFromUser(websocket, currUserName);
+
+      console.log(allMessages);
     }
   });
+
+  chatSectionChildren.chatSendMessageForm.addEventListener(
+    'submit',
+    (event) => {
+      event.preventDefault();
+      const form = event.target as HTMLFormElement;
+      const inputElem = form.elements[0] as HTMLInputElement;
+      const inputValue = inputElem.value;
+
+      sendMessageToUser(websocket, userSendMessageTo, inputValue);
+
+      const messageElem = createElem({
+        tagName: 'div',
+        classNames: ['owner'],
+        textContent: `${inputValue}`,
+      });
+
+      messagesToWindowChatElem.append(messageElem);
+    },
+  );
+
+  chatSectionChildren.chatWindow.append(messagesToWindowChatElem);
 
   userSection.append(userSearch, userList);
 

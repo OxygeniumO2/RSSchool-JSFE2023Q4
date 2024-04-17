@@ -39,10 +39,21 @@ interface UserServerResp {
   isLogined: boolean;
 }
 
+interface GetAllMessagesClientResp {
+  id: string;
+  type: 'MSG_FROM_USER';
+  payload: {
+    user: {
+      login: string;
+    };
+  };
+}
+
 export {
   UserAuthClient,
   UserLogoutClient,
   GetAllOnlineUsersClientResp,
   GetAllOfflineUsersClientResp,
   UsersServerResp,
+  GetAllMessagesClientResp,
 };
