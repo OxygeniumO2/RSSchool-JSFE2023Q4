@@ -23,10 +23,10 @@ function loginPageRouteHandler(websocket: WebSocket) {
   renderPage(APP_CONTAINER, loginContainer);
 }
 
-function mainPageRouteHandler(websocket: WebSocket) {
+async function mainPageRouteHandler(websocket: WebSocket) {
   const mainContainer = createMainPage(websocket);
   window.history.pushState({}, 'Main', '/main');
-  renderPage(APP_CONTAINER, mainContainer);
+  renderPage(APP_CONTAINER, await mainContainer);
 }
 
 function aboutPageRouteHandler(websocket: WebSocket) {

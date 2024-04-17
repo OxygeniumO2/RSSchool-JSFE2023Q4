@@ -5,7 +5,7 @@ import createFooter from './footer/footer';
 import createHeader from './header/header';
 import createMain from './main/main';
 
-function createMainPage(websocket: WebSocket): HTMLElement {
+async function createMainPage(websocket: WebSocket): Promise<HTMLElement> {
   const mainPageContainer = createElem({
     tagName: 'div',
     classNames: ['main__page-container'],
@@ -13,11 +13,11 @@ function createMainPage(websocket: WebSocket): HTMLElement {
 
   const header = createHeader(websocket);
 
-  const main = createMain();
+  const main = createMain(websocket);
 
   const footer = createFooter();
 
-  mainPageContainer.append(header, main, footer);
+  mainPageContainer.append(header, await main, footer);
 
   return mainPageContainer;
 }

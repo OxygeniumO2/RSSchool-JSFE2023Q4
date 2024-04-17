@@ -1,5 +1,7 @@
 import APP_CONTAINER from '../app-container/app-container';
 import createReconnectModal from '../modal-lost-connect/modal';
+import SessionStorageKeys from '../utils/session-storage-keys';
+import { UserAuthClient, UserLogoutClient } from './web-socket-interfaces';
 
 let isReconnectModalOpen = false;
 
@@ -11,6 +13,30 @@ function createWebSocket(): WebSocket {
   socket.addEventListener('open', () => {
     if (isReconnectModalOpen) {
       APP_CONTAINER.removeChild(appContainerLastChild);
+    } else {
+      const userFromSS = sessionStorage.getItem(SessionStorageKeys.login);
+      const userPassFromSS = sessionStorage.getItem(
+        SessionStorageKeys.password,
+      );
+
+      if (userFromSS && userPassFromSS) {
+        const randomId = crypto.randomUUID();
+        const userLogin = userFromSS;
+        const userPassword = userPassFromSS;
+
+        const userData: UserAuthClient = {
+          id: randomId,
+          type: 'USER_LOGIN',
+          payload: {
+            user: {
+              login: userLogin,
+              password: userPassword,
+            },
+          },
+        };
+
+        socket.send(JSON.stringify(userData));
+      }
     }
   });
 
@@ -29,6 +55,26 @@ function createWebSocket(): WebSocket {
       const modalReconnect = createReconnectModal();
       APP_CONTAINER.append(modalReconnect);
       isReconnectModalOpen = true;
+    }
+  });
+
+  window.addEventListener('beforeunload', () => {
+    const userFromSS = sessionStorage.getItem(SessionStorageKeys.login);
+    const userPassFromSS = sessionStorage.getItem(SessionStorageKeys.password);
+
+    if (userFromSS && userPassFromSS) {
+      const logoutUserData: UserLogoutClient = {
+        id: 'logout',
+        type: 'USER_LOGOUT',
+        payload: {
+          user: {
+            login: userFromSS,
+            password: userPassFromSS,
+          },
+        },
+      };
+
+      socket.send(JSON.stringify(logoutUserData));
     }
   });
 

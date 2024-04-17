@@ -1,10 +1,16 @@
 import './user-section.css';
 import createElem from '../../../../utils/create-elem';
 import { ChatSectionDataChildren } from '../chat-section/chat-section';
+import getOnlineUsers from './get-online-users';
+import getOfflineUsers from './get-offline-users';
+import { UsersServerResp } from '../../../../web-socket/web-socket-interfaces';
+import removeAllChildren from '../../../../utils/remove-all-children';
+import SessionStorageKeys from '../../../../utils/session-storage-keys';
 
-function createUserSection(
+async function createUserSection(
+  websocket: WebSocket,
   chatSectionChildren: ChatSectionDataChildren,
-): HTMLElement {
+): Promise<HTMLElement> {
   const userSection = createElem({ tagName: 'section' });
 
   const userSearch = createElem({
@@ -18,16 +24,65 @@ function createUserSection(
 
   const userList = createElem({ tagName: 'div' });
 
-  const userTest = createElem({
-    tagName: 'div',
-    textContent: 'Vasya',
-    classNames: ['registered__user', '_online'],
-  });
+  const currUserFromSS = sessionStorage.getItem(SessionStorageKeys.login);
 
-  const userTest2 = createElem({
-    tagName: 'div',
-    textContent: 'Petya',
-    classNames: ['registered__user', '_offline'],
+  if (currUserFromSS) {
+    websocket.addEventListener('open', async () => {
+      const onlineUsers: UsersServerResp = await getOnlineUsers(websocket);
+      const offlineUsers: UsersServerResp = await getOfflineUsers(websocket);
+      const allUsers = [...onlineUsers, ...offlineUsers];
+
+      removeAllChildren(userList);
+
+      allUsers.forEach((user) => {
+        if (currUserFromSS && currUserFromSS !== user.login) {
+          const statusResp = user.isLogined;
+
+          const status = statusResp ? 'online' : 'offline';
+
+          const newUser = createElem({
+            tagName: 'div',
+            classNames: ['registered__user', `_${status}`],
+            textContent: `${user.login}`,
+          });
+
+          userList.append(newUser);
+        }
+      });
+    });
+  }
+
+  websocket.addEventListener('message', async (event) => {
+    const message = JSON.parse(event.data);
+
+    if (
+      message.type === 'USER_EXTERNAL_LOGIN' ||
+      message.type === 'USER_LOGIN' ||
+      message.type === 'USER_EXTERNAL_LOGOUT'
+    ) {
+      const onlineUsers: UsersServerResp = await getOnlineUsers(websocket);
+      const offlineUsers: UsersServerResp = await getOfflineUsers(websocket);
+
+      const allUsers = [...onlineUsers, ...offlineUsers];
+
+      removeAllChildren(userList);
+
+      allUsers.forEach((user) => {
+        if (currUserFromSS && currUserFromSS !== user.login) {
+          const statusResp = user.isLogined;
+
+          const status = statusResp ? 'online' : 'offline';
+
+          const newUser = createElem({
+            tagName: 'div',
+            classNames: ['registered__user', `_${status}`],
+            textContent: `${user.login}`,
+          });
+
+          userList.append(newUser);
+        }
+      });
+    }
   });
 
   userSearch.addEventListener('input', () => {
@@ -44,8 +99,6 @@ function createUserSection(
       }
     });
   });
-
-  console.log(chatSectionChildren);
 
   userList.addEventListener('click', (event) => {
     const currUser = event.target as HTMLElement;
@@ -64,8 +117,6 @@ function createUserSection(
       userStatus.classList.add(`_${currUserStatus}`);
     }
   });
-
-  userList.append(userTest, userTest2);
 
   userSection.append(userSearch, userList);
 

@@ -20,4 +20,29 @@ interface UserLogoutClient {
   };
 }
 
-export { UserAuthClient, UserLogoutClient };
+interface GetAllOnlineUsersClientResp {
+  id: string;
+  type: 'USER_ACTIVE';
+  payload: null;
+}
+
+interface GetAllOfflineUsersClientResp {
+  id: string;
+  type: 'USER_INACTIVE';
+  payload: null;
+}
+
+type UsersServerResp = UserServerResp[];
+
+interface UserServerResp {
+  login: string;
+  isLogined: boolean;
+}
+
+export {
+  UserAuthClient,
+  UserLogoutClient,
+  GetAllOnlineUsersClientResp,
+  GetAllOfflineUsersClientResp,
+  UsersServerResp,
+};
