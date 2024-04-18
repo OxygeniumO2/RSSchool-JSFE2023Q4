@@ -8,6 +8,7 @@ import removeAllChildren from '../../../../utils/remove-all-children';
 import SessionStorageKeys from '../../../../utils/session-storage-keys';
 import getMessagesFromUser from './get-messages-from-user';
 import sendMessageToUser from './send-message';
+import formatDateTime from '../../../../utils/format-date';
 
 async function createUserSection(
   websocket: WebSocket,
@@ -52,7 +53,36 @@ async function createUserSection(
         }
       });
     });
+
+    setTimeout(async () => {
+      const onlineUsers: UsersServerResp = await getOnlineUsers(websocket);
+      const offlineUsers: UsersServerResp = await getOfflineUsers(websocket);
+      const allUsers = [...onlineUsers, ...offlineUsers];
+
+      removeAllChildren(userList);
+
+      allUsers.forEach((user) => {
+        if (currUserFromSS && currUserFromSS !== user.login) {
+          const statusResp = user.isLogined;
+
+          const status = statusResp ? 'online' : 'offline';
+
+          const newUser = createElem({
+            tagName: 'div',
+            classNames: ['registered__user', `_${status}`],
+            textContent: `${user.login}`,
+          });
+
+          userList.append(newUser);
+        }
+      });
+    }, 0);
   }
+
+  const { chatSendMessageForm, chatWindow, userName, userStatus } =
+    chatSectionChildren;
+
+  const messagesToWindowChatElem = createElem({ tagName: 'div' });
 
   websocket.addEventListener('message', async (event) => {
     const message = JSON.parse(event.data);
@@ -84,6 +114,55 @@ async function createUserSection(
           userList.append(newUser);
         }
       });
+
+      console.log(userList);
+    }
+
+    if (
+      message.type === 'MSG_SEND' &&
+      ((currUserFromSS === message.payload.message.from &&
+        userName.textContent === message.payload.message.to) ||
+        (currUserFromSS === message.payload.message.to &&
+          userName.textContent === message.payload.message.from))
+    ) {
+      const { from, to, text, datetime, status } = message.payload.message;
+
+      const msgContainer = createElem({
+        tagName: 'div',
+        classNames: ['message-container'],
+      });
+
+      const userText = currUserFromSS === from ? 'you' : from;
+
+      const userNameDateContainer = createElem({
+        tagName: 'div',
+        classNames: ['username__date-container'],
+      });
+
+      const userNameElem = createElem({
+        tagName: 'div',
+        textContent: `${userText}`,
+      });
+
+      const msgDate = formatDateTime(datetime);
+
+      const msgDateElem = createElem({
+        tagName: 'div',
+        textContent: `${msgDate}`,
+      });
+
+      userNameDateContainer.append(userNameElem, msgDateElem);
+
+      const msgElem = createElem({
+        tagName: 'div',
+        classNames: ['message'],
+        textContent: `${text}`,
+      });
+
+      msgContainer.append(userNameDateContainer, msgElem);
+
+      messagesToWindowChatElem.append(msgContainer);
+      console.log(to, status);
     }
   });
 
@@ -92,9 +171,9 @@ async function createUserSection(
     const allUsers = Array.from(userList.children);
 
     allUsers.forEach((item, index) => {
-      const userName = allUsers[index].textContent?.trim().toLowerCase();
+      const currUserName = allUsers[index].textContent?.trim().toLowerCase();
 
-      if (userName && !userName.includes(userSearchText)) {
+      if (currUserName && !currUserName.includes(userSearchText)) {
         item.classList.add('_hidden');
       } else {
         item.classList.remove('_hidden');
@@ -103,14 +182,11 @@ async function createUserSection(
   });
 
   let userSendMessageTo: string;
-  const messagesToWindowChatElem = createElem({ tagName: 'div' });
 
   userList.addEventListener('click', async (event) => {
     const currUser = event.target as HTMLElement;
 
     if (currUser && currUser.classList.contains('registered__user')) {
-      const { userName, userStatus } = chatSectionChildren;
-
       const currUserName = currUser.textContent as string;
 
       userName.textContent = `${currUserName}`;
@@ -131,27 +207,16 @@ async function createUserSection(
     }
   });
 
-  chatSectionChildren.chatSendMessageForm.addEventListener(
-    'submit',
-    (event) => {
-      event.preventDefault();
-      const form = event.target as HTMLFormElement;
-      const inputElem = form.elements[0] as HTMLInputElement;
-      const inputValue = inputElem.value;
+  chatSendMessageForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const form = event.target as HTMLFormElement;
+    const inputElem = form.elements[0] as HTMLInputElement;
+    const inputValue = inputElem.value;
 
-      sendMessageToUser(websocket, userSendMessageTo, inputValue);
+    sendMessageToUser(websocket, userSendMessageTo, inputValue);
+  });
 
-      const messageElem = createElem({
-        tagName: 'div',
-        classNames: ['owner'],
-        textContent: `${inputValue}`,
-      });
-
-      messagesToWindowChatElem.append(messageElem);
-    },
-  );
-
-  chatSectionChildren.chatWindow.append(messagesToWindowChatElem);
+  chatWindow.append(messagesToWindowChatElem);
 
   userSection.append(userSearch, userList);
 

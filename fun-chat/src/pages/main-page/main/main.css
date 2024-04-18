@@ -2,6 +2,7 @@ main {
   flex-grow: 1;
   display: flex;
   gap: 20px;
+  max-height: 74vh;
 }
 
 main section {

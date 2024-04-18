@@ -13,11 +13,11 @@ async function createMainPage(websocket: WebSocket): Promise<HTMLElement> {
 
   const header = createHeader(websocket);
 
-  const main = createMain(websocket);
+  const main = await createMain(websocket);
 
   const footer = createFooter();
 
-  mainPageContainer.append(header, await main, footer);
+  mainPageContainer.append(header, main, footer);
 
   return mainPageContainer;
 }
