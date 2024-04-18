@@ -55,6 +55,10 @@ function router() {
 
   path = userFromSS ? '/main' : '/login';
 
+  if (window.location.pathname === '/about') {
+    path = '/about';
+  }
+
   const routeHandler = ROUTES[path];
 
   if (routeHandler) {

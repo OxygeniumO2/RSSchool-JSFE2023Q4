@@ -44,4 +44,4 @@ async function getMessagesFromUser(
   });
 }
 
-export default getMessagesFromUser;
+export { getMessagesFromUser, Message, AllMessages };

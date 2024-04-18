@@ -81,8 +81,9 @@ function createLoginPage(websocket: WebSocket): HTMLElement {
 
     if (message.type === 'ERROR') {
       removeAllChildren(APP_CONTAINER);
-      const modal = createErrorAuthModal(websocket);
+      const modal = createErrorAuthModal(websocket, message.payload.error);
       APP_CONTAINER.append(modal);
+      sessionStorage.clear();
     }
 
     if (

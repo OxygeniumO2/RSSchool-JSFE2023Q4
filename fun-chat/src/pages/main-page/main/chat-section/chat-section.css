@@ -26,6 +26,8 @@
   margin-bottom: 10px;
   padding: 10px;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column-reverse;
 }
 
 .message-container {
@@ -44,4 +46,5 @@
 .message {
   padding: 5px 30px;
   background-color: azure;
+  word-break: break-word;
 }

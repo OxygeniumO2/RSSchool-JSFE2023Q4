@@ -1,8 +1,12 @@
+import './modal.css';
 // eslint-disable-next-line import/no-cycle
 import { loginPageRouteHandler } from '../router/router';
 import createElem from '../utils/create-elem';
 
-function createErrorAuthModal(websocket: WebSocket): HTMLElement {
+function createErrorAuthModal(
+  websocket: WebSocket,
+  messageError: string,
+): HTMLElement {
   const modal = createElem({
     tagName: 'div',
     classNames: ['error__auth__modal'],
@@ -15,7 +19,7 @@ function createErrorAuthModal(websocket: WebSocket): HTMLElement {
 
   const modalText = createElem({
     tagName: 'div',
-    textContent: 'Error. User already logged',
+    textContent: `${messageError}`,
   });
 
   const modalBtn = createElem({ tagName: 'button', textContent: 'Back' });
