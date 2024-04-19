@@ -1,6 +1,6 @@
 import createElem from '../../../../utils/create-elem';
 import formatDateTime from '../../../../utils/format-date';
-import { Message } from './get-messages-from-user';
+import { Message } from './send-resp-get-messages-from-user';
 
 function createMessage(currUserFromSS: string, msg: Message): HTMLElement {
   const msgContainer = createElem({

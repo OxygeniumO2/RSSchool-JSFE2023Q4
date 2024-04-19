@@ -9,6 +9,10 @@
   cursor: pointer;
 }
 
+.user-container._hidden {
+  display: none;
+}
+
 .registered__user._hidden {
   display: none;
 }
@@ -34,4 +38,19 @@
 
 .registered__user._offline::before {
   background-color: red;
+}
+
+.user-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.all__messages-container {
+}
+
+.start__dialogue {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%);
 }

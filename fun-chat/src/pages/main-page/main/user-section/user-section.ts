@@ -1,20 +1,23 @@
 import './user-section.css';
 import createElem from '../../../../utils/create-elem';
 import { ChatSectionDataChildren } from '../chat-section/chat-section';
-import getOnlineUsers from './get-online-users';
-import getOfflineUsers from './get-offline-users';
-import { UsersServerResp } from '../../../../web-socket/web-socket-interfaces';
-import removeAllChildren from '../../../../utils/remove-all-children';
 import SessionStorageKeys from '../../../../utils/session-storage-keys';
-import { Message, getMessagesFromUser } from './get-messages-from-user';
-import sendMessageToUser from './send-message';
-// import formatDateTime from '../../../../utils/format-date';
 import createMessage from './create-message';
+import appendUsersToUserList from './append-users-to-userlist';
+import { UserServerResp } from '../../../../web-socket/web-socket-interfaces';
+import removeAllChildren from '../../../../utils/remove-all-children';
+import {
+  Message,
+  sendRespToGetMessagesFromUser,
+} from './send-resp-get-messages-from-user';
+import sendRespToGetOnlineUsers from './send-resp-get-online-users';
+import sendRespToGetOfflineUsers from './send-resp-get-offline-users';
+import sendMessageToUser from './send-resp-message';
 
-async function createUserSection(
+function createUserSection(
   websocket: WebSocket,
   chatSectionChildren: ChatSectionDataChildren,
-): Promise<HTMLElement> {
+) {
   const userSection = createElem({ tagName: 'section' });
 
   const userSearch = createElem({
@@ -30,56 +33,6 @@ async function createUserSection(
 
   const currUserFromSS = sessionStorage.getItem(SessionStorageKeys.login);
 
-  if (currUserFromSS) {
-    // websocket.addEventListener('open', async () => {
-    //   const onlineUsers: UsersServerResp = await getOnlineUsers(websocket);
-    //   const offlineUsers: UsersServerResp = await getOfflineUsers(websocket);
-    //   const allUsers = [...onlineUsers, ...offlineUsers];
-
-    //   removeAllChildren(userList);
-
-    //   allUsers.forEach((user) => {
-    //     if (currUserFromSS && currUserFromSS !== user.login) {
-    //       const statusResp = user.isLogined;
-
-    //       const status = statusResp ? 'online' : 'offline';
-
-    //       const newUser = createElem({
-    //         tagName: 'div',
-    //         classNames: ['registered__user', `_${status}`],
-    //         textContent: `${user.login}`,
-    //       });
-
-    //       userList.append(newUser);
-    //     }
-    //   });
-    // });
-
-    setTimeout(async () => {
-      const onlineUsers: UsersServerResp = await getOnlineUsers(websocket);
-      const offlineUsers: UsersServerResp = await getOfflineUsers(websocket);
-      const allUsers = [...onlineUsers, ...offlineUsers];
-
-      removeAllChildren(userList);
-
-      allUsers.forEach((user) => {
-        if (currUserFromSS && currUserFromSS !== user.login) {
-          const statusResp = user.isLogined;
-
-          const status = statusResp ? 'online' : 'offline';
-
-          const newUser = createElem({
-            tagName: 'div',
-            classNames: ['registered__user', `_${status}`],
-            textContent: `${user.login}`,
-          });
-
-          userList.append(newUser);
-        }
-      });
-    }, 0);
-  }
-
   const { chatSendMessageForm, chatWindow, userName, userStatus } =
     chatSectionChildren;
 
@@ -88,36 +41,31 @@ async function createUserSection(
     classNames: ['all__messages-container'],
   });
 
-  websocket.addEventListener('message', async (event) => {
+  const chooseUserElem = createElem({
+    tagName: 'div',
+    classNames: ['start__dialogue'],
+    textContent: 'Choose user to dialogue',
+  });
+
+  messagesToWindowChatElem.append(chooseUserElem);
+
+  const startDialogueElem = createElem({
+    tagName: 'div',
+    classNames: ['start__dialogue'],
+    textContent: 'Start your dialogue',
+  });
+
+  websocket.addEventListener('message', (event) => {
     const message = JSON.parse(event.data);
 
     if (
       message.type === 'USER_EXTERNAL_LOGIN' ||
       message.type === 'USER_LOGIN' ||
-      message.type === 'USER_EXTERNAL_LOGOUT'
+      message.type === 'USER_EXTERNAL_LOGOUT' ||
+      message.type === 'EXTERNAL_LOGIN'
     ) {
-      const onlineUsers: UsersServerResp = await getOnlineUsers(websocket);
-      const offlineUsers: UsersServerResp = await getOfflineUsers(websocket);
-
-      const allUsers = [...onlineUsers, ...offlineUsers];
-
-      removeAllChildren(userList);
-
-      allUsers.forEach((user) => {
-        if (currUserFromSS && currUserFromSS !== user.login) {
-          const statusResp = user.isLogined;
-
-          const status = statusResp ? 'online' : 'offline';
-
-          const newUser = createElem({
-            tagName: 'div',
-            classNames: ['registered__user', `_${status}`],
-            textContent: `${user.login}`,
-          });
-
-          userList.append(newUser);
-        }
-      });
+      sendRespToGetOnlineUsers(websocket);
+      sendRespToGetOfflineUsers(websocket);
 
       if (message.payload.user.login === userName.textContent) {
         const newUserStatus = message.payload.user.isLogined
@@ -128,6 +76,17 @@ async function createUserSection(
         userStatus.classList.remove('_online', '_offline');
         userStatus.classList.add(`_${newUserStatus}`);
       }
+    }
+
+    if (message.type === 'USER_ACTIVE') {
+      removeAllChildren(userList);
+      const onlineUsers: UserServerResp[] = message.payload.users;
+      appendUsersToUserList(onlineUsers, userList, currUserFromSS as string);
+    }
+
+    if (message.type === 'USER_INACTIVE') {
+      const offlineUsers: UserServerResp[] = message.payload.users;
+      appendUsersToUserList(offlineUsers, userList, currUserFromSS as string);
     }
 
     if (
@@ -142,6 +101,21 @@ async function createUserSection(
       const newMessage = createMessage(currUserFromSS as string, msgData);
 
       messagesToWindowChatElem.append(newMessage);
+    }
+
+    if (message.type === 'MSG_FROM_USER') {
+      removeAllChildren(messagesToWindowChatElem);
+
+      const allMessages: Message[] = message.payload.messages;
+
+      allMessages.forEach((msgData: Message) => {
+        const newMessage = createMessage(currUserFromSS as string, msgData);
+        messagesToWindowChatElem.append(newMessage);
+      });
+
+      if (!allMessages.length) {
+        messagesToWindowChatElem.append(startDialogueElem);
+      }
     }
   });
 
@@ -180,16 +154,11 @@ async function createUserSection(
       userStatus.classList.remove('_online', '_offline');
       userStatus.classList.add(`_${currUserStatus}`);
 
-      const allMessages = await getMessagesFromUser(websocket, currUserName);
-      removeAllChildren(messagesToWindowChatElem);
+      sendRespToGetMessagesFromUser(websocket, currUserName);
 
-      console.log(allMessages);
-
-      allMessages.forEach((msg: Message) => {
-        const newMsg = createMessage(currUserFromSS as string, msg);
-        messagesToWindowChatElem.append(newMsg);
-      });
-      chatWindow.append(messagesToWindowChatElem);
+      chatSendMessageForm.classList.remove('_hidden');
+      const formInput = chatSendMessageForm.children[0] as HTMLInputElement;
+      formInput.value = '';
     }
   });
 
@@ -198,6 +167,12 @@ async function createUserSection(
     const form = event.target as HTMLFormElement;
     const inputElem = form.elements[0] as HTMLInputElement;
     const inputValue = inputElem.value;
+
+    if (
+      messagesToWindowChatElem.children[0].classList.contains('start__dialogue')
+    ) {
+      removeAllChildren(messagesToWindowChatElem);
+    }
 
     sendMessageToUser(websocket, userSendMessageTo, inputValue);
   });

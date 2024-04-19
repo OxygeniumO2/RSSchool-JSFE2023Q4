@@ -6,14 +6,14 @@ import {
   createChatSection,
 } from './chat-section/chat-section';
 
-async function createMain(websocket: WebSocket): Promise<HTMLElement> {
+function createMain(websocket: WebSocket) {
   const main = createElem({ tagName: 'main' });
 
   const { section, sectionChildren }: ChatSectionData = createChatSection();
 
   const userSection = createUserSection(websocket, sectionChildren);
 
-  main.append(await userSection, section);
+  main.append(userSection, section);
 
   return main;
 }

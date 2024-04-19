@@ -26,7 +26,7 @@ function loginPageRouteHandler(websocket: WebSocket) {
 async function mainPageRouteHandler(websocket: WebSocket) {
   const mainContainer = createMainPage(websocket);
   window.history.pushState({}, 'Main', '/main');
-  renderPage(APP_CONTAINER, await mainContainer);
+  renderPage(APP_CONTAINER, mainContainer);
 }
 
 function aboutPageRouteHandler(websocket: WebSocket) {

@@ -41,9 +41,7 @@ function createWebSocket(): WebSocket {
   });
 
   socket.addEventListener('close', (event) => {
-    if (event.wasClean) {
-      console.log('Соединение закрыто чисто');
-    } else {
+    if (!event.wasClean) {
       setTimeout(() => {
         createWebSocket();
       }, 1600);

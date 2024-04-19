@@ -32,8 +32,6 @@ interface GetAllOfflineUsersClientResp {
   payload: null;
 }
 
-type UsersServerResp = UserServerResp[];
-
 interface UserServerResp {
   login: string;
   isLogined: boolean;
@@ -54,6 +52,6 @@ export {
   UserLogoutClient,
   GetAllOnlineUsersClientResp,
   GetAllOfflineUsersClientResp,
-  UsersServerResp,
   GetAllMessagesClientResp,
+  UserServerResp,
 };

@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import './login-page.css';
 import createElem from '../../utils/create-elem';
 import { UserAuthClient } from '../../web-socket/web-socket-interfaces';
@@ -73,10 +74,12 @@ function createLoginPage(websocket: WebSocket): HTMLElement {
       },
     };
 
+    mainPageRouteHandler(websocket);
+
     websocket.send(JSON.stringify(userData));
   });
 
-  websocket.addEventListener('message', async (e) => {
+  websocket.addEventListener('message', (e) => {
     const message = JSON.parse(e.data);
 
     if (message.type === 'ERROR') {
@@ -84,13 +87,6 @@ function createLoginPage(websocket: WebSocket): HTMLElement {
       const modal = createErrorAuthModal(websocket, message.payload.error);
       APP_CONTAINER.append(modal);
       sessionStorage.clear();
-    }
-
-    if (
-      message.type === 'USER_LOGIN' ||
-      message.type === 'USER_EXTERNAL_LOGIN'
-    ) {
-      await mainPageRouteHandler(websocket);
     }
   });
 
