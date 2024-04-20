@@ -8,6 +8,7 @@ import createLoginPage from '../pages/login-page/login-page';
 // eslint-disable-next-line import/no-cycle
 import createMainPage from '../pages/main-page/main-page';
 import SessionStorageKeys from '../utils/session-storage-keys';
+// eslint-disable-next-line import/no-cycle
 import createWebSocket from '../web-socket/web-socket';
 
 type Routes = {

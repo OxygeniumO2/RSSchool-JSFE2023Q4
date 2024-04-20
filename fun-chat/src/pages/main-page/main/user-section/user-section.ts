@@ -215,6 +215,18 @@ function createUserSection(
       }
     }
 
+    if (message.type === 'MSG_DELETE' && message.id === null) {
+      if (
+        messagesToWindowChatElem.children[1] &&
+        messagesToWindowChatElem.children[1].classList.contains(
+          'new__message__line',
+        )
+      ) {
+        line.remove();
+        line = createNewMessagesLineElem();
+      }
+    }
+
     if (message.type === 'MSG_READ' && message.id === null) {
       const messagesToWindowChatElemChildren = Array.from(
         messagesToWindowChatElem.children,
@@ -229,10 +241,14 @@ function createUserSection(
       });
     }
 
-    if (message.type === 'MSG_READ') {
-      line.remove();
-      line = createNewMessagesLineElem(); // MAYBE BETTER TO REMOVE LINE INSTANTLY WITHOUT WAITING SERVER RESPONSE
-    }
+    // if (message.type === 'MSG_READ') {
+    //   line.remove();
+    //   line = createNewMessagesLineElem(); // MAYBE BETTER TO REMOVE LINE INSTANTLY WITHOUT WAITING SERVER RESPONSE
+    // }
+
+    // if (message.type === 'MSG_DELIVER' && message.id === null) {
+    //   console.log('sas');
+    // }
   });
 
   userSearch.addEventListener('input', () => {
@@ -291,10 +307,8 @@ function createUserSection(
     const inputElem = form.elements[0] as HTMLInputElement;
     const inputValue = inputElem.value;
 
-    if (
-      messagesToWindowChatElem.children[0] &&
-      messagesToWindowChatElem.children[0].classList.contains('start__dialogue')
-    ) {
+    const startDialogue = messagesToWindowChatElem.children[0];
+    if (startDialogue && startDialogue.classList.contains('start__dialogue')) {
       removeAllChildren(messagesToWindowChatElem);
     }
 
@@ -310,9 +324,13 @@ function createUserSection(
     handleContextMenuAndScroll(websocket, line);
   });
 
-  chatWindow.addEventListener('wheel', () => {
-    handleContextMenuAndScroll(websocket, line);
-  });
+  chatWindow.addEventListener(
+    'wheel',
+    () => {
+      handleContextMenuAndScroll(websocket, line);
+    },
+    { passive: true },
+  );
 
   chatWindow.append(messagesToWindowChatElem);
 

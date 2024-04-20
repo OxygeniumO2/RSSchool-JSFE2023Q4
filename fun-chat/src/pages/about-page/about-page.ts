@@ -24,6 +24,7 @@ function createAboutPage(websocket: WebSocket): HTMLElement {
 
   const aboutPageAuthorLink = createElem({
     tagName: 'a',
+    classNames: ['author__link'],
     textContent: 'Author - Alexander',
     attributes: [['href', 'https://github.com/OxygeniumO2']],
   });

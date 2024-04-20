@@ -24,6 +24,7 @@ function createFooter(): HTMLElement {
 
   const authorName = createElem({
     tagName: 'a',
+    classNames: ['author__link'],
     textContent: 'Alexander',
     attributes: [['href', 'https://github.com/OxygeniumO2']],
   });

@@ -30,9 +30,21 @@ a {
   transition: all 0.2s ease;
 }
 
+.author__link {
+  padding: 5px;
+  border: 1px solid black;
+  border-radius: 5px;
+  color: white;
+  background-color: #916828;
+}
+
 @media (any-hover: hover) {
   a:hover {
     color: rgb(71, 140, 201);
+  }
+
+  .author__link:hover {
+    background-color: #541238;
   }
 
   button:hover {

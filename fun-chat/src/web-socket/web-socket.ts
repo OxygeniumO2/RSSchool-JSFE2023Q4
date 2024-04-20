@@ -1,9 +1,16 @@
 import APP_CONTAINER from '../app-container/app-container';
 import createReconnectModal from '../modal-lost-connect/modal';
+// eslint-disable-next-line import/no-cycle
+import {
+  aboutPageRouteHandler,
+  loginPageRouteHandler,
+  mainPageRouteHandler,
+} from '../router/router';
 import SessionStorageKeys from '../utils/session-storage-keys';
 import { UserAuthClient, UserLogoutClient } from './web-socket-interfaces';
 
 let isReconnectModalOpen = false;
+let reconnectTimeout: NodeJS.Timeout | undefined;
 
 function createWebSocket(): WebSocket {
   const socket = new WebSocket('ws://localhost:4000');
@@ -13,46 +20,65 @@ function createWebSocket(): WebSocket {
   socket.addEventListener('open', () => {
     if (isReconnectModalOpen) {
       APP_CONTAINER.removeChild(appContainerLastChild);
-    } else {
       const userFromSS = sessionStorage.getItem(SessionStorageKeys.login);
       const userPassFromSS = sessionStorage.getItem(
         SessionStorageKeys.password,
       );
 
       if (userFromSS && userPassFromSS) {
-        const randomId = crypto.randomUUID();
-        const userLogin = userFromSS;
-        const userPassword = userPassFromSS;
+        isReconnectModalOpen = false;
 
-        const userData: UserAuthClient = {
-          id: randomId,
-          type: 'USER_LOGIN',
-          payload: {
-            user: {
-              login: userLogin,
-              password: userPassword,
-            },
-          },
-        };
+        clearTimeout(reconnectTimeout);
 
-        socket.send(JSON.stringify(userData));
+        if (window.location.pathname === '/about') {
+          aboutPageRouteHandler(socket);
+        } else {
+          mainPageRouteHandler(socket);
+        }
+      } else {
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        window.location.pathname === '/about'
+          ? aboutPageRouteHandler(socket)
+          : loginPageRouteHandler(socket);
+
+        clearTimeout(reconnectTimeout);
       }
     }
+
+    const userFromSS = sessionStorage.getItem(SessionStorageKeys.login);
+    const userPassFromSS = sessionStorage.getItem(SessionStorageKeys.password);
+
+    if (userFromSS && userPassFromSS) {
+      const randomId = crypto.randomUUID();
+      const userLogin = userFromSS;
+      const userPassword = userPassFromSS;
+
+      const userData: UserAuthClient = {
+        id: randomId,
+        type: 'USER_LOGIN',
+        payload: {
+          user: {
+            login: userLogin,
+            password: userPassword,
+          },
+        },
+      };
+      clearTimeout(reconnectTimeout);
+      socket.send(JSON.stringify(userData));
+    }
+    clearTimeout(reconnectTimeout);
   });
 
   socket.addEventListener('close', (event) => {
     if (!event.wasClean) {
-      setTimeout(() => {
+      if (!isReconnectModalOpen) {
+        const modalReconnect = createReconnectModal();
+        APP_CONTAINER.append(modalReconnect);
+        isReconnectModalOpen = true;
+      }
+      reconnectTimeout = setTimeout(() => {
         createWebSocket();
-      }, 1600);
-    }
-  });
-
-  socket.addEventListener('error', () => {
-    if (!isReconnectModalOpen) {
-      const modalReconnect = createReconnectModal();
-      APP_CONTAINER.append(modalReconnect);
-      isReconnectModalOpen = true;
+      }, 2000);
     }
   });
 
