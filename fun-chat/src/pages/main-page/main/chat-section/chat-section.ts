@@ -52,7 +52,7 @@ function createChatSection(): ChatSectionData {
     attributes: [
       ['type', 'text'],
       ['required', true],
-      ['placeholder', 'Write your message'],
+      ['placeholder', 'Enter message'],
     ],
   });
 

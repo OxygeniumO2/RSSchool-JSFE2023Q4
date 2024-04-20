@@ -19,7 +19,8 @@ function createAboutPage(websocket: WebSocket): HTMLElement {
 
   const aboutPageDesc = createElem({
     tagName: 'p',
-    textContent: 'App where you can communicate with other people',
+    textContent:
+      'App where you can communicate with other people. Thanks to all RS School community, and good luck with study',
   });
 
   const aboutPageAuthorLink = createElem({

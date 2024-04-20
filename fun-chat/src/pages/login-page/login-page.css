@@ -30,5 +30,5 @@
 }
 
 .login__form input::placeholder {
-  font-size: 1.3rem;
+  font-size: inherit;
 }

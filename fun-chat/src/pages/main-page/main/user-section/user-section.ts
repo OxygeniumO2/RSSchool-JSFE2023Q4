@@ -15,6 +15,7 @@ import sendRequestToGetOfflineUsers from './send-request-get-offline-users';
 import sendRequestMessageToUser from './send-request-message';
 import createNewMessagesLineElem from '../chat-section/new-messages-line';
 import handleContextMenuAndScroll from '../chat-section/chat-window-new-messages-handler';
+import updateUnreadMessagesInterface from './messages-unread-update';
 
 function createUserSection(
   websocket: WebSocket,
@@ -95,6 +96,12 @@ function createUserSection(
         onlineUsersList,
         currUserFromSS as string,
       );
+
+      onlineUsers.forEach((user) => {
+        if (currUserFromSS !== user.login) {
+          sendRequestToGetMessagesFromUser(websocket, user.login);
+        }
+      });
     }
 
     if (message.type === 'USER_INACTIVE') {
@@ -105,6 +112,12 @@ function createUserSection(
         offlineUsersList,
         currUserFromSS as string,
       );
+
+      offlineUsers.forEach((user) => {
+        if (currUserFromSS !== user.login) {
+          sendRequestToGetMessagesFromUser(websocket, user.login);
+        }
+      });
     }
 
     if (message.type === 'MSG_SEND' && message.id === 'send-msg') {
@@ -152,7 +165,26 @@ function createUserSection(
       chatWindow.scrollTop = 0;
     }
 
-    if (message.type === 'MSG_FROM_USER') {
+    if (message.type === 'MSG_SEND' && message.id === null) {
+      const onlineUsers = Array.from(onlineUsersList.children);
+      const offlineUsers = Array.from(offlineUsersList.children);
+      const allUsers = [...onlineUsers, ...offlineUsers];
+
+      allUsers.forEach((user) => {
+        if (user.children[0].textContent === message.payload.message.from) {
+          const currUser = user;
+
+          let currUnreadValueNumber: number = Number(
+            user.children[1].textContent,
+          );
+
+          currUnreadValueNumber += 1;
+          currUser.children[1].textContent = currUnreadValueNumber.toString();
+        }
+      });
+    }
+
+    if (message.type === 'MSG_FROM_USER' && userName.textContent) {
       removeAllChildren(messagesToWindowChatElem);
 
       const allMessages: Message[] = message.payload.messages;
@@ -195,6 +227,14 @@ function createUserSection(
 
         chatWindow.scrollTop += scrollAmount;
       }
+    }
+
+    if (message.type === 'MSG_FROM_USER') {
+      updateUnreadMessagesInterface(
+        message.payload.messages,
+        onlineUsersList,
+        offlineUsersList,
+      );
     }
 
     if (message.type === 'MSG_DELETE') {
@@ -246,9 +286,13 @@ function createUserSection(
     //   line = createNewMessagesLineElem(); // MAYBE BETTER TO REMOVE LINE INSTANTLY WITHOUT WAITING SERVER RESPONSE
     // }
 
-    // if (message.type === 'MSG_DELIVER' && message.id === null) {
-    //   console.log('sas');
-    // }
+    if (message.type === 'MSG_DELIVER' && userName.textContent) {
+      const onlineUsers = Array.from(onlineUsersList.children);
+      const offlineUsers = Array.from(offlineUsersList.children);
+      const allUsers = [...onlineUsers, ...offlineUsers];
+
+      console.log(allUsers);
+    }
   });
 
   userSearch.addEventListener('input', () => {
@@ -312,22 +356,46 @@ function createUserSection(
       removeAllChildren(messagesToWindowChatElem);
     }
 
-    handleContextMenuAndScroll(websocket, line);
+    handleContextMenuAndScroll(
+      websocket,
+      line,
+      userName,
+      onlineUsersList,
+      offlineUsersList,
+    );
     sendRequestMessageToUser(websocket, userSendMessageTo, inputValue);
   });
 
   chatWindow.addEventListener('click', () => {
-    handleContextMenuAndScroll(websocket, line);
+    handleContextMenuAndScroll(
+      websocket,
+      line,
+      userName,
+      onlineUsersList,
+      offlineUsersList,
+    );
   });
 
   chatWindow.addEventListener('contextmenu', () => {
-    handleContextMenuAndScroll(websocket, line);
+    handleContextMenuAndScroll(
+      websocket,
+      line,
+      userName,
+      onlineUsersList,
+      offlineUsersList,
+    );
   });
 
   chatWindow.addEventListener(
     'wheel',
     () => {
-      handleContextMenuAndScroll(websocket, line);
+      handleContextMenuAndScroll(
+        websocket,
+        line,
+        userName,
+        onlineUsersList,
+        offlineUsersList,
+      );
     },
     { passive: true },
   );
