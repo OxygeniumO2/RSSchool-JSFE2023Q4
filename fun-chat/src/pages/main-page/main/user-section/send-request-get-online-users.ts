@@ -1,6 +1,6 @@
 import { GetAllOnlineUsersClientResp } from '../../../../web-socket/web-socket-interfaces';
 
-function sendRespToGetOnlineUsers(websocket: WebSocket) {
+function sendRequestToGetOnlineUsers(websocket: WebSocket) {
   const messageData: GetAllOnlineUsersClientResp = {
     id: 'online',
     type: 'USER_ACTIVE',
@@ -10,4 +10,4 @@ function sendRespToGetOnlineUsers(websocket: WebSocket) {
   websocket.send(JSON.stringify(messageData));
 }
 
-export default sendRespToGetOnlineUsers;
+export default sendRequestToGetOnlineUsers;

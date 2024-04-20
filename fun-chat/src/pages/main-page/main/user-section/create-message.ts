@@ -61,6 +61,13 @@ function createMessage(
     classNames: ['message__status__info-container'],
   });
 
+  const msgInfoModified = createElem({
+    tagName: 'div',
+    classNames: ['message__status__modified'],
+  });
+
+  msgInfoStatusContainer.append(msgInfoModified);
+
   msgContainer.append(userNameDateContainer, msgElem, msgInfoStatusContainer);
 
   if (userText === 'you') {

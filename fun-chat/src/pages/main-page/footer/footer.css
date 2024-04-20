@@ -12,6 +12,9 @@ footer {
   width: 60px;
   height: 60px;
   text-decoration: none;
+  border-radius: 50%;
+  border-left: 1px solid transparent;
+  border-top: 1px solid transparent;
 }
 
 @media screen and (max-width: 866px) {

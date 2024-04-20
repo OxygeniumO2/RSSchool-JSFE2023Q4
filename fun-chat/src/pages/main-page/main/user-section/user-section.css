@@ -69,7 +69,7 @@
   z-index: 2;
 }
 
-.delete__message {
+.context__menu div {
   cursor: pointer;
 }
 
@@ -133,4 +133,12 @@
   display: flex;
   justify-content: space-around;
   font-size: 1rem;
+}
+
+@media (any-hover: hover) {
+  .context__menu div:hover {
+    background-color: #d0aa54;
+    border-radius: 5px;
+    padding-left: 3px;
+  }
 }

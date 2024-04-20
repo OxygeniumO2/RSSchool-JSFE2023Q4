@@ -1,6 +1,6 @@
 import { GetAllOfflineUsersClientResp } from '../../../../web-socket/web-socket-interfaces';
 
-function sendRespToGetOfflineUsers(websocket: WebSocket) {
+function sendRequestToGetOfflineUsers(websocket: WebSocket) {
   const messageData: GetAllOfflineUsersClientResp = {
     id: 'offline',
     type: 'USER_INACTIVE',
@@ -10,4 +10,4 @@ function sendRespToGetOfflineUsers(websocket: WebSocket) {
   websocket.send(JSON.stringify(messageData));
 }
 
-export default sendRespToGetOfflineUsers;
+export default sendRequestToGetOfflineUsers;

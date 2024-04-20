@@ -10,12 +10,11 @@ import {
   Message,
   sendRequestToGetMessagesFromUser,
 } from './send-request-get-messages-from-user';
-import sendRespToGetOnlineUsers from './send-request-get-online-users';
-import sendRespToGetOfflineUsers from './send-request-get-offline-users';
+import sendRequestToGetOnlineUsers from './send-request-get-online-users';
+import sendRequestToGetOfflineUsers from './send-request-get-offline-users';
 import sendRequestMessageToUser from './send-request-message';
 import createNewMessagesLineElem from '../chat-section/new-messages-line';
-import collectMessagesToRead from './collect-messages-to-read';
-import sendRequestMessageRead from './send-request-messages-read';
+import handleContextMenuAndScroll from '../chat-section/chat-window-new-messages-handler';
 
 function createUserSection(
   websocket: WebSocket,
@@ -74,8 +73,8 @@ function createUserSection(
       message.type === 'USER_EXTERNAL_LOGOUT' ||
       message.type === 'EXTERNAL_LOGIN'
     ) {
-      sendRespToGetOnlineUsers(websocket);
-      sendRespToGetOfflineUsers(websocket);
+      sendRequestToGetOnlineUsers(websocket);
+      sendRequestToGetOfflineUsers(websocket);
 
       if (message.payload.user.login === userName.textContent) {
         const newUserStatus = message.payload.user.isLogined
@@ -117,9 +116,10 @@ function createUserSection(
         msgData,
         messagesToWindowChatElem,
       );
-      chatWindow.scrollTop = 0;
 
       messagesToWindowChatElem.append(newMessage);
+
+      chatWindow.scrollTop = 0;
     }
 
     if (
@@ -146,9 +146,10 @@ function createUserSection(
         msgData,
         messagesToWindowChatElem,
       );
-      chatWindow.scrollTop = 0;
 
       messagesToWindowChatElem.append(newMessage);
+
+      chatWindow.scrollTop = 0;
     }
 
     if (message.type === 'MSG_FROM_USER') {
@@ -168,7 +169,11 @@ function createUserSection(
 
         const isRead = newMessage.getAttribute('read');
 
-        if (isRead !== 'true' && !isLineAppend) {
+        if (
+          isRead !== 'true' &&
+          !isLineAppend &&
+          !newMessage.classList.contains('_you')
+        ) {
           messagesToWindowChatElem.append(line);
           isLineAppend = true;
         }
@@ -222,6 +227,11 @@ function createUserSection(
           msgStatus!.textContent = 'Read';
         }
       });
+    }
+
+    if (message.type === 'MSG_READ') {
+      line.remove();
+      line = createNewMessagesLineElem(); // MAYBE BETTER TO REMOVE LINE INSTANTLY WITHOUT WAITING SERVER RESPONSE
     }
   });
 
@@ -288,18 +298,20 @@ function createUserSection(
       removeAllChildren(messagesToWindowChatElem);
     }
 
+    handleContextMenuAndScroll(websocket, line);
     sendRequestMessageToUser(websocket, userSendMessageTo, inputValue);
   });
 
   chatWindow.addEventListener('click', () => {
-    const messagesToRead = collectMessagesToRead(line);
-    line.remove();
+    handleContextMenuAndScroll(websocket, line);
+  });
 
-    line = createNewMessagesLineElem(); // MAYBE RESP FROM SERVER NEED TO REMOVE LINE AND CREATE NEW ONE
+  chatWindow.addEventListener('contextmenu', () => {
+    handleContextMenuAndScroll(websocket, line);
+  });
 
-    messagesToRead.forEach((item) => {
-      sendRequestMessageRead(websocket, item.id);
-    });
+  chatWindow.addEventListener('wheel', () => {
+    handleContextMenuAndScroll(websocket, line);
   });
 
   chatWindow.append(messagesToWindowChatElem);

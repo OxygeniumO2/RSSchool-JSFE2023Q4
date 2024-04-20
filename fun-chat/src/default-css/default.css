@@ -7,6 +7,7 @@ body {
 button {
   cursor: pointer;
   padding: 5px 10px;
+  transition: all 0.2s ease;
 }
 
 .container {
@@ -21,6 +22,26 @@ button {
 
 input {
   padding: 5px;
+}
+
+a {
+  text-decoration: none;
+  color: #2f2413;
+  transition: all 0.2s ease;
+}
+
+@media (any-hover: hover) {
+  a:hover {
+    color: rgb(71, 140, 201);
+  }
+
+  button:hover {
+    background-color: aliceblue;
+  }
+  .rs__logo:hover {
+    background-color: rgb(232 196 117);
+    border-color: rgb(232 196 117);
+  }
 }
 
 @media screen and (max-width: 1024px) {

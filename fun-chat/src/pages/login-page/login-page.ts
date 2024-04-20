@@ -41,7 +41,7 @@ function createLoginPage(websocket: WebSocket): HTMLElement {
       ['autocomplete', 'current-password'],
       ['minlength', '4'],
       ['pattern', '.*[A-Z].*'],
-      ['title', 'Minimum one letter in uppercase'],
+      ['title', 'Minimum one letter in uppercase, English alphabet'],
     ],
   }) as HTMLInputElement;
 
