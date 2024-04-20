@@ -2,7 +2,7 @@ import { GetAllOnlineUsersClientResp } from '../../../../web-socket/web-socket-i
 
 function sendRespToGetOnlineUsers(websocket: WebSocket) {
   const messageData: GetAllOnlineUsersClientResp = {
-    id: 'offline',
+    id: 'online',
     type: 'USER_ACTIVE',
     payload: null,
   };

@@ -22,3 +22,24 @@ button {
 input {
   padding: 5px;
 }
+
+@media screen and (max-width: 1024px) {
+  body {
+    font-size: 1rem;
+  }
+}
+
+@media screen and (max-width: 866px) {
+  .search__user {
+    max-width: 100px;
+  }
+  .rs__logo {
+    width: 30px;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  body {
+    font-size: 0.8rem;
+  }
+}

@@ -15,11 +15,11 @@ interface Message {
 
 type AllMessages = Message[];
 
-function sendRespToGetMessagesFromUser(
+function sendRequestToGetMessagesFromUser(
   websocket: WebSocket,
   currUserName: string,
 ) {
-  const respGetMessages: GetAllMessagesClientResp = {
+  const requestGetMessages: GetAllMessagesClientResp = {
     id: 'messages',
     type: 'MSG_FROM_USER',
     payload: {
@@ -28,7 +28,7 @@ function sendRespToGetMessagesFromUser(
       },
     },
   };
-  websocket.send(JSON.stringify(respGetMessages));
+  websocket.send(JSON.stringify(requestGetMessages));
 }
 
-export { sendRespToGetMessagesFromUser, Message, AllMessages };
+export { sendRequestToGetMessagesFromUser, Message, AllMessages };

@@ -9,3 +9,13 @@ main section {
   padding: 20px;
   border: 2px solid black;
 }
+
+@media screen and (max-width: 712px) {
+  main {
+    gap: 10px;
+  }
+
+  main section {
+    padding: 10px;
+  }
+}

@@ -9,7 +9,7 @@ interface SendMessageToUserData {
   };
 }
 
-function sendMessageToUser(
+function sendRequestMessageToUser(
   websocket: WebSocket,
   user: string,
   textMessage: string,
@@ -28,4 +28,4 @@ function sendMessageToUser(
   websocket.send(JSON.stringify(data));
 }
 
-export default sendMessageToUser;
+export default sendRequestMessageToUser;

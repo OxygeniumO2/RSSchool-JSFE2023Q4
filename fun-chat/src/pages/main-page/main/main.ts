@@ -6,6 +6,13 @@ import {
   createChatSection,
 } from './chat-section/chat-section';
 
+document.addEventListener('click', (event) => {
+  const contextMenu = document.querySelector('.context__menu');
+  if (contextMenu && !contextMenu.contains(event.target as Node)) {
+    contextMenu.remove();
+  }
+});
+
 function createMain(websocket: WebSocket) {
   const main = createElem({ tagName: 'main' });
 

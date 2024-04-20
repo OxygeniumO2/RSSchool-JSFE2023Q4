@@ -48,6 +48,7 @@ function createChatSection(): ChatSectionData {
 
   const chatMessageTextInput = createElem({
     tagName: 'input',
+    classNames: ['message__text__input'],
     attributes: [
       ['type', 'text'],
       ['required', true],

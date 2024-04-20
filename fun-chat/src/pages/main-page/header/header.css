@@ -7,3 +7,9 @@ header {
   align-items: center;
   max-height: 10vh;
 }
+
+@media screen and (max-width: 712px) {
+  header {
+    padding: 10px;
+  }
+}

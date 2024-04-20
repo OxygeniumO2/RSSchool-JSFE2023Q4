@@ -7,6 +7,7 @@
   padding-left: 18px;
   margin-bottom: 10px;
   cursor: pointer;
+  word-break: break-word;
 }
 
 .user-container._hidden {
@@ -45,12 +46,91 @@
   justify-content: space-between;
 }
 
-.all__messages-container {
-}
-
 .start__dialogue {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%);
+  color: aliceblue;
+}
+
+.message__status {
+  display: flex;
+  justify-content: end;
+  font-size: 1rem;
+}
+
+.context__menu {
+  padding: 5px;
+  border: 1px solid black;
+  border-radius: 10px;
+  background-color: bisque;
+  position: absolute;
+  z-index: 2;
+}
+
+.delete__message {
+  cursor: pointer;
+}
+
+.new__message__line {
+  text-align: center;
+  margin-bottom: 10px;
+  margin-top: 8px;
+  color: aliceblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 5px;
+  gap: 20px;
+}
+
+.new__message__line div {
+  position: relative;
+}
+
+.message__line {
+  height: 3px;
+  background-color: aliceblue;
+  width: 41%;
+  flex-shrink: 1;
+}
+
+.message__line__text {
+  flex-shrink: 0;
+}
+
+/* .new__message__line div::before {
+  position: absolute;
+  content: '';
+  width: 35%;
+  height: 2px;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  background-color: aliceblue;
+}
+
+.new__message__line div::after {
+  position: absolute;
+  content: '';
+  width: 35%;
+  height: 2px;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  background-color: aliceblue;
+}
+
+@media screen and (max-width: 740px) {
+  .new__message__line div::after,
+  .new__message__line div::before {
+    width: 25%;
+  }
+} */
+
+.message__status__info-container {
+  display: flex;
+  justify-content: space-around;
+  font-size: 1rem;
 }

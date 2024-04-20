@@ -8,11 +8,14 @@ import { UserServerResp } from '../../../../web-socket/web-socket-interfaces';
 import removeAllChildren from '../../../../utils/remove-all-children';
 import {
   Message,
-  sendRespToGetMessagesFromUser,
-} from './send-resp-get-messages-from-user';
-import sendRespToGetOnlineUsers from './send-resp-get-online-users';
-import sendRespToGetOfflineUsers from './send-resp-get-offline-users';
-import sendMessageToUser from './send-resp-message';
+  sendRequestToGetMessagesFromUser,
+} from './send-request-get-messages-from-user';
+import sendRespToGetOnlineUsers from './send-request-get-online-users';
+import sendRespToGetOfflineUsers from './send-request-get-offline-users';
+import sendRequestMessageToUser from './send-request-message';
+import createNewMessagesLineElem from '../chat-section/new-messages-line';
+import collectMessagesToRead from './collect-messages-to-read';
+import sendRequestMessageRead from './send-request-messages-read';
 
 function createUserSection(
   websocket: WebSocket,
@@ -31,6 +34,11 @@ function createUserSection(
 
   const userList = createElem({ tagName: 'div' });
 
+  const onlineUsersList = createElem({ tagName: 'div' });
+  const offlineUsersList = createElem({ tagName: 'div' });
+
+  userList.append(onlineUsersList, offlineUsersList);
+
   const currUserFromSS = sessionStorage.getItem(SessionStorageKeys.login);
 
   const { chatSendMessageForm, chatWindow, userName, userStatus } =
@@ -46,6 +54,8 @@ function createUserSection(
     classNames: ['start__dialogue'],
     textContent: 'Choose user to dialogue',
   });
+
+  let line = createNewMessagesLineElem();
 
   messagesToWindowChatElem.append(chooseUserElem);
 
@@ -79,26 +89,64 @@ function createUserSection(
     }
 
     if (message.type === 'USER_ACTIVE') {
-      removeAllChildren(userList);
+      removeAllChildren(onlineUsersList);
       const onlineUsers: UserServerResp[] = message.payload.users;
-      appendUsersToUserList(onlineUsers, userList, currUserFromSS as string);
+      appendUsersToUserList(
+        onlineUsers,
+        onlineUsersList,
+        currUserFromSS as string,
+      );
     }
 
     if (message.type === 'USER_INACTIVE') {
+      removeAllChildren(offlineUsersList);
       const offlineUsers: UserServerResp[] = message.payload.users;
-      appendUsersToUserList(offlineUsers, userList, currUserFromSS as string);
+      appendUsersToUserList(
+        offlineUsers,
+        offlineUsersList,
+        currUserFromSS as string,
+      );
+    }
+
+    if (message.type === 'MSG_SEND' && message.id === 'send-msg') {
+      const msgData: Message = message.payload.message;
+
+      const newMessage = createMessage(
+        websocket,
+        currUserFromSS as string,
+        msgData,
+        messagesToWindowChatElem,
+      );
+      chatWindow.scrollTop = 0;
+
+      messagesToWindowChatElem.append(newMessage);
     }
 
     if (
       message.type === 'MSG_SEND' &&
-      ((currUserFromSS === message.payload.message.from &&
-        userName.textContent === message.payload.message.to) ||
-        (currUserFromSS === message.payload.message.to &&
-          userName.textContent === message.payload.message.from))
+      message.id === null &&
+      currUserFromSS === message.payload.message.to &&
+      userName.textContent === message.payload.message.from
     ) {
+      const allChildrenMessages = Array.from(messagesToWindowChatElem.children);
+
+      if (
+        !allChildrenMessages.some((item: Element) =>
+          (item as HTMLElement).classList.contains('new__message__line'),
+        )
+      ) {
+        messagesToWindowChatElem.append(line);
+      }
+
       const msgData: Message = message.payload.message;
 
-      const newMessage = createMessage(currUserFromSS as string, msgData);
+      const newMessage = createMessage(
+        websocket,
+        currUserFromSS as string,
+        msgData,
+        messagesToWindowChatElem,
+      );
+      chatWindow.scrollTop = 0;
 
       messagesToWindowChatElem.append(newMessage);
     }
@@ -108,20 +156,81 @@ function createUserSection(
 
       const allMessages: Message[] = message.payload.messages;
 
+      let isLineAppend = false;
+
       allMessages.forEach((msgData: Message) => {
-        const newMessage = createMessage(currUserFromSS as string, msgData);
+        const newMessage = createMessage(
+          websocket,
+          currUserFromSS as string,
+          msgData,
+          messagesToWindowChatElem,
+        );
+
+        const isRead = newMessage.getAttribute('read');
+
+        if (isRead !== 'true' && !isLineAppend) {
+          messagesToWindowChatElem.append(line);
+          isLineAppend = true;
+        }
+
         messagesToWindowChatElem.append(newMessage);
       });
 
       if (!allMessages.length) {
         messagesToWindowChatElem.append(startDialogueElem);
       }
+
+      const lineExists = messagesToWindowChatElem.contains(line);
+
+      if (lineExists) {
+        const chatWindowTop = chatWindow.getBoundingClientRect().top;
+        const lineTop = line.getBoundingClientRect().top;
+
+        const scrollAmount = lineTop - chatWindowTop;
+
+        chatWindow.scrollTop += scrollAmount;
+      }
+    }
+
+    if (message.type === 'MSG_DELETE') {
+      const allMsgs = Array.from(messagesToWindowChatElem.children);
+      const msgToDelete = message.payload.message.id;
+
+      allMsgs.forEach((msg) => {
+        if (msgToDelete === msg.id) {
+          msg.remove();
+        }
+      });
+
+      if (
+        allMsgs.length === 1 &&
+        !allMsgs[0].classList.contains('start__dialogue')
+      ) {
+        messagesToWindowChatElem.append(startDialogueElem);
+      }
+    }
+
+    if (message.type === 'MSG_READ' && message.id === null) {
+      const messagesToWindowChatElemChildren = Array.from(
+        messagesToWindowChatElem.children,
+      );
+
+      messagesToWindowChatElemChildren.forEach((elem) => {
+        if (elem.id === message.payload.message.id) {
+          const msgStatus = elem.querySelector('.message__status');
+
+          msgStatus!.textContent = 'Read';
+        }
+      });
     }
   });
 
   userSearch.addEventListener('input', () => {
     const userSearchText = userSearch.value.trim().toLowerCase();
-    const allUsers = Array.from(userList.children);
+
+    const onlineUsers = Array.from(onlineUsersList.children);
+    const offlineUsers = Array.from(offlineUsersList.children);
+    const allUsers = [...onlineUsers, ...offlineUsers];
 
     allUsers.forEach((item, index) => {
       const currUserName = allUsers[index].textContent?.trim().toLowerCase();
@@ -139,7 +248,11 @@ function createUserSection(
   userList.addEventListener('click', async (event) => {
     const currUser = event.target as HTMLElement;
 
-    if (currUser && currUser.classList.contains('registered__user')) {
+    if (
+      currUser &&
+      currUser.classList.contains('registered__user') &&
+      userName.textContent !== currUser.textContent
+    ) {
       const currUserName = currUser.textContent as string;
 
       userName.textContent = `${currUserName}`;
@@ -154,7 +267,7 @@ function createUserSection(
       userStatus.classList.remove('_online', '_offline');
       userStatus.classList.add(`_${currUserStatus}`);
 
-      sendRespToGetMessagesFromUser(websocket, currUserName);
+      sendRequestToGetMessagesFromUser(websocket, currUserName);
 
       chatSendMessageForm.classList.remove('_hidden');
       const formInput = chatSendMessageForm.children[0] as HTMLInputElement;
@@ -169,12 +282,24 @@ function createUserSection(
     const inputValue = inputElem.value;
 
     if (
+      messagesToWindowChatElem.children[0] &&
       messagesToWindowChatElem.children[0].classList.contains('start__dialogue')
     ) {
       removeAllChildren(messagesToWindowChatElem);
     }
 
-    sendMessageToUser(websocket, userSendMessageTo, inputValue);
+    sendRequestMessageToUser(websocket, userSendMessageTo, inputValue);
+  });
+
+  chatWindow.addEventListener('click', () => {
+    const messagesToRead = collectMessagesToRead(line);
+    line.remove();
+
+    line = createNewMessagesLineElem(); // MAYBE RESP FROM SERVER NEED TO REMOVE LINE AND CREATE NEW ONE
+
+    messagesToRead.forEach((item) => {
+      sendRequestMessageRead(websocket, item.id);
+    });
   });
 
   chatWindow.append(messagesToWindowChatElem);

@@ -22,7 +22,8 @@
 
 .chat__window {
   flex-grow: 1;
-  background-color: aliceblue;
+  background-color: #193751;
+  border-radius: 5px;
   margin-bottom: 10px;
   padding: 10px;
   overflow-y: auto;
@@ -35,19 +36,34 @@
   border: 2px solid black;
   border-radius: 10px;
   padding: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
+  position: relative;
+  background-color: #8dc0e8;
+}
+
+.message-container:last-child {
+  margin-bottom: 0;
+}
+
+.message-container._you {
+  background-color: #c5eba2;
 }
 
 .username__date-container {
   display: flex;
   justify-content: space-around;
   margin-bottom: 5px;
+  flex-wrap: wrap;
+  gap: 5px;
+  font-size: 1rem;
 }
 
 .message {
-  padding: 5px 30px;
-  background-color: azure;
+  padding: 10px;
+  background-color: #ffffff;
   word-break: break-word;
+  margin-bottom: 5px;
+  border-radius: 5px;
 }
 
 .send__message__form {
@@ -57,4 +73,10 @@
 
 .send__message__form._hidden {
   visibility: hidden;
+}
+
+@media screen and (max-width: 520px) {
+  .message__text__input {
+    max-width: 115px;
+  }
 }
