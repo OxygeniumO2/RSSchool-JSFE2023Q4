@@ -42,8 +42,9 @@ function createMessage(
   const msgElem = createElem({
     tagName: 'div',
     classNames: ['message'],
-    textContent: `${msg.text}`,
   });
+
+  msgElem.innerHTML = `<pre>${msg.text}</pre>`;
 
   const isDelivered = msg.status.isDelivered ? 'Delivered' : 'Sent';
   const isRead = msg.status.isReaded ? 'Read' : '';

@@ -25,7 +25,7 @@ function appendUsersToUserList(
 
       const unreadMessagesElem = createElem({
         tagName: 'div',
-        textContent: `${''}`,
+        classNames: ['unread__messages'],
       });
 
       userContainer.append(newUser, unreadMessagesElem);

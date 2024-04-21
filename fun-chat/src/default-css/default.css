@@ -22,8 +22,7 @@ button {
 
 input {
   padding: 5px;
-  font-size: 1.2rem;
-  line-height: 120%;
+  line-height: 100%;
 }
 
 a {
@@ -42,6 +41,15 @@ a {
 
 input::placeholder {
   font-size: inherit;
+}
+
+pre {
+  margin: 0;
+  font-family: inherit;
+  font-weight: 500;
+  white-space: break-spaces;
+  word-wrap: break-word;
+  letter-spacing: 0.2px;
 }
 
 @media (any-hover: hover) {
@@ -84,5 +92,9 @@ input::placeholder {
 @media screen and (max-width: 520px) {
   body {
     font-size: 0.8rem;
+  }
+
+  .message__text__input {
+    max-width: 100px;
   }
 }

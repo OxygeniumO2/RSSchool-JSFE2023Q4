@@ -5,7 +5,6 @@
 .registered__user {
   position: relative;
   padding-left: 18px;
-  margin-bottom: 10px;
   cursor: pointer;
   word-break: break-word;
   border-bottom: 2px solid transparent;
@@ -46,6 +45,9 @@
 .user-container {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 10px;
+  align-items: center;
+  gap: 10px;
 }
 
 .start__dialogue {
@@ -59,7 +61,6 @@
 .message__status {
   display: flex;
   justify-content: end;
-  font-size: 1rem;
 }
 
 .context__menu {
@@ -105,7 +106,23 @@
 .message__status__info-container {
   display: flex;
   justify-content: space-around;
-  font-size: 1rem;
+  font-size: 1.05rem;
+}
+
+.unread__messages {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 32px;
+  min-height: 32px;
+  border: 1px solid green;
+  border-radius: 50%;
+  font-size: 1.1rem;
+  line-height: 101%;
+}
+
+.unread__messages:empty {
+  border: none;
 }
 
 @media (any-hover: hover) {
@@ -119,6 +136,24 @@
   }
 }
 
+@media screen and (max-width: 1024px) {
+  .unread__messages {
+    font-size: inherit;
+  }
+
+  .message__status__info-container {
+    font-size: 0.9rem;
+  }
+}
+
+@media screen and (max-width: 866px) {
+  .unread__messages {
+    min-width: 25px;
+    min-height: 25px;
+    font-size: 0.8rem;
+  }
+}
+
 @media screen and (max-width: 712px) {
   .registered__user._online::before,
   .registered__user._offline::before {
@@ -128,5 +163,24 @@
 
   .registered__user {
     padding-left: 13px;
+  }
+
+  .unread__messages {
+    min-width: 22px;
+    min-height: 22px;
+    font-size: 0.7rem;
+    line-height: 106%;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .unread__messages {
+    min-width: 18px;
+    min-height: 18px;
+    font-size: 0.6rem;
+    line-height: 102%;
+  }
+  .message__status__info-container {
+    font-size: 0.7rem;
   }
 }

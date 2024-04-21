@@ -53,6 +53,8 @@ function createChatSection(): ChatSectionData {
       ['type', 'text'],
       ['required', true],
       ['placeholder', 'Enter message'],
+      ['pattern', '.*\\S.*'],
+      ['title', 'Message cannot be empty'],
     ],
   });
 

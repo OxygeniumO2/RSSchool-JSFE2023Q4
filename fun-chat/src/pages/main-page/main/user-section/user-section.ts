@@ -143,6 +143,10 @@ function createUserSection(
     ) {
       const allChildrenMessages = Array.from(messagesToWindowChatElem.children);
 
+      if (allChildrenMessages[0].classList.contains('start__dialogue')) {
+        allChildrenMessages[0].remove();
+      }
+
       if (
         !allChildrenMessages.some((item: Element) =>
           (item as HTMLElement).classList.contains('new__message__line'),
@@ -162,7 +166,16 @@ function createUserSection(
 
       messagesToWindowChatElem.append(newMessage);
 
-      chatWindow.scrollTop = 0;
+      const lineExists = messagesToWindowChatElem.contains(line);
+
+      if (lineExists) {
+        const chatWindowTop = chatWindow.getBoundingClientRect().top;
+        const lineTop = line.getBoundingClientRect().top;
+
+        const scrollAmount = lineTop - chatWindowTop;
+
+        chatWindow.scrollTop += scrollAmount;
+      }
     }
 
     if (message.type === 'MSG_SEND' && message.id === null) {
@@ -257,13 +270,17 @@ function createUserSection(
 
     if (message.type === 'MSG_DELETE' && message.id === null) {
       if (
-        messagesToWindowChatElem.children[1] &&
-        messagesToWindowChatElem.children[1].classList.contains(
+        messagesToWindowChatElem.children[0] &&
+        messagesToWindowChatElem.children[0].classList.contains(
           'new__message__line',
+        ) &&
+        !messagesToWindowChatElem.children[1].classList.contains(
+          'message-container',
         )
       ) {
         line.remove();
         line = createNewMessagesLineElem();
+        messagesToWindowChatElem.append(startDialogueElem);
       }
     }
 
@@ -287,11 +304,18 @@ function createUserSection(
     // }
 
     if (message.type === 'MSG_DELIVER' && userName.textContent) {
-      const onlineUsers = Array.from(onlineUsersList.children);
-      const offlineUsers = Array.from(offlineUsersList.children);
-      const allUsers = [...onlineUsers, ...offlineUsers];
+      const allMsgsInContainer = Array.from(messagesToWindowChatElem.children);
 
-      console.log(allUsers);
+      allMsgsInContainer.forEach((msg) => {
+        if (msg.id === message.payload.message.id) {
+          const msgInfoStatus = msg.querySelector('.message__status');
+          const newStatus =
+            msgInfoStatus?.textContent !== 'Read'
+              ? 'Delivered'
+              : msgInfoStatus.textContent;
+          msgInfoStatus!.textContent = newStatus;
+        }
+      });
     }
   });
 
@@ -303,7 +327,9 @@ function createUserSection(
     const allUsers = [...onlineUsers, ...offlineUsers];
 
     allUsers.forEach((item, index) => {
-      const currUserName = allUsers[index].textContent?.trim().toLowerCase();
+      const currUserName = allUsers[index].children[0].textContent
+        ?.trim()
+        .toLowerCase();
 
       if (currUserName && !currUserName.includes(userSearchText)) {
         item.classList.add('_hidden');
