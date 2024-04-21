@@ -44,6 +44,7 @@ function createChatSection(): ChatSectionData {
   const chatSendMessageForm = createElem({
     tagName: 'form',
     classNames: ['send__message__form', '_hidden'],
+    attributes: [['action-type', 'send']],
   }) as HTMLFormElement;
 
   const chatMessageTextInput = createElem({

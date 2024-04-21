@@ -48,6 +48,7 @@ function createMessage(
 
   const isDelivered = msg.status.isDelivered ? 'Delivered' : 'Sent';
   const isRead = msg.status.isReaded ? 'Read' : '';
+  const iEdited = msg.status.isEdited ? 'Edited' : '';
 
   // const msgStatus = createElem({ tagName: 'div', textContent: `${isRead}` });
 
@@ -65,6 +66,7 @@ function createMessage(
   const msgInfoModified = createElem({
     tagName: 'div',
     classNames: ['message__status__modified'],
+    textContent: `${iEdited}`,
   });
 
   msgInfoStatusContainer.append(msgInfoModified);
@@ -79,13 +81,6 @@ function createMessage(
 
     msgContainer.addEventListener('contextmenu', (event) => {
       event.preventDefault();
-
-      const mouseEvent = event as MouseEvent;
-
-      const containerRect = msgContainer.getBoundingClientRect();
-      const menuX = mouseEvent.clientX - containerRect.left;
-      const menuY = mouseEvent.clientY - containerRect.top;
-
       const allMsgs = Array.from(allMsgContainer.children);
 
       allMsgs.forEach((messageElem) => {
@@ -99,10 +94,11 @@ function createMessage(
       }
 
       const contextMenu = createContextMenu(websocket, msgContainer.id);
-      contextMenu.style.top = `${menuY}px`;
-      contextMenu.style.left = `${menuX}px`;
 
       msgContainer.append(contextMenu);
+
+      const formToSend = document.querySelector('.send__message__form');
+      formToSend?.setAttribute('action-type', 'send');
     });
   }
 

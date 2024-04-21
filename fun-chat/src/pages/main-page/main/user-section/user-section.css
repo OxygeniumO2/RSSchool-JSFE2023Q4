@@ -70,6 +70,9 @@
   background-color: bisque;
   position: absolute;
   z-index: 2;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 10%;
 }
 
 .context__menu div {
@@ -123,6 +126,10 @@
 
 .unread__messages:empty {
   border: none;
+}
+
+.message__status__modified {
+  width: 40%;
 }
 
 @media (any-hover: hover) {

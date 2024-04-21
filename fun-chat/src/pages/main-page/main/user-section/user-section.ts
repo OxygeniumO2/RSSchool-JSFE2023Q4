@@ -16,6 +16,9 @@ import sendRequestMessageToUser from './send-request-message';
 import createNewMessagesLineElem from '../chat-section/new-messages-line';
 import handleContextMenuAndScroll from '../chat-section/chat-window-new-messages-handler';
 import updateUnreadMessagesInterface from './messages-unread-update';
+import sendRequestToModifyMessage from './send-request-modify-message';
+
+let currUserFromSS = sessionStorage.getItem(SessionStorageKeys.login);
 
 function createUserSection(
   websocket: WebSocket,
@@ -39,7 +42,7 @@ function createUserSection(
 
   userList.append(onlineUsersList, offlineUsersList);
 
-  const currUserFromSS = sessionStorage.getItem(SessionStorageKeys.login);
+  currUserFromSS = sessionStorage.getItem(SessionStorageKeys.login);
 
   const { chatSendMessageForm, chatWindow, userName, userStatus } =
     chatSectionChildren;
@@ -71,8 +74,7 @@ function createUserSection(
     if (
       message.type === 'USER_EXTERNAL_LOGIN' ||
       message.type === 'USER_LOGIN' ||
-      message.type === 'USER_EXTERNAL_LOGOUT' ||
-      message.type === 'EXTERNAL_LOGIN'
+      message.type === 'USER_EXTERNAL_LOGOUT'
     ) {
       sendRequestToGetOnlineUsers(websocket);
       sendRequestToGetOfflineUsers(websocket);
@@ -266,6 +268,23 @@ function createUserSection(
       ) {
         messagesToWindowChatElem.append(startDialogueElem);
       }
+
+      if (
+        allMsgs.length === 2 &&
+        allMsgs[0].classList.contains('new__message__line')
+      ) {
+        line.remove();
+        line = createNewMessagesLineElem();
+        messagesToWindowChatElem.append(startDialogueElem);
+      }
+
+      if (
+        allMsgs[allMsgs.length - 2] &&
+        allMsgs[allMsgs.length - 2].classList.contains('new__message__line')
+      ) {
+        line.remove();
+        line = createNewMessagesLineElem();
+      }
     }
 
     if (message.type === 'MSG_DELETE' && message.id === null) {
@@ -273,13 +292,8 @@ function createUserSection(
         messagesToWindowChatElem.children[0] &&
         messagesToWindowChatElem.children[0].classList.contains(
           'new__message__line',
-        ) &&
-        !messagesToWindowChatElem.children[1].classList.contains(
-          'message-container',
         )
       ) {
-        line.remove();
-        line = createNewMessagesLineElem();
         messagesToWindowChatElem.append(startDialogueElem);
       }
     }
@@ -317,6 +331,26 @@ function createUserSection(
         }
       });
     }
+
+    if (
+      message.type === 'MSG_EDIT' &&
+      message.id === null &&
+      userName.textContent
+    ) {
+      const allMsgsInContainer = Array.from(messagesToWindowChatElem.children);
+
+      allMsgsInContainer.forEach((msg) => {
+        if (msg.id === message.payload.message.id) {
+          const msgInfoModified = msg.querySelector(
+            '.message__status__modified',
+          );
+          msgInfoModified!.textContent = 'Edited';
+
+          const currMsg = msg.querySelector('.message')?.children[0];
+          currMsg!.innerHTML = `<pre>${message.payload.message.text}</pre>`;
+        }
+      });
+    }
   });
 
   userSearch.addEventListener('input', () => {
@@ -343,6 +377,7 @@ function createUserSection(
 
   userList.addEventListener('click', async (event) => {
     const currUser = event.target as HTMLElement;
+    chatSendMessageForm.setAttribute('action-type', 'send');
 
     if (
       currUser &&
@@ -389,7 +424,30 @@ function createUserSection(
       onlineUsersList,
       offlineUsersList,
     );
-    sendRequestMessageToUser(websocket, userSendMessageTo, inputValue);
+
+    const formActionType = chatSendMessageForm.getAttribute('action-type');
+
+    if (formActionType === 'send') {
+      sendRequestMessageToUser(websocket, userSendMessageTo, inputValue);
+    } else {
+      const msgIdToModify = chatSendMessageForm.getAttribute(
+        'currMsgId',
+      ) as string;
+      sendRequestToModifyMessage(websocket, msgIdToModify, inputValue);
+
+      const allMsgs = Array.from(messagesToWindowChatElem.children);
+
+      allMsgs.forEach((msg) => {
+        if (msg.id === msgIdToModify) {
+          const modifyElem = msg.querySelector('.message__status__modified');
+          modifyElem!.textContent = 'Edited';
+        }
+      });
+
+      chatSendMessageForm.setAttribute('action-type', 'send');
+    }
+
+    inputElem.value = '';
   });
 
   chatWindow.addEventListener('click', () => {
