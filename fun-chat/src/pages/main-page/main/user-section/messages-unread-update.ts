@@ -9,30 +9,20 @@ function updateUnreadMessagesInterface(
   const offlineUsers = Array.from(offlineUsersList.children);
   const allUsers = [...onlineUsers, ...offlineUsers];
 
-  const unreadMessagesCount: { [userName: string]: number } = {};
-
   allUsers.forEach((user) => {
-    const userName = user.textContent || '';
-    if (!(userName in unreadMessagesCount)) {
-      unreadMessagesCount[userName] = 0;
-    }
-  });
+    const currUserName = user.children[0].textContent;
+    let countOfUnreadMessages = 0;
 
-  messages.forEach((msg: Message) => {
-    if (!msg.status.isReaded) {
-      unreadMessagesCount[msg.from] += 1;
-    }
-  });
+    messages.forEach((msg: Message) => {
+      if (msg.from === currUserName && !msg.status.isReaded) {
+        countOfUnreadMessages += 1;
+      }
+    });
 
-  allUsers.forEach((user) => {
-    const userName = user.textContent || '';
     const numOfUnreadMessagesElem = user.children[1];
 
-    if (userName && numOfUnreadMessagesElem) {
-      if (!numOfUnreadMessagesElem.textContent) {
-        const unreadCount = unreadMessagesCount[userName];
-        numOfUnreadMessagesElem.textContent = `${unreadCount || ''}`;
-      }
+    if (numOfUnreadMessagesElem && !numOfUnreadMessagesElem.textContent) {
+      numOfUnreadMessagesElem.textContent = `${countOfUnreadMessages === 0 ? '' : countOfUnreadMessages}`;
     }
   });
 }

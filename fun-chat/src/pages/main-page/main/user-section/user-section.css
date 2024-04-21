@@ -73,6 +73,8 @@
   top: 50%;
   transform: translateY(-50%);
   left: 10%;
+  width: 20%;
+  text-align: center;
 }
 
 .context__menu div {

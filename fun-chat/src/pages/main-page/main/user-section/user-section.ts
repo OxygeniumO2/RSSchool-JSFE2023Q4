@@ -19,6 +19,7 @@ import updateUnreadMessagesInterface from './messages-unread-update';
 import sendRequestToModifyMessage from './send-request-modify-message';
 
 let currUserFromSS = sessionStorage.getItem(SessionStorageKeys.login);
+let userSendMessageTo: string;
 
 function createUserSection(
   websocket: WebSocket,
@@ -296,6 +297,16 @@ function createUserSection(
       ) {
         messagesToWindowChatElem.append(startDialogueElem);
       }
+
+      // const onlineUsers = Array.from(onlineUsersList.children);
+      // const offlineUsers = Array.from(offlineUsersList.children);
+      // const allUsers = [...onlineUsers, ...offlineUsers];
+      // allUsers.forEach((user) => {
+      //   sendRequestToGetMessagesFromUser(
+      //     websocket,
+      //     user.children[0].textContent as string,
+      //   );
+      // });
     }
 
     if (message.type === 'MSG_READ' && message.id === null) {
@@ -372,8 +383,6 @@ function createUserSection(
       }
     });
   });
-
-  let userSendMessageTo: string;
 
   userList.addEventListener('click', async (event) => {
     const currUser = event.target as HTMLElement;

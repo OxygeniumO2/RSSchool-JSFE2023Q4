@@ -50,8 +50,6 @@ function createMessage(
   const isRead = msg.status.isReaded ? 'Read' : '';
   const iEdited = msg.status.isEdited ? 'Edited' : '';
 
-  // const msgStatus = createElem({ tagName: 'div', textContent: `${isRead}` });
-
   const msgDelivered = createElem({
     tagName: 'div',
     classNames: ['message__status'],
