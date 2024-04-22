@@ -18,9 +18,10 @@ type AllMessages = Message[];
 function sendRequestToGetMessagesFromUser(
   websocket: WebSocket,
   currUserName: string,
+  msgFrom: string = 'message',
 ) {
   const requestGetMessages: GetAllMessagesClientResp = {
-    id: 'messages',
+    id: `${msgFrom}`,
     type: 'MSG_FROM_USER',
     payload: {
       user: {

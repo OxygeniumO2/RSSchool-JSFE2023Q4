@@ -95,32 +95,34 @@ function createUserSection(
       removeAllChildren(onlineUsersList);
       const onlineUsers: UserServerResp[] = message.payload.users;
       appendUsersToUserList(
+        websocket,
         onlineUsers,
         onlineUsersList,
         currUserFromSS as string,
       );
 
-      onlineUsers.forEach((user) => {
-        if (currUserFromSS !== user.login) {
-          sendRequestToGetMessagesFromUser(websocket, user.login);
-        }
-      });
+      // onlineUsers.forEach((user) => {
+      //   if (currUserFromSS !== user.login) {
+      //     sendRequestToGetMessagesFromUser(websocket, user.login);  Maybe it's better to send requests after full build of users
+      //   }
+      // });
     }
 
     if (message.type === 'USER_INACTIVE') {
       removeAllChildren(offlineUsersList);
       const offlineUsers: UserServerResp[] = message.payload.users;
       appendUsersToUserList(
+        websocket,
         offlineUsers,
         offlineUsersList,
         currUserFromSS as string,
       );
 
-      offlineUsers.forEach((user) => {
-        if (currUserFromSS !== user.login) {
-          sendRequestToGetMessagesFromUser(websocket, user.login);
-        }
-      });
+      // offlineUsers.forEach((user) => {
+      //   if (currUserFromSS !== user.login) {
+      //     sendRequestToGetMessagesFromUser(websocket, user.login);  Maybe it's better to send requests after full build of users
+      //   }
+      // });
     }
 
     if (message.type === 'MSG_SEND' && message.id === 'send-msg') {
@@ -200,7 +202,11 @@ function createUserSection(
       });
     }
 
-    if (message.type === 'MSG_FROM_USER' && userName.textContent) {
+    if (
+      message.type === 'MSG_FROM_USER' &&
+      userName.textContent &&
+      message.id === userName.textContent
+    ) {
       removeAllChildren(messagesToWindowChatElem);
 
       const allMessages: Message[] = message.payload.messages;
@@ -297,16 +303,6 @@ function createUserSection(
       ) {
         messagesToWindowChatElem.append(startDialogueElem);
       }
-
-      // const onlineUsers = Array.from(onlineUsersList.children);
-      // const offlineUsers = Array.from(offlineUsersList.children);
-      // const allUsers = [...onlineUsers, ...offlineUsers];
-      // allUsers.forEach((user) => {
-      //   sendRequestToGetMessagesFromUser(
-      //     websocket,
-      //     user.children[0].textContent as string,
-      //   );
-      // });
     }
 
     if (message.type === 'MSG_READ' && message.id === null) {
@@ -384,7 +380,7 @@ function createUserSection(
     });
   });
 
-  userList.addEventListener('click', async (event) => {
+  userList.addEventListener('click', (event) => {
     const currUser = event.target as HTMLElement;
     chatSendMessageForm.setAttribute('action-type', 'send');
 
@@ -407,7 +403,11 @@ function createUserSection(
       userStatus.classList.remove('_online', '_offline');
       userStatus.classList.add(`_${currUserStatus}`);
 
-      sendRequestToGetMessagesFromUser(websocket, currUserName);
+      sendRequestToGetMessagesFromUser(
+        websocket,
+        currUserName,
+        userName.textContent,
+      );
 
       chatSendMessageForm.classList.remove('_hidden');
       const formInput = chatSendMessageForm.children[0] as HTMLInputElement;

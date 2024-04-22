@@ -1,7 +1,9 @@
 import createElem from '../../../../utils/create-elem';
 import { UserServerResp } from '../../../../web-socket/web-socket-interfaces';
+import { sendRequestToGetMessagesFromUser } from './send-request-get-messages-from-user';
 
 function appendUsersToUserList(
+  websocket: WebSocket,
   users: UserServerResp[],
   userList: HTMLElement,
   currUserFromSS: string,
@@ -31,6 +33,8 @@ function appendUsersToUserList(
       userContainer.append(newUser, unreadMessagesElem);
 
       userList.append(userContainer);
+
+      sendRequestToGetMessagesFromUser(websocket, user.login); // Maybe it's better to send requests after full build of users
     }
   });
 }
