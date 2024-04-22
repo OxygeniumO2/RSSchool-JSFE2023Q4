@@ -4,7 +4,7 @@ module.exports = {
         "es2021": true,
         "node": false
     },
-    // "noInlineConfig": true,
+    "noInlineConfig": true,
     "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
