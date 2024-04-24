@@ -1,8 +1,8 @@
-import { Car } from './create-car';
+import { CarData } from './create-car';
 import generateRandomCarName from './generate-random-car-name';
 import generateRandomColor from './generate-random-color';
 
-function createRandomCar(): Car {
+function createRandomCar(): CarData {
   const randomName = generateRandomCarName();
   const randomColor = generateRandomColor();
   const newRandomCar = {

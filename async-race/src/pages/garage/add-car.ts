@@ -1,7 +1,7 @@
 import { GARAGE_PATH, baseUrl } from '../../utils/base-url';
-import { Car } from '../../utils/create-car';
+import { CarData } from '../../utils/create-car';
 
-async function addCar(car: Car): Promise<void> {
+async function addCar(car: CarData): Promise<void> {
   await fetch(`${baseUrl}${GARAGE_PATH}`, {
     method: 'POST',
     headers: {

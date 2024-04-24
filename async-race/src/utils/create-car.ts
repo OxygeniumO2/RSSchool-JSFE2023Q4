@@ -1,14 +1,13 @@
-interface Car {
+interface CarData {
   name: string;
   color: string;
 }
 
-function createCar(name: string, color: string): Car {
-  const newCar: Car = {
-    name,
-    color,
-  };
-  return newCar;
+class Car implements CarData {
+  constructor(
+    public name: string,
+    public color: string,
+  ) {}
 }
 
-export { Car, createCar };
+export { CarData, Car };

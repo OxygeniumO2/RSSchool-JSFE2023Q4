@@ -7,7 +7,7 @@ import updateCar from './update-car';
 import changeGaragePage from './change-garage-page';
 import getCurrPage from '../../utils/get-page-from-ls';
 import buildGaragePage from './build-garage-page';
-import { Car, createCar } from '../../utils/create-car';
+import { Car } from '../../utils/create-car';
 import startRace from './start-race';
 import resetRace from './reset-race';
 import buildWinnersPage from '../winners/build-winners-page';
@@ -172,10 +172,7 @@ export function buildGarageControls(): void {
 
   addCarsContainer.addEventListener('submit', async (event) => {
     event.preventDefault();
-    const newCar: Car = createCar(
-      inputCarAddName.value,
-      inputColorAddCar.value,
-    );
+    const newCar = new Car(inputCarAddName.value, inputColorAddCar.value);
     await addCar(newCar);
     const currPage = getCurrPage();
 
