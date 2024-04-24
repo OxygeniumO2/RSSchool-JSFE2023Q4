@@ -4,13 +4,12 @@ interface Winner {
   time: number;
 }
 
-function createCarWinner(id: number, wins: number, time: number): Winner {
-  const newCarWinner = {
-    id,
-    wins,
-    time,
-  };
-  return newCarWinner;
+class CarWinner implements Winner {
+  constructor(
+    public id: number,
+    public wins: number,
+    public time: number,
+  ) {}
 }
 
-export { Winner, createCarWinner };
+export { Winner, CarWinner };

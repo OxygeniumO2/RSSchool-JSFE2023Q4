@@ -1,7 +1,7 @@
 import { ENGINE_PATH, GARAGE_PATH, baseUrl } from '../../utils/base-url';
 import changeBtnsState from '../../utils/change-state-btns';
 import setMainPagesBtnsState from '../../utils/change-state-main-pages-btns';
-import { createCarWinner } from '../../utils/create-car-winner';
+import { CarWinner } from '../../utils/create-car-winner';
 import { garageCarsByPageAndLimitPromise } from '../../utils/fetch-resp';
 import getCarTravelData from '../../utils/get-car-travel-data';
 import getCurrPage from '../../utils/get-page-from-ls';
@@ -71,7 +71,7 @@ async function startRace() {
             MODAL_WINNER.textContent = `${currCar.dataset.carName} went first in ${totalTimeInSecToFixed} sec`;
             const wins = 1;
 
-            const carWinner: Winner = createCarWinner(
+            const carWinner: Winner = new CarWinner(
               result.value.carId,
               wins,
               totalTimeInSecToFixed,
