@@ -2,7 +2,7 @@ import { ENGINE_PATH, baseUrl } from '../../utils/base-url';
 import carSvg from '../../utils/car-svg-content';
 import changeBtnsState from '../../utils/change-state-btns';
 import changeStateBtnWhileDriving from '../../utils/change-state-btns-while-driving';
-import setStateMainPagesBtns from '../../utils/change-state-main-pages-btns';
+import setMainPagesBtnsState from '../../utils/change-state-main-pages-btns';
 import changeStateRaceStopBtns from '../../utils/change-state-race-stop-btns';
 import createElem from '../../utils/create-elem';
 import getCarTravelData from '../../utils/get-car-travel-data';
@@ -118,7 +118,7 @@ function buildCars(
 
     carStartBtn.addEventListener('click', async () => {
       changeStateBtnWhileDriving(false);
-      setStateMainPagesBtns(true);
+      setMainPagesBtnsState(true);
 
       carStartBtn.disabled = true;
 

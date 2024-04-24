@@ -1,6 +1,6 @@
 import { ENGINE_PATH, GARAGE_PATH, baseUrl } from '../../utils/base-url';
 import changeBtnsState from '../../utils/change-state-btns';
-import setStateMainPagesBtns from '../../utils/change-state-main-pages-btns';
+import setMainPagesBtnsState from '../../utils/change-state-main-pages-btns';
 import { createCarWinner } from '../../utils/create-car-winner';
 import { garageCarsByPageAndLimitPromise } from '../../utils/fetch-resp';
 import getCarTravelData from '../../utils/get-car-travel-data';
@@ -82,7 +82,7 @@ async function startRace() {
             const winnersContainer = document.querySelector('.winners');
             winnersContainer?.classList.add('_hidden');
 
-            setStateMainPagesBtns(true);
+            setMainPagesBtnsState(true);
           }
           finishedCarsCount += 1;
         }
@@ -92,7 +92,7 @@ async function startRace() {
     if (finishedCarsCount === 0) {
       MODAL_WINNER.classList.add('_active');
       MODAL_WINNER.textContent = `No one gets to the finish`;
-      setStateMainPagesBtns(true);
+      setMainPagesBtnsState(true);
     }
 
     const resetRaceBtn = document.querySelector(

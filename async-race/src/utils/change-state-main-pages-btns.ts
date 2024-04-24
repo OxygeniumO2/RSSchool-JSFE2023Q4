@@ -1,4 +1,4 @@
-function setStateMainPagesBtns(state: boolean) {
+function setMainPagesBtnsState(state: boolean) {
   const toGarageBtn = document.querySelector(
     '.to__garage-btn',
   ) as HTMLButtonElement;
@@ -9,4 +9,4 @@ function setStateMainPagesBtns(state: boolean) {
   toWinnersBtn.disabled = !state;
 }
 
-export default setStateMainPagesBtns;
+export default setMainPagesBtnsState;
