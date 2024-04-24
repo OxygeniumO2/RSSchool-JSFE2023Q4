@@ -36,7 +36,7 @@ function createUserSection(
     ],
   }) as HTMLInputElement;
 
-  const userList = createElem({ tagName: 'div' });
+  const userList = createElem({ tagName: 'div', classNames: ['total__users'] });
 
   const onlineUsersList = createElem({ tagName: 'div' });
   const offlineUsersList = createElem({ tagName: 'div' });
@@ -357,6 +357,18 @@ function createUserSection(
           currMsg!.innerHTML = `<pre>${message.payload.message.text}</pre>`;
         }
       });
+    }
+
+    if (message.type === 'MSG_EDIT' && message.id === 'modify-msg') {
+      const allMessages = Array.from(messagesToWindowChatElem.children);
+      const msgToModify = allMessages.find(
+        (msg) => msg.id === message.payload.message.id,
+      );
+
+      if (msgToModify) {
+        const msgToModifyTextContainer = msgToModify.querySelector('.message');
+        msgToModifyTextContainer!.innerHTML = `<pre>${message.payload.message.text}</pre>`;
+      }
     }
   });
 

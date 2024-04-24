@@ -134,6 +134,10 @@
   width: 40%;
 }
 
+.total__users {
+  overflow-y: auto;
+}
+
 @media (any-hover: hover) {
   .context__menu div:hover {
     background-color: #d0aa54;
