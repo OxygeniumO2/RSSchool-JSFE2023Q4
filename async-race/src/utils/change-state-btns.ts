@@ -1,4 +1,4 @@
-function changeStateBtns(state: boolean) {
+function changeBtnsState(state: boolean) {
   const driveCarBtns = document.querySelectorAll('.btn');
   driveCarBtns.forEach((btn) => {
     const currBtn = btn as HTMLButtonElement;
@@ -6,4 +6,4 @@ function changeStateBtns(state: boolean) {
   });
 }
 
-export default changeStateBtns;
+export default changeBtnsState;

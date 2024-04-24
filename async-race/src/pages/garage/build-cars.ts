@@ -1,6 +1,6 @@
 import { ENGINE_PATH, baseUrl } from '../../utils/base-url';
 import carSvg from '../../utils/car-svg-content';
-import changeStateBtns from '../../utils/change-state-btns';
+import changeBtnsState from '../../utils/change-state-btns';
 import changeStateBtnWhileDriving from '../../utils/change-state-btns-while-driving';
 import setStateMainPagesBtns from '../../utils/change-state-main-pages-btns';
 import changeStateRaceStopBtns from '../../utils/change-state-race-stop-btns';
@@ -157,7 +157,7 @@ function buildCars(
       removeFinishedCar(car.id);
 
       if (isAllCarsFinished()) {
-        changeStateBtns(true);
+        changeBtnsState(true);
         changeStateRaceStopBtns(false);
       }
 

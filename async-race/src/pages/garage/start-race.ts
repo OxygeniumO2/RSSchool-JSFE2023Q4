@@ -1,5 +1,5 @@
 import { ENGINE_PATH, GARAGE_PATH, baseUrl } from '../../utils/base-url';
-import changeStateBtns from '../../utils/change-state-btns';
+import changeBtnsState from '../../utils/change-state-btns';
 import setStateMainPagesBtns from '../../utils/change-state-main-pages-btns';
 import { createCarWinner } from '../../utils/create-car-winner';
 import { garageCarsByPageAndLimitPromise } from '../../utils/fetch-resp';
@@ -22,7 +22,7 @@ async function startRace() {
     7,
   );
 
-  changeStateBtns(false);
+  changeBtnsState(false);
 
   removeActiveStateFromCars();
 
