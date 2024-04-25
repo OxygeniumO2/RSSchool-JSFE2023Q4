@@ -21,37 +21,17 @@ function buildChangePages() {
     textContent: 'Next Page',
   });
 
-  prevPageBtn.addEventListener(
-    'click',
-    function handleClickPrevPage(this: HTMLElement) {
-      const order = localStorage.getItem('winnersOrderBy') as string;
-      const sort = localStorage.getItem('winnersSortedBy') as string;
+  nextPageBtn.addEventListener('click', () => {
+    const order = localStorage.getItem('winnersOrderBy') as string;
+    const sort = localStorage.getItem('winnersSortedBy') as string;
+    changeWinnersPage(nextPageBtn, WINNERS_DEFAULT_LIMIT, order, sort);
+  });
 
-      changeWinnersPage.call(
-        this,
-        prevPageBtn,
-        WINNERS_DEFAULT_LIMIT,
-        order,
-        sort,
-      );
-    },
-  );
-
-  nextPageBtn.addEventListener(
-    'click',
-    function handleClickNextPage(this: HTMLElement) {
-      const order = localStorage.getItem('winnersOrderBy') as string;
-      const sort = localStorage.getItem('winnersSortedBy') as string;
-
-      changeWinnersPage.call(
-        this,
-        nextPageBtn,
-        WINNERS_DEFAULT_LIMIT,
-        order,
-        sort,
-      );
-    },
-  );
+  prevPageBtn.addEventListener('click', () => {
+    const order = localStorage.getItem('winnersOrderBy') as string;
+    const sort = localStorage.getItem('winnersSortedBy') as string;
+    changeWinnersPage(nextPageBtn, WINNERS_DEFAULT_LIMIT, order, sort);
+  });
 
   changePageContainer.append(prevPageBtn, nextPageBtn);
   return changePageContainer;
