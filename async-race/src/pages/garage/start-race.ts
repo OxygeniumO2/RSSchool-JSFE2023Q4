@@ -2,7 +2,7 @@ import { ENGINE_PATH, GARAGE_PATH, baseUrl } from '../../utils/base-url';
 import changeBtnsState from '../../utils/change-state-btns';
 import setMainPagesBtnsState from '../../utils/change-state-main-pages-btns';
 import { CarWinner } from '../../utils/create-car-winner';
-import { garageCarsByPageAndLimitPromise } from '../../utils/fetch-resp';
+import { getGarageCars } from '../../utils/fetch-resp';
 import getCarTravelData from '../../utils/get-car-travel-data';
 import getCurrPage from '../../utils/get-page-from-ls';
 import removeActiveStateFromCars from '../../utils/remove-active-state-from-cars';
@@ -12,14 +12,16 @@ import buildWinnersPage from '../winners/build-winners-page';
 import Winner from '../winners/winners-interfaces';
 import changeEngineStatePromise from './engine-state';
 
+const DEFAULT_LIMIT = 7;
+
 async function startRace() {
   const currPage = getCurrPage();
 
-  const currCarsOnPage = await garageCarsByPageAndLimitPromise(
+  const currCarsOnPage = await getGarageCars(
     baseUrl,
     GARAGE_PATH,
     currPage,
-    7,
+    DEFAULT_LIMIT,
   );
 
   changeBtnsState(false);

@@ -1,9 +1,6 @@
 import { GARAGE_PATH, baseUrl } from '../../utils/base-url';
 import createElem from '../../utils/create-elem';
-import {
-  garageAllCarsPromise,
-  garageCarsByPageAndLimitPromise,
-} from '../../utils/fetch-resp';
+import { getGarageCars } from '../../utils/fetch-resp';
 import removeElementsByClass from '../../utils/remove-elem-by-class';
 // eslint-disable-next-line import/no-cycle
 import buildCars from './build-cars';
@@ -24,19 +21,15 @@ async function buildGaragePage(
 
   localStorage.setItem('garagePageOxy', pageNumber.toString());
 
-  const garageTotal: GarageCar[] = await garageAllCarsPromise(
-    baseUrl,
-    GARAGE_PATH,
-  );
+  const garageTotal: GarageCar[] = await getGarageCars(baseUrl, GARAGE_PATH);
   const garageTotalLength: number = garageTotal.length;
 
-  const garageCarsOnOnePage: GarageCar[] =
-    await garageCarsByPageAndLimitPromise(
-      baseUrl,
-      GARAGE_PATH,
-      pageNumber,
-      limit,
-    );
+  const garageCarsOnOnePage: GarageCar[] = await getGarageCars(
+    baseUrl,
+    GARAGE_PATH,
+    pageNumber,
+    limit,
+  );
 
   const garageNumberOfCarsElem: HTMLElement = createElem({
     tagName: 'span',

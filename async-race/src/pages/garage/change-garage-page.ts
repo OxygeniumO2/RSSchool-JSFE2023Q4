@@ -1,5 +1,5 @@
 import { GARAGE_PATH, baseUrl } from '../../utils/base-url';
-import { garageAllCarsPromise } from '../../utils/fetch-resp';
+import { getGarageCars } from '../../utils/fetch-resp';
 import getCurrPage from '../../utils/get-page-from-ls';
 import buildGaragePage from './build-garage-page';
 import { GarageCar } from './garage-interfaces';
@@ -12,7 +12,7 @@ async function changeGaragePage(
 ): Promise<void> {
   const currPage = getCurrPage();
 
-  const allCars: GarageCar[] = await garageAllCarsPromise(baseUrl, GARAGE_PATH);
+  const allCars: GarageCar[] = await getGarageCars(baseUrl, GARAGE_PATH);
 
   const allCarsLength = allCars.length;
 

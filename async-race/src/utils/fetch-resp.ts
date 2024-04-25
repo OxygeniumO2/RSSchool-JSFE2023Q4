@@ -1,26 +1,18 @@
 import { GarageCar } from '../pages/garage/garage-interfaces';
 import Winner from '../pages/winners/winners-interfaces';
 
-async function garageAllCarsPromise(
+async function getGarageCars(
   url: string,
   path: string,
+  pageNumber?: number,
+  limit?: number,
 ): Promise<GarageCar[]> {
-  const garageResponse = await fetch(`${url}${path}`);
-  const garageTotal: GarageCar[] = await garageResponse.json();
-  return garageTotal;
-}
+  const pageNumberQuery = pageNumber ? `?_page=${pageNumber}` : '';
+  const limitQuery = limit ? `&_limit=${limit}` : '';
+  const requestUrl = `${url}${path}${pageNumberQuery}${limitQuery}`;
 
-async function garageCarsByPageAndLimitPromise(
-  url: string,
-  path: string,
-  pageNumber: number,
-  limit: number,
-): Promise<GarageCar[]> {
-  const garageResponseByPageAndLimit = await fetch(
-    `${url}${path}?_page=${pageNumber}&_limit=${limit}`,
-  );
-  const garageCarsOnOnePage = await garageResponseByPageAndLimit.json();
-  return garageCarsOnOnePage;
+  const garageCars = await fetch(requestUrl);
+  return garageCars.json();
 }
 
 async function winnersByPageAndLimitPromise(
@@ -72,9 +64,4 @@ async function allWinnersPromise(
   return winnerTotal;
 }
 
-export {
-  garageAllCarsPromise,
-  garageCarsByPageAndLimitPromise,
-  allWinnersPromise,
-  winnersByPageAndLimitPromise,
-};
+export { getGarageCars, allWinnersPromise, winnersByPageAndLimitPromise };
