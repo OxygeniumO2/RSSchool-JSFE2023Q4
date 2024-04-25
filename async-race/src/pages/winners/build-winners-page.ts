@@ -49,13 +49,6 @@ async function buildWinnersPage(
 
   const allWinnersLength = allWinners.length;
 
-  // const winnersCarsOnOnePage: Winner[] = await winnersByPageAndLimitPromise(
-  //   baseUrl,
-  //   WINNERS_PATH,
-  //   pageNumber,
-  //   LIMIT_WINNERS_BY_PAGE,
-  // );
-
   const winnersTitle = createElem({
     tagName: 'span',
     classNames: ['winners__title'],
