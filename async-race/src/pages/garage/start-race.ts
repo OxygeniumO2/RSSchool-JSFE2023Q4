@@ -31,78 +31,78 @@ async function startRace() {
 
   let finishedCarsCount = 0;
 
-  const racePromises = currCarsOnPage.map(async (car) => {
-    const carId = car.id;
-    const changedEngine = changeEngineStatePromise(
-      baseUrl,
-      ENGINE_PATH,
-      carId,
-      'started',
-    );
-    const totalTime = await getCarTravelData(changedEngine);
-    return { totalTime, carId };
-  });
+  const results = await Promise.allSettled(
+    currCarsOnPage.map(async (car) => {
+      const carId = car.id;
+      const changedEngine = changeEngineStatePromise(
+        baseUrl,
+        ENGINE_PATH,
+        carId,
+        'started',
+      );
+      const totalTime = await getCarTravelData(changedEngine);
+      return { totalTime, carId };
+    }),
+  );
 
-  Promise.allSettled(racePromises).then(async (results) => {
-    const allCars = document.querySelectorAll('.car');
-    let isWinner = true;
+  const allCars = document.querySelectorAll('.car');
+  let isWinner = true;
 
-    await Promise.all(
-      results.map(async (result, index) => {
-        if (result.status === 'fulfilled') {
-          const { totalTime } = result.value;
-          const currCar = allCars[index] as HTMLElement;
-          currCar.style.animationDuration = `${totalTime}ms`;
-          currCar.classList.add('car-moving');
-          const carDriveResp = await changeEngineStatePromise(
-            baseUrl,
-            ENGINE_PATH,
-            result.value.carId,
-            'drive',
-          );
+  await Promise.all(
+    results.map(async (result, index) => {
+      if (result.status === 'fulfilled') {
+        const { totalTime } = result.value;
+        const currCar = allCars[index] as HTMLElement;
+        currCar.style.animationDuration = `${totalTime}ms`;
+        currCar.classList.add('car-moving');
+        const carDriveResp = await changeEngineStatePromise(
+          baseUrl,
+          ENGINE_PATH,
+          result.value.carId,
+          'drive',
+        );
 
-          if (!carDriveResp.ok) {
-            currCar.style.animationPlayState = 'paused';
-            finishedCarsCount -= 1;
-          }
-          if (carDriveResp.status === HttpStatusCodes.OK && isWinner) {
-            isWinner = false;
-            ModalWinner.classList.add('_active');
-
-            const totalTimeInSec = totalTime / 1000;
-            const totalTimeInSecToFixed = Number(totalTimeInSec.toFixed(2));
-            ModalWinner.textContent = `${currCar.dataset.carName} went first in ${totalTimeInSecToFixed} sec`;
-            const wins = 1;
-
-            const carWinner: Winner = new CarWinner(
-              result.value.carId,
-              wins,
-              totalTimeInSecToFixed,
-            );
-            await addOrUpdateWinnerToTable(carWinner);
-            await buildWinnersPage();
-
-            const winnersContainer = document.querySelector('.winners');
-            winnersContainer?.classList.add('_hidden');
-
-            setMainPagesBtnsState(true);
-          }
-          finishedCarsCount += 1;
+        if (!carDriveResp.ok) {
+          currCar.style.animationPlayState = 'paused';
+          finishedCarsCount -= 1;
         }
-      }),
-    );
+        if (carDriveResp.status === HttpStatusCodes.OK && isWinner) {
+          isWinner = false;
+          ModalWinner.classList.add('_active');
 
-    if (finishedCarsCount === 0) {
-      ModalWinner.classList.add('_active');
-      ModalWinner.textContent = `No one gets to the finish`;
-      setMainPagesBtnsState(true);
-    }
+          const totalTimeInSec = totalTime / 1000;
+          const totalTimeInSecToFixed = Number(totalTimeInSec.toFixed(2));
+          ModalWinner.textContent = `${currCar.dataset.carName} went first in ${totalTimeInSecToFixed} sec`;
+          const wins = 1;
 
-    const resetRaceBtn = document.querySelector(
-      '.reset__race-btn',
-    ) as HTMLButtonElement;
-    resetRaceBtn.disabled = false;
-  });
+          const carWinner: Winner = new CarWinner(
+            result.value.carId,
+            wins,
+            totalTimeInSecToFixed,
+          );
+          await addOrUpdateWinnerToTable(carWinner);
+          await buildWinnersPage();
+
+          const winnersContainer = document.querySelector('.winners');
+          winnersContainer?.classList.add('_hidden');
+
+          setMainPagesBtnsState(true);
+        }
+        finishedCarsCount += 1;
+      }
+    }),
+  );
+
+  if (finishedCarsCount === 0) {
+    ModalWinner.classList.add('_active');
+    ModalWinner.textContent = `No one gets to the finish`;
+    setMainPagesBtnsState(true);
+  }
+
+  const resetRaceBtn = document.querySelector(
+    '.reset__race-btn',
+  ) as HTMLButtonElement;
+  resetRaceBtn.disabled = false;
 }
 
 export default startRace;
