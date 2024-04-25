@@ -1,7 +1,6 @@
 function getCurrWinnerPage(): number {
   const currPageFromLS = localStorage.getItem('winnersPageOxy') as string;
-  const currPage = parseInt(currPageFromLS, 10);
-  return currPage;
+  return parseInt(currPageFromLS, 10);
 }
 
 export default getCurrWinnerPage;
