@@ -5,9 +5,7 @@ async function getCarTravelData(
 ): Promise<number> {
   const response = await engineResp;
   const engineData: CarTravelData = await response.json();
-  const totalTime = Math.ceil(engineData.distance / engineData.velocity);
-
-  return totalTime;
+  return Math.ceil(engineData.distance / engineData.velocity);
 }
 
 export default getCarTravelData;
