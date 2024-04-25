@@ -1,6 +1,6 @@
 import { CarData } from '../../utils/create-car';
 import createRandomCar from '../../utils/create-random-car';
-import getCurrPage from '../../utils/get-page-from-ls';
+import { LocalStoragePages, getPage } from '../../utils/get-page-from-ls';
 import addCar from './add-car';
 import buildGaragePage from './build-garage-page';
 
@@ -11,7 +11,7 @@ async function generateCars() {
     const newRandomCar: CarData = createRandomCar();
     addCar(newRandomCar);
   }
-  const currPage = getCurrPage();
+  const currPage = getPage(LocalStoragePages.garagePage);
   await buildGaragePage(currPage);
 }
 

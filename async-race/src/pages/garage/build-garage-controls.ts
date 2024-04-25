@@ -5,13 +5,12 @@ import addCar from './add-car';
 import generateCars from './generate-cars';
 import updateCarPayload from './update-car';
 import changeGaragePage from './change-garage-page';
-import getCurrPage from '../../utils/get-page-from-ls';
+import { getPage, LocalStoragePages } from '../../utils/get-page-from-ls';
 import buildGaragePage from './build-garage-page';
 import { Car } from '../../utils/create-car';
 import startRace from './start-race';
 import resetRace from './reset-race';
 import buildWinnersPage from '../winners/build-winners-page';
-import getCurrWinnerPage from '../../utils/get-winner-page-from-ls';
 import carSvg from '../../utils/car-svg-content';
 
 const DEFAULT_LIMIT: number = 7;
@@ -174,7 +173,7 @@ export function buildGarageControls(): void {
     event.preventDefault();
     const newCar = new Car(inputCarAddName.value, inputColorAddCar.value);
     await addCar(newCar);
-    const currPage = getCurrPage();
+    const currPage = getPage(LocalStoragePages.garagePage);
 
     await buildGaragePage(currPage);
   });
@@ -189,8 +188,8 @@ export function buildGarageControls(): void {
       inputColorUpdateCar.value,
       currCarIdParsed,
     );
-    const currPage = getCurrPage();
-    const currWinnerPage = getCurrWinnerPage();
+    const currPage = getPage(LocalStoragePages.garagePage);
+    const currWinnerPage = getPage(LocalStoragePages.winnersPage);
     const winnersOrderBy = localStorage.getItem('winnersOrderBy') as string;
     const winnersSortedBy = localStorage.getItem('winnersSortedBy') as string;
 

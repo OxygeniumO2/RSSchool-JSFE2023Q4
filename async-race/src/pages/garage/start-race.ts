@@ -4,7 +4,7 @@ import setMainPagesBtnsState from '../../utils/change-state-main-pages-btns';
 import { CarWinner } from '../../utils/create-car-winner';
 import { getGarageCars } from '../../utils/fetch-resp';
 import getCarTravelData from '../../utils/get-car-travel-data';
-import getCurrPage from '../../utils/get-page-from-ls';
+import { LocalStoragePages, getPage } from '../../utils/get-page-from-ls';
 import HttpStatusCodes from '../../utils/http-resp-enum';
 import removeActiveStateFromCars from '../../utils/remove-active-state-from-cars';
 import { ModalWinner } from '../winner-modal/winner-modal';
@@ -16,7 +16,7 @@ import changeEngineStatePromise from './engine-state';
 const DEFAULT_LIMIT = 7;
 
 async function startRace() {
-  const currPage = getCurrPage();
+  const currPage = getPage(LocalStoragePages.garagePage);
 
   const currCarsOnPage = await getGarageCars(
     baseUrl,

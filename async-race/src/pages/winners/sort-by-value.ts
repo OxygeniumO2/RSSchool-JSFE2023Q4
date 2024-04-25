@@ -1,5 +1,5 @@
 import { Order } from '../../utils/fetch-resp';
-import getCurrWinnerPage from '../../utils/get-winner-page-from-ls';
+import { LocalStoragePages, getPage } from '../../utils/get-page-from-ls';
 // eslint-disable-next-line import/no-cycle
 import buildWinnersPage from './build-winners-page';
 
@@ -14,7 +14,7 @@ function sortWinnersByValue(value: AllowedSortValue) {
 
   const newOrder = prevOrder === Order.Asc ? Order.Desc : Order.Asc;
 
-  const currWinnerPage = getCurrWinnerPage();
+  const currWinnerPage = getPage(LocalStoragePages.winnersPage);
 
   buildWinnersPage(currWinnerPage, newOrder, sortByValue);
 }

@@ -6,7 +6,7 @@ import setMainPagesBtnsState from '../../utils/change-state-main-pages-btns';
 import changeStateRaceStopBtns from '../../utils/change-state-race-stop-btns';
 import createElem from '../../utils/create-elem';
 import getCarTravelData from '../../utils/get-car-travel-data';
-import getCurrPage from '../../utils/get-page-from-ls';
+import { LocalStoragePages, getPage } from '../../utils/get-page-from-ls';
 import setUpdateToNewState from '../../utils/set-update-to-new-state';
 // eslint-disable-next-line import/no-cycle
 import buildGaragePage from './build-garage-page';
@@ -60,7 +60,7 @@ function buildCars(
     removeCarBtn.addEventListener('click', async () => {
       await removeCar(carId);
 
-      const currPage = getCurrPage();
+      const currPage = getPage(LocalStoragePages.garagePage);
 
       await buildGaragePage(currPage);
     });

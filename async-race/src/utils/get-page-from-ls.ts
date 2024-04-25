@@ -1,6 +1,11 @@
-function getCurrPage(): number {
-  const currPageFromLS = localStorage.getItem('garagePageOxy') as string;
+enum LocalStoragePages {
+  winnersPage = 'winnersPageOxy',
+  garagePage = 'garagePageOxy',
+}
+
+function getPage(page: string): number {
+  const currPageFromLS = localStorage.getItem(`${page}`) as string;
   return parseInt(currPageFromLS, 10);
 }
 
-export default getCurrPage;
+export { LocalStoragePages, getPage };

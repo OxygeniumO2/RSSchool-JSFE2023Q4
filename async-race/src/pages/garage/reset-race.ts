@@ -1,5 +1,5 @@
 import changeBtnsState from '../../utils/change-state-btns';
-import getCurrPage from '../../utils/get-page-from-ls';
+import { LocalStoragePages, getPage } from '../../utils/get-page-from-ls';
 import { ModalWinner } from '../winner-modal/winner-modal';
 import buildGaragePage from './build-garage-page';
 
@@ -13,7 +13,7 @@ async function resetRace() {
   ModalWinner.textContent = '';
   ModalWinner.classList.remove('_active');
 
-  const currPage = getCurrPage();
+  const currPage = getPage(LocalStoragePages.garagePage);
 
   await buildGaragePage(currPage);
 }
