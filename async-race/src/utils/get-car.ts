@@ -6,8 +6,7 @@ async function getCar(
   carId: number,
 ): Promise<GarageCar> {
   const currCarByIdResponse = await fetch(`${url}${path}/${carId}`);
-  const currCarById = await currCarByIdResponse.json();
-  return currCarById;
+  return currCarByIdResponse.json();
 }
 
 export default getCar;
