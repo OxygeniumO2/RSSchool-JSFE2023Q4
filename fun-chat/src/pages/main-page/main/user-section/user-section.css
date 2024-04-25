@@ -136,6 +136,7 @@
 
 .total__users {
   overflow-y: auto;
+  height: 85%;
 }
 
 @media (any-hover: hover) {
