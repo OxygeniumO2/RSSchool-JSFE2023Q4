@@ -1,6 +1,11 @@
 import { GarageCar } from '../pages/garage/garage-interfaces';
 import Winner from '../pages/winners/winners-interfaces';
 
+enum Order {
+  Asc = 'ASC',
+  Desc = 'DESC',
+}
+
 async function getGarageCars(
   url: string,
   path: string,
@@ -20,7 +25,7 @@ async function winnersByPageAndLimitPromise(
   path: string,
   pageNumber: number,
   limit: number,
-  order: string = 'ASC',
+  order: string = Order.Asc,
   sort: string = '',
 ): Promise<Winner[]> {
   let winnersResponseByPageAndLimit;
@@ -49,7 +54,7 @@ async function winnersByPageAndLimitPromise(
 async function allWinnersPromise(
   url: string,
   path: string,
-  order: string = 'ASC',
+  order: string = Order.Asc,
   sort: string = '',
 ): Promise<Winner[]> {
   let winnerResponse;
@@ -64,4 +69,9 @@ async function allWinnersPromise(
   return winnerTotal;
 }
 
-export { getGarageCars, allWinnersPromise, winnersByPageAndLimitPromise };
+export {
+  getGarageCars,
+  allWinnersPromise,
+  winnersByPageAndLimitPromise,
+  Order,
+};

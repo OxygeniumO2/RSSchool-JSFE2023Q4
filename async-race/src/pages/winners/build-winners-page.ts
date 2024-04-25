@@ -2,6 +2,7 @@ import './winners.css';
 import { APP_CONTAINER } from '../../app-container/app-container';
 import createElem from '../../utils/create-elem';
 import {
+  Order,
   allWinnersPromise,
   winnersByPageAndLimitPromise,
 } from '../../utils/fetch-resp';
@@ -19,7 +20,7 @@ const LIMIT_WINNERS_BY_PAGE: number = 10;
 
 async function buildWinnersPage(
   pageNumber: number = PAGE_NUMBER_DEFAULT,
-  order: string = 'ASC',
+  order: string = Order.Asc,
   sort: string = 'id',
 ): Promise<void> {
   const winners = createElem({

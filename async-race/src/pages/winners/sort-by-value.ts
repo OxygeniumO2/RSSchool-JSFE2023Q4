@@ -1,3 +1,4 @@
+import { Order } from '../../utils/fetch-resp';
 import getCurrWinnerPage from '../../utils/get-winner-page-from-ls';
 // eslint-disable-next-line import/no-cycle
 import buildWinnersPage from './build-winners-page';
@@ -9,14 +10,9 @@ function sortWinnersByValue(value: AllowedSortValue) {
 
   localStorage.setItem('winnersSortedBy', sortByValue);
 
-  let newOrder;
   const prevOrder = localStorage.getItem('winnersOrderBy') as string;
 
-  if (prevOrder === 'ASC') {
-    newOrder = 'DESC';
-  } else {
-    newOrder = 'ASC';
-  }
+  const newOrder = prevOrder === Order.Asc ? Order.Desc : Order.Asc;
 
   const currWinnerPage = getCurrWinnerPage();
 
