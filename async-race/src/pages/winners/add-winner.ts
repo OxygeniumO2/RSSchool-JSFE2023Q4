@@ -1,5 +1,6 @@
 import { WINNERS_PATH, baseUrl } from '../../utils/base-url';
 import getWinnerResp from '../../utils/get-winner';
+import HttpStatusCodes from '../../utils/http-resp-enum';
 import Winner from './winners-interfaces';
 
 interface WinnerUpdate {
@@ -10,7 +11,7 @@ interface WinnerUpdate {
 async function addOrUpdateWinnerToTable(car: Winner) {
   const checkWinner = await getWinnerResp(baseUrl, WINNERS_PATH, car.id);
 
-  if (checkWinner.status === 404) {
+  if (checkWinner.status === HttpStatusCodes.NOT_FOUND) {
     await fetch(`${baseUrl}${WINNERS_PATH}`, {
       method: 'POST',
       headers: {
@@ -20,7 +21,7 @@ async function addOrUpdateWinnerToTable(car: Winner) {
     });
   }
 
-  if (checkWinner.status === 200) {
+  if (checkWinner.status === HttpStatusCodes.OK) {
     const winnerResp = await getWinnerResp(baseUrl, WINNERS_PATH, car.id);
     const winnerData: Winner = await winnerResp.json();
 

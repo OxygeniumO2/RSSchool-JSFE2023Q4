@@ -5,6 +5,7 @@ import { CarWinner } from '../../utils/create-car-winner';
 import { getGarageCars } from '../../utils/fetch-resp';
 import getCarTravelData from '../../utils/get-car-travel-data';
 import getCurrPage from '../../utils/get-page-from-ls';
+import HttpStatusCodes from '../../utils/http-resp-enum';
 import removeActiveStateFromCars from '../../utils/remove-active-state-from-cars';
 import { ModalWinner } from '../winner-modal/winner-modal';
 import addOrUpdateWinnerToTable from '../winners/add-winner';
@@ -64,7 +65,7 @@ async function startRace() {
             currCar.style.animationPlayState = 'paused';
             finishedCarsCount -= 1;
           }
-          if (carDriveResp.status === 200 && isWinner) {
+          if (carDriveResp.status === HttpStatusCodes.OK && isWinner) {
             isWinner = false;
             ModalWinner.classList.add('_active');
 
