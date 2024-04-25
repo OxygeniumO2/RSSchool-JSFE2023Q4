@@ -6,7 +6,7 @@ import { getGarageCars } from '../../utils/fetch-resp';
 import getCarTravelData from '../../utils/get-car-travel-data';
 import getCurrPage from '../../utils/get-page-from-ls';
 import removeActiveStateFromCars from '../../utils/remove-active-state-from-cars';
-import { MODAL_WINNER } from '../winner-modal/winner-modal';
+import { ModalWinner } from '../winner-modal/winner-modal';
 import addOrUpdateWinnerToTable from '../winners/add-winner';
 import buildWinnersPage from '../winners/build-winners-page';
 import Winner from '../winners/winners-interfaces';
@@ -66,11 +66,11 @@ async function startRace() {
           }
           if (carDriveResp.status === 200 && isWinner) {
             isWinner = false;
-            MODAL_WINNER.classList.add('_active');
+            ModalWinner.classList.add('_active');
 
             const totalTimeInSec = totalTime / 1000;
             const totalTimeInSecToFixed = Number(totalTimeInSec.toFixed(2));
-            MODAL_WINNER.textContent = `${currCar.dataset.carName} went first in ${totalTimeInSecToFixed} sec`;
+            ModalWinner.textContent = `${currCar.dataset.carName} went first in ${totalTimeInSecToFixed} sec`;
             const wins = 1;
 
             const carWinner: Winner = new CarWinner(
@@ -92,8 +92,8 @@ async function startRace() {
     );
 
     if (finishedCarsCount === 0) {
-      MODAL_WINNER.classList.add('_active');
-      MODAL_WINNER.textContent = `No one gets to the finish`;
+      ModalWinner.classList.add('_active');
+      ModalWinner.textContent = `No one gets to the finish`;
       setMainPagesBtnsState(true);
     }
 
