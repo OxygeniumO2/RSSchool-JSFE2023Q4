@@ -1,7 +1,7 @@
 import { GARAGE_PATH, baseUrl } from '../../utils/base-url';
 import setUpdateToNewState from '../../utils/set-update-to-new-state';
 
-async function updateCar(
+async function updateCarPayload(
   carName: string,
   carColor: string,
   carId: number,
@@ -22,4 +22,4 @@ async function updateCar(
   setUpdateToNewState(false);
 }
 
-export default updateCar;
+export default updateCarPayload;

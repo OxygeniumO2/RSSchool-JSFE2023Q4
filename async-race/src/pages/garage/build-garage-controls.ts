@@ -3,7 +3,7 @@ import { APP_CONTAINER } from '../../app-container/app-container';
 import createElem from '../../utils/create-elem';
 import addCar from './add-car';
 import generateCars from './generate-cars';
-import updateCar from './update-car';
+import updateCarPayload from './update-car';
 import changeGaragePage from './change-garage-page';
 import getCurrPage from '../../utils/get-page-from-ls';
 import buildGaragePage from './build-garage-page';
@@ -184,7 +184,7 @@ export function buildGarageControls(): void {
     const currCarId = localStorage.getItem('carIdOxy') as string;
     const currCarIdParsed = parseInt(currCarId, 10);
 
-    await updateCar(
+    await updateCarPayload(
       inputCarUpdateName.value,
       inputColorUpdateCar.value,
       currCarIdParsed,
