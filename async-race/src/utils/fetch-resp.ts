@@ -36,9 +36,7 @@ async function getWinners(
 
   const requestUrl = `${url}${path}${pageNumberQuery}${limitQuery}${orderQuery}${sortQuery}`;
   const winnersResp = await fetch(requestUrl);
-  const winners = await winnersResp.json();
-
-  return winners;
+  return winnersResp.json();
 }
 
 export { getGarageCars, getWinners, Order };
