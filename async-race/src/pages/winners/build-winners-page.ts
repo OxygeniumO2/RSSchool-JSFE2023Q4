@@ -1,11 +1,7 @@
 import './winners.css';
 import { APP_CONTAINER } from '../../app-container/app-container';
 import createElem from '../../utils/create-elem';
-import {
-  Order,
-  allWinnersPromise,
-  winnersByPageAndLimitPromise,
-} from '../../utils/fetch-resp';
+import { Order, getWinners } from '../../utils/fetch-resp';
 import { WINNERS_PATH, baseUrl } from '../../utils/base-url';
 import Winner from './winners-interfaces';
 import buildWinners from './build-winners';
@@ -36,15 +32,15 @@ async function buildWinnersPage(
   localStorage.setItem('winnersOrderBy', order);
   localStorage.setItem('winnersSortedBy', sort);
 
-  const allWinners = await allWinnersPromise(baseUrl, WINNERS_PATH);
+  const allWinners = await getWinners(baseUrl, WINNERS_PATH);
 
-  const myWinners: Winner[] = await winnersByPageAndLimitPromise(
+  const myWinners: Winner[] = await getWinners(
     baseUrl,
     WINNERS_PATH,
-    pageNumber,
-    LIMIT_WINNERS_BY_PAGE,
     order,
     sort,
+    pageNumber,
+    LIMIT_WINNERS_BY_PAGE,
   );
 
   const allWinnersLength = allWinners.length;

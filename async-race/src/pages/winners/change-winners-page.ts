@@ -1,5 +1,5 @@
 import { WINNERS_PATH, baseUrl } from '../../utils/base-url';
-import { allWinnersPromise } from '../../utils/fetch-resp';
+import { getWinners } from '../../utils/fetch-resp';
 import { LocalStoragePages, getPage } from '../../utils/get-page-from-ls';
 
 // eslint-disable-next-line import/no-cycle
@@ -16,7 +16,7 @@ async function changeWinnersPage(
 ): Promise<void> {
   const currPage = getPage(LocalStoragePages.winnersPage);
 
-  const allWinners: Winner[] = await allWinnersPromise(
+  const allWinners: Winner[] = await getWinners(
     baseUrl,
     WINNERS_PATH,
     order,
