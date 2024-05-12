@@ -23,7 +23,7 @@ function sendRequestToGetMessagesFromUser(
 ) {
   const requestGetMessages: GetAllMessagesClientResp = {
     id: `${msgFrom}`,
-    type: WebSocketMessageTypes.msgFromUser,
+    type: WebSocketMessageTypes.MsgFromUser,
     payload: {
       user: {
         login: currUserName,

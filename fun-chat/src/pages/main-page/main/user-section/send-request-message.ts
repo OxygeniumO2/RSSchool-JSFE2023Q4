@@ -18,7 +18,7 @@ function sendRequestMessageToUser(
 ) {
   const data: SendMessageToUserData = {
     id: 'send-msg',
-    type: WebSocketMessageTypes.msgSend,
+    type: WebSocketMessageTypes.MsgSend,
     payload: {
       message: {
         to: user,

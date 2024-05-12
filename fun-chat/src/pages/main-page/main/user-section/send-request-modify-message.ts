@@ -7,7 +7,7 @@ function sendRequestToModifyMessage(
 ) {
   const requestData = {
     id: 'modify-msg',
-    type: WebSocketMessageTypes.msgEdit,
+    type: WebSocketMessageTypes.MsgEdit,
     payload: {
       message: {
         id: msgId,

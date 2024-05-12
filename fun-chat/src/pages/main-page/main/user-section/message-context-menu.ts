@@ -17,7 +17,7 @@ function createContextMenu(websocket: WebSocket, idMsg: string): HTMLElement {
   deleteMessageElem.addEventListener('click', () => {
     const msgToDelete = {
       id: 'delete',
-      type: WebSocketMessageTypes.msgDelete,
+      type: WebSocketMessageTypes.MsgDelete,
       payload: {
         message: {
           id: idMsg,

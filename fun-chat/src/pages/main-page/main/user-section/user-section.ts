@@ -74,9 +74,9 @@ function createUserSection(
     const message = JSON.parse(event.data);
 
     if (
-      message.type === WebSocketMessageTypes.userExternalLogin ||
-      message.type === WebSocketMessageTypes.userLogin ||
-      message.type === WebSocketMessageTypes.userExternalLogout
+      message.type === WebSocketMessageTypes.UserExternalLogin ||
+      message.type === WebSocketMessageTypes.UserLogin ||
+      message.type === WebSocketMessageTypes.UserExternalLogout
     ) {
       sendRequestToGetOnlineUsers(websocket);
       sendRequestToGetOfflineUsers(websocket);
@@ -92,7 +92,7 @@ function createUserSection(
       }
     }
 
-    if (message.type === WebSocketMessageTypes.userActive) {
+    if (message.type === WebSocketMessageTypes.UserActive) {
       removeAllChildren(onlineUsersList);
       const onlineUsers: UserServerResp[] = message.payload.users;
       addUsers(
@@ -109,7 +109,7 @@ function createUserSection(
       // });
     }
 
-    if (message.type === WebSocketMessageTypes.userInactive) {
+    if (message.type === WebSocketMessageTypes.UserInactive) {
       removeAllChildren(offlineUsersList);
       const offlineUsers: UserServerResp[] = message.payload.users;
       addUsers(
@@ -127,7 +127,7 @@ function createUserSection(
     }
 
     if (
-      message.type === WebSocketMessageTypes.msgSend &&
+      message.type === WebSocketMessageTypes.MsgSend &&
       message.id === 'send-msg'
     ) {
       const msgData: Message = message.payload.message;
@@ -145,7 +145,7 @@ function createUserSection(
     }
 
     if (
-      message.type === WebSocketMessageTypes.msgSend &&
+      message.type === WebSocketMessageTypes.MsgSend &&
       message.id === null &&
       currUserFromSS === message.payload.message.to &&
       userName.textContent === message.payload.message.from
@@ -187,7 +187,7 @@ function createUserSection(
       }
     }
 
-    if (message.type === WebSocketMessageTypes.msgSend && message.id === null) {
+    if (message.type === WebSocketMessageTypes.MsgSend && message.id === null) {
       const onlineUsers = Array.from(onlineUsersList.children);
       const offlineUsers = Array.from(offlineUsersList.children);
       const allUsers = [...onlineUsers, ...offlineUsers];
@@ -207,7 +207,7 @@ function createUserSection(
     }
 
     if (
-      message.type === WebSocketMessageTypes.msgFromUser &&
+      message.type === WebSocketMessageTypes.MsgFromUser &&
       userName.textContent &&
       message.id === userName.textContent
     ) {
@@ -255,7 +255,7 @@ function createUserSection(
       }
     }
 
-    if (message.type === WebSocketMessageTypes.msgFromUser) {
+    if (message.type === WebSocketMessageTypes.MsgFromUser) {
       updateUnreadMessagesInterface(
         message.payload.messages,
         onlineUsersList,
@@ -263,7 +263,7 @@ function createUserSection(
       );
     }
 
-    if (message.type === WebSocketMessageTypes.msgDelete) {
+    if (message.type === WebSocketMessageTypes.MsgDelete) {
       const allMsgs = Array.from(messagesToWindowChatElem.children);
       const msgToDelete = message.payload.message.id;
 
@@ -299,7 +299,7 @@ function createUserSection(
     }
 
     if (
-      message.type === WebSocketMessageTypes.msgDelete &&
+      message.type === WebSocketMessageTypes.MsgDelete &&
       message.id === null
     ) {
       if (
@@ -312,7 +312,7 @@ function createUserSection(
       }
     }
 
-    if (message.type === WebSocketMessageTypes.msgRead && message.id === null) {
+    if (message.type === WebSocketMessageTypes.MsgRead && message.id === null) {
       const messagesToWindowChatElemChildren = Array.from(
         messagesToWindowChatElem.children,
       );
@@ -332,7 +332,7 @@ function createUserSection(
     // }
 
     if (
-      message.type === WebSocketMessageTypes.msgDeliver &&
+      message.type === WebSocketMessageTypes.MsgDeliver &&
       userName.textContent
     ) {
       const allMsgsInContainer = Array.from(messagesToWindowChatElem.children);
@@ -350,7 +350,7 @@ function createUserSection(
     }
 
     if (
-      message.type === WebSocketMessageTypes.msgEdit &&
+      message.type === WebSocketMessageTypes.MsgEdit &&
       message.id === null &&
       userName.textContent
     ) {
@@ -370,7 +370,7 @@ function createUserSection(
     }
 
     if (
-      message.type === WebSocketMessageTypes.msgEdit &&
+      message.type === WebSocketMessageTypes.MsgEdit &&
       message.id === 'modify-msg'
     ) {
       const allMessages = Array.from(messagesToWindowChatElem.children);

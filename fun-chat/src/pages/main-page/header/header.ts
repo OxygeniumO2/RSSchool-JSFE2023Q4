@@ -32,7 +32,7 @@ function createHeader(websocket: WebSocket): HTMLElement {
 
     const logoutUserData: UserLogoutClient = {
       id: 'logout',
-      type: WebSocketMessageTypes.userLogout,
+      type: WebSocketMessageTypes.UserLogout,
       payload: {
         user: {
           login: currUserName,

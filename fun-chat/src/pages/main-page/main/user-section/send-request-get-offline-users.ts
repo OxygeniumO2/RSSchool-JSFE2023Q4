@@ -4,7 +4,7 @@ import { GetAllOfflineUsersClientResp } from '../../../../web-socket/web-socket-
 function sendRequestToGetOfflineUsers(websocket: WebSocket) {
   const messageData: GetAllOfflineUsersClientResp = {
     id: 'offline',
-    type: WebSocketMessageTypes.userInactive,
+    type: WebSocketMessageTypes.UserInactive,
     payload: null,
   };
 

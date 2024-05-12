@@ -66,7 +66,7 @@ function createLoginPage(websocket: WebSocket): HTMLElement {
 
     const userData: UserAuthClient = {
       id: randomId,
-      type: WebSocketMessageTypes.userLogin,
+      type: WebSocketMessageTypes.UserLogin,
       payload: {
         user: {
           login: userLogin,
@@ -83,7 +83,7 @@ function createLoginPage(websocket: WebSocket): HTMLElement {
   websocket.addEventListener('message', (e) => {
     const message = JSON.parse(e.data);
 
-    if (message.type === WebSocketMessageTypes.error) {
+    if (message.type === WebSocketMessageTypes.Error) {
       removeAllChildren(APP_CONTAINER);
       const modal = createErrorAuthModal(websocket, message.payload.error);
       APP_CONTAINER.append(modal);
