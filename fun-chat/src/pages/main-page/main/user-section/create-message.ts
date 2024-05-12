@@ -10,6 +10,10 @@ enum MessageStatus {
   Edited = 'Edited',
 }
 
+enum MessageSender {
+  You = 'you',
+}
+
 function createMessage(
   websocket: WebSocket,
   currUserFromSS: string,
@@ -25,7 +29,7 @@ function createMessage(
     ],
   });
 
-  const userText = currUserFromSS === msg.from ? 'you' : msg.from;
+  const userText = currUserFromSS === msg.from ? MessageSender.You : msg.from;
 
   const userNameDateContainer = createElem({
     tagName: 'div',
@@ -81,7 +85,7 @@ function createMessage(
 
   msgContainer.append(userNameDateContainer, msgElem, msgInfoStatusContainer);
 
-  if (userText === 'you') {
+  if (userText === MessageSender.You) {
     // msgInfoStatusContainer.append(msgStatus);
     msgInfoStatusContainer.append(msgDelivered);
 
