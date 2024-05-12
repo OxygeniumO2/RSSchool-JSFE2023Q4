@@ -3,7 +3,7 @@ import createElem from '../../../../utils/create-elem';
 import { ChatSectionDataChildren } from '../chat-section/chat-section';
 import SessionStorageKeys from '../../../../utils/session-storage-keys';
 import createMessage from './create-message';
-import appendUsersToUserList from './append-users-to-userlist';
+import addUsers from './append-users-to-userlist';
 import { UserServerResp } from '../../../../web-socket/web-socket-interfaces';
 import removeAllChildren from '../../../../utils/remove-all-children';
 import {
@@ -95,7 +95,7 @@ function createUserSection(
     if (message.type === WebSocketMessageTypes.userActive) {
       removeAllChildren(onlineUsersList);
       const onlineUsers: UserServerResp[] = message.payload.users;
-      appendUsersToUserList(
+      addUsers(
         websocket,
         onlineUsers,
         onlineUsersList,
@@ -112,7 +112,7 @@ function createUserSection(
     if (message.type === WebSocketMessageTypes.userInactive) {
       removeAllChildren(offlineUsersList);
       const offlineUsers: UserServerResp[] = message.payload.users;
-      appendUsersToUserList(
+      addUsers(
         websocket,
         offlineUsers,
         offlineUsersList,

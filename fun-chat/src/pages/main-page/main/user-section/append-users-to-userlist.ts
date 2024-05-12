@@ -2,7 +2,7 @@ import createElem from '../../../../utils/create-elem';
 import { UserServerResp } from '../../../../web-socket/web-socket-interfaces';
 import { sendRequestToGetMessagesFromUser } from './send-request-get-messages-from-user';
 
-function appendUsersToUserList(
+function addUsers(
   websocket: WebSocket,
   users: UserServerResp[],
   userList: HTMLElement,
@@ -39,4 +39,4 @@ function appendUsersToUserList(
   });
 }
 
-export default appendUsersToUserList;
+export default addUsers;
