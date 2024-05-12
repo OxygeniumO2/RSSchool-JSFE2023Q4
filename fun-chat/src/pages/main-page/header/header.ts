@@ -6,6 +6,7 @@ import SessionStorageKeys from '../../../utils/session-storage-keys';
 import { UserLogoutClient } from '../../../web-socket/web-socket-interfaces';
 import { loginPageRouteHandler } from '../../../router/router';
 import createWebSocket from '../../../web-socket/web-socket';
+import WebSocketMessageTypes from '../../../utils/websocket-msg-types';
 
 function createHeader(websocket: WebSocket): HTMLElement {
   const header = createElem({ tagName: 'header' });
@@ -31,7 +32,7 @@ function createHeader(websocket: WebSocket): HTMLElement {
 
     const logoutUserData: UserLogoutClient = {
       id: 'logout',
-      type: 'USER_LOGOUT',
+      type: WebSocketMessageTypes.userLogout,
       payload: {
         user: {
           login: currUserName,

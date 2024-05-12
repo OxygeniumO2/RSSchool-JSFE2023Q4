@@ -17,6 +17,7 @@ import createNewMessagesLineElem from '../chat-section/new-messages-line';
 import handleContextMenuAndScroll from '../chat-section/chat-window-new-messages-handler';
 import updateUnreadMessagesInterface from './messages-unread-update';
 import sendRequestToModifyMessage from './send-request-modify-message';
+import WebSocketMessageTypes from '../../../../utils/websocket-msg-types';
 
 let currUserFromSS = sessionStorage.getItem(SessionStorageKeys.login);
 let userSendMessageTo: string;
@@ -73,9 +74,9 @@ function createUserSection(
     const message = JSON.parse(event.data);
 
     if (
-      message.type === 'USER_EXTERNAL_LOGIN' ||
-      message.type === 'USER_LOGIN' ||
-      message.type === 'USER_EXTERNAL_LOGOUT'
+      message.type === WebSocketMessageTypes.userExternalLogin ||
+      message.type === WebSocketMessageTypes.userLogin ||
+      message.type === WebSocketMessageTypes.userExternalLogout
     ) {
       sendRequestToGetOnlineUsers(websocket);
       sendRequestToGetOfflineUsers(websocket);
@@ -91,7 +92,7 @@ function createUserSection(
       }
     }
 
-    if (message.type === 'USER_ACTIVE') {
+    if (message.type === WebSocketMessageTypes.userActive) {
       removeAllChildren(onlineUsersList);
       const onlineUsers: UserServerResp[] = message.payload.users;
       appendUsersToUserList(
@@ -108,7 +109,7 @@ function createUserSection(
       // });
     }
 
-    if (message.type === 'USER_INACTIVE') {
+    if (message.type === WebSocketMessageTypes.userInactive) {
       removeAllChildren(offlineUsersList);
       const offlineUsers: UserServerResp[] = message.payload.users;
       appendUsersToUserList(
@@ -125,7 +126,10 @@ function createUserSection(
       // });
     }
 
-    if (message.type === 'MSG_SEND' && message.id === 'send-msg') {
+    if (
+      message.type === WebSocketMessageTypes.msgSend &&
+      message.id === 'send-msg'
+    ) {
       const msgData: Message = message.payload.message;
 
       const newMessage = createMessage(
@@ -141,7 +145,7 @@ function createUserSection(
     }
 
     if (
-      message.type === 'MSG_SEND' &&
+      message.type === WebSocketMessageTypes.msgSend &&
       message.id === null &&
       currUserFromSS === message.payload.message.to &&
       userName.textContent === message.payload.message.from
@@ -183,7 +187,7 @@ function createUserSection(
       }
     }
 
-    if (message.type === 'MSG_SEND' && message.id === null) {
+    if (message.type === WebSocketMessageTypes.msgSend && message.id === null) {
       const onlineUsers = Array.from(onlineUsersList.children);
       const offlineUsers = Array.from(offlineUsersList.children);
       const allUsers = [...onlineUsers, ...offlineUsers];
@@ -203,7 +207,7 @@ function createUserSection(
     }
 
     if (
-      message.type === 'MSG_FROM_USER' &&
+      message.type === WebSocketMessageTypes.msgFromUser &&
       userName.textContent &&
       message.id === userName.textContent
     ) {
@@ -251,7 +255,7 @@ function createUserSection(
       }
     }
 
-    if (message.type === 'MSG_FROM_USER') {
+    if (message.type === WebSocketMessageTypes.msgFromUser) {
       updateUnreadMessagesInterface(
         message.payload.messages,
         onlineUsersList,
@@ -259,7 +263,7 @@ function createUserSection(
       );
     }
 
-    if (message.type === 'MSG_DELETE') {
+    if (message.type === WebSocketMessageTypes.msgDelete) {
       const allMsgs = Array.from(messagesToWindowChatElem.children);
       const msgToDelete = message.payload.message.id;
 
@@ -294,7 +298,10 @@ function createUserSection(
       }
     }
 
-    if (message.type === 'MSG_DELETE' && message.id === null) {
+    if (
+      message.type === WebSocketMessageTypes.msgDelete &&
+      message.id === null
+    ) {
       if (
         messagesToWindowChatElem.children[0] &&
         messagesToWindowChatElem.children[0].classList.contains(
@@ -305,7 +312,7 @@ function createUserSection(
       }
     }
 
-    if (message.type === 'MSG_READ' && message.id === null) {
+    if (message.type === WebSocketMessageTypes.msgRead && message.id === null) {
       const messagesToWindowChatElemChildren = Array.from(
         messagesToWindowChatElem.children,
       );
@@ -324,7 +331,10 @@ function createUserSection(
     //   line = createNewMessagesLineElem(); // MAYBE BETTER TO REMOVE LINE INSTANTLY WITHOUT WAITING SERVER RESPONSE
     // }
 
-    if (message.type === 'MSG_DELIVER' && userName.textContent) {
+    if (
+      message.type === WebSocketMessageTypes.msgDeliver &&
+      userName.textContent
+    ) {
       const allMsgsInContainer = Array.from(messagesToWindowChatElem.children);
 
       allMsgsInContainer.forEach((msg) => {
@@ -340,7 +350,7 @@ function createUserSection(
     }
 
     if (
-      message.type === 'MSG_EDIT' &&
+      message.type === WebSocketMessageTypes.msgEdit &&
       message.id === null &&
       userName.textContent
     ) {
@@ -359,7 +369,10 @@ function createUserSection(
       });
     }
 
-    if (message.type === 'MSG_EDIT' && message.id === 'modify-msg') {
+    if (
+      message.type === WebSocketMessageTypes.msgEdit &&
+      message.id === 'modify-msg'
+    ) {
       const allMessages = Array.from(messagesToWindowChatElem.children);
       const msgToModify = allMessages.find(
         (msg) => msg.id === message.payload.message.id,

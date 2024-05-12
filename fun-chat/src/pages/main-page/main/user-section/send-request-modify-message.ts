@@ -1,3 +1,5 @@
+import WebSocketMessageTypes from '../../../../utils/websocket-msg-types';
+
 function sendRequestToModifyMessage(
   websocket: WebSocket,
   msgId: string,
@@ -5,7 +7,7 @@ function sendRequestToModifyMessage(
 ) {
   const requestData = {
     id: 'modify-msg',
-    type: 'MSG_EDIT',
+    type: WebSocketMessageTypes.msgEdit,
     payload: {
       message: {
         id: msgId,

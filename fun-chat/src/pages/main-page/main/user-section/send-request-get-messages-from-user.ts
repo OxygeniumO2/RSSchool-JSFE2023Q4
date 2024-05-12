@@ -1,3 +1,4 @@
+import WebSocketMessageTypes from '../../../../utils/websocket-msg-types';
 import { GetAllMessagesClientResp } from '../../../../web-socket/web-socket-interfaces';
 
 interface Message {
@@ -22,7 +23,7 @@ function sendRequestToGetMessagesFromUser(
 ) {
   const requestGetMessages: GetAllMessagesClientResp = {
     id: `${msgFrom}`,
-    type: 'MSG_FROM_USER',
+    type: WebSocketMessageTypes.msgFromUser,
     payload: {
       user: {
         login: currUserName,

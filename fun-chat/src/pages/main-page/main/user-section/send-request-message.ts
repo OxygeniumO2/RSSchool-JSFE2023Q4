@@ -1,3 +1,5 @@
+import WebSocketMessageTypes from '../../../../utils/websocket-msg-types';
+
 interface SendMessageToUserData {
   id: string;
   type: 'MSG_SEND';
@@ -16,7 +18,7 @@ function sendRequestMessageToUser(
 ) {
   const data: SendMessageToUserData = {
     id: 'send-msg',
-    type: 'MSG_SEND',
+    type: WebSocketMessageTypes.msgSend,
     payload: {
       message: {
         to: user,

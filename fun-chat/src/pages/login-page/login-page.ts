@@ -9,6 +9,7 @@ import createAboutBtn from '../about-page/about-btn';
 import createErrorAuthModal from '../../modal-user-already-logged/modal';
 import APP_CONTAINER from '../../app-container/app-container';
 import removeAllChildren from '../../utils/remove-all-children';
+import WebSocketMessageTypes from '../../utils/websocket-msg-types';
 
 function createLoginPage(websocket: WebSocket): HTMLElement {
   const loginContainer = createElem({
@@ -65,7 +66,7 @@ function createLoginPage(websocket: WebSocket): HTMLElement {
 
     const userData: UserAuthClient = {
       id: randomId,
-      type: 'USER_LOGIN',
+      type: WebSocketMessageTypes.userLogin,
       payload: {
         user: {
           login: userLogin,
@@ -82,7 +83,7 @@ function createLoginPage(websocket: WebSocket): HTMLElement {
   websocket.addEventListener('message', (e) => {
     const message = JSON.parse(e.data);
 
-    if (message.type === 'ERROR') {
+    if (message.type === WebSocketMessageTypes.error) {
       removeAllChildren(APP_CONTAINER);
       const modal = createErrorAuthModal(websocket, message.payload.error);
       APP_CONTAINER.append(modal);

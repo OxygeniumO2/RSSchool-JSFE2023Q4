@@ -1,4 +1,5 @@
 import createElem from '../../../../utils/create-elem';
+import WebSocketMessageTypes from '../../../../utils/websocket-msg-types';
 
 function createContextMenu(websocket: WebSocket, idMsg: string): HTMLElement {
   const menu = createElem({ tagName: 'div', classNames: ['context__menu'] });
@@ -16,7 +17,7 @@ function createContextMenu(websocket: WebSocket, idMsg: string): HTMLElement {
   deleteMessageElem.addEventListener('click', () => {
     const msgToDelete = {
       id: 'delete',
-      type: 'MSG_DELETE',
+      type: WebSocketMessageTypes.msgDelete,
       payload: {
         message: {
           id: idMsg,

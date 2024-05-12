@@ -1,7 +1,9 @@
+import WebSocketMessageTypes from '../../../../utils/websocket-msg-types';
+
 function sendRequestMessageRead(websocket: WebSocket, idMsg: string) {
   const requestData = {
     id: 'read',
-    type: 'MSG_READ',
+    type: WebSocketMessageTypes.msgRead,
     payload: {
       message: {
         id: idMsg,
