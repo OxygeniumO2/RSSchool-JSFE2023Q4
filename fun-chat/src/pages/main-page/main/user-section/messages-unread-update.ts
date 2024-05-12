@@ -22,7 +22,7 @@ function updateUnreadMessagesInterface(
     const numOfUnreadMessagesElem = user.children[1];
 
     if (numOfUnreadMessagesElem && !numOfUnreadMessagesElem.textContent) {
-      numOfUnreadMessagesElem.textContent = `${countOfUnreadMessages === 0 ? '' : countOfUnreadMessages}`;
+      numOfUnreadMessagesElem.textContent = `${countOfUnreadMessages || ''}`;
     }
   });
 }
