@@ -6,10 +6,7 @@ import createMessage from './create-message';
 import addUsers from './append-users-to-userlist';
 import { UserServerResp } from '../../../../web-socket/web-socket-interfaces';
 import removeAllChildren from '../../../../utils/remove-all-children';
-import {
-  Message,
-  sendRequestToGetMessagesFromUser,
-} from './send-request-get-messages-from-user';
+import { Message, getMessages } from './send-request-get-messages-from-user';
 import sendRequestToGetOnlineUsers from './send-request-get-online-users';
 import sendRequestToGetOfflineUsers from './send-request-get-offline-users';
 import sendRequestMessageToUser from './send-request-message';
@@ -428,11 +425,7 @@ function createUserSection(
       userStatus.classList.remove('_online', '_offline');
       userStatus.classList.add(`_${currUserStatus}`);
 
-      sendRequestToGetMessagesFromUser(
-        websocket,
-        currUserName,
-        userName.textContent,
-      );
+      getMessages(websocket, currUserName, userName.textContent);
 
       chatSendMessageForm.classList.remove('_hidden');
       const formInput = chatSendMessageForm.children[0] as HTMLInputElement;

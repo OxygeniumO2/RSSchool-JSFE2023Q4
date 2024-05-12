@@ -20,7 +20,7 @@ enum IdRequest {
 
 type AllMessages = Message[];
 
-function sendRequestToGetMessagesFromUser(
+function getMessages(
   websocket: WebSocket,
   currUserName: string,
   msgFrom: string = IdRequest.Message,
@@ -37,4 +37,4 @@ function sendRequestToGetMessagesFromUser(
   websocket.send(JSON.stringify(requestGetMessages));
 }
 
-export { sendRequestToGetMessagesFromUser, Message, AllMessages };
+export { getMessages, Message, AllMessages };

@@ -1,6 +1,6 @@
 import createElem from '../../../../utils/create-elem';
 import { UserServerResp } from '../../../../web-socket/web-socket-interfaces';
-import { sendRequestToGetMessagesFromUser } from './send-request-get-messages-from-user';
+import { getMessages } from './send-request-get-messages-from-user';
 
 enum UserStatus {
   Online = 'online',
@@ -39,7 +39,7 @@ function addUsers(
 
       userList.append(userContainer);
 
-      sendRequestToGetMessagesFromUser(websocket, user.login); // Maybe it's better to send requests after full build of users
+      getMessages(websocket, user.login); // Maybe it's better to send requests after full build of users
     }
   });
 }
