@@ -2,7 +2,7 @@ import collectMessagesToRead from '../user-section/collect-messages-to-read';
 import sendRequestMessageRead from '../user-section/send-request-messages-read';
 import createNewMessagesLineElem from './new-messages-line';
 
-function handleContextMenuAndScroll(
+function handleUnreadMessages(
   websocket: WebSocket,
   line: HTMLElement,
   userNameElem: HTMLElement,
@@ -31,4 +31,4 @@ function handleContextMenuAndScroll(
   });
 }
 
-export default handleContextMenuAndScroll;
+export default handleUnreadMessages;

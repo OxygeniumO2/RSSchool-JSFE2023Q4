@@ -14,7 +14,7 @@ import sendRequestToGetOnlineUsers from './send-request-get-online-users';
 import sendRequestToGetOfflineUsers from './send-request-get-offline-users';
 import sendRequestMessageToUser from './send-request-message';
 import createNewMessagesLineElem from '../chat-section/new-messages-line';
-import handleContextMenuAndScroll from '../chat-section/chat-window-new-messages-handler';
+import handleUnreadMessages from '../chat-section/chat-window-new-messages-handler';
 import updateUnreadMessagesInterface from './messages-unread-update';
 import sendRequestToModifyMessage from './send-request-modify-message';
 import WebSocketMessageTypes from '../../../../utils/websocket-msg-types';
@@ -451,7 +451,7 @@ function createUserSection(
       removeAllChildren(messagesToWindowChatElem);
     }
 
-    handleContextMenuAndScroll(
+    handleUnreadMessages(
       websocket,
       line,
       userName,
@@ -485,7 +485,7 @@ function createUserSection(
   });
 
   chatWindow.addEventListener('click', () => {
-    handleContextMenuAndScroll(
+    handleUnreadMessages(
       websocket,
       line,
       userName,
@@ -495,7 +495,7 @@ function createUserSection(
   });
 
   chatWindow.addEventListener('contextmenu', () => {
-    handleContextMenuAndScroll(
+    handleUnreadMessages(
       websocket,
       line,
       userName,
@@ -507,7 +507,7 @@ function createUserSection(
   chatWindow.addEventListener(
     'wheel',
     () => {
-      handleContextMenuAndScroll(
+      handleUnreadMessages(
         websocket,
         line,
         userName,
