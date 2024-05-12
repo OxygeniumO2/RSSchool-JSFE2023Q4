@@ -26,7 +26,7 @@ function sendRequestToGetMessagesFromUser(
   msgFrom: string = IdRequest.Message,
 ) {
   const requestGetMessages: GetAllMessagesClientResp = {
-    id: `${msgFrom}`,
+    id: msgFrom,
     type: WebSocketMessageTypes.MsgFromUser,
     payload: {
       user: {
