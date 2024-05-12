@@ -3,6 +3,13 @@ import formatDateTime from '../../../../utils/format-date';
 import createContextMenu from './message-context-menu';
 import { Message } from './send-request-get-messages-from-user';
 
+enum MessageStatus {
+  Delivered = 'Delivered',
+  Sent = 'Sent',
+  Read = 'Read',
+  Edited = 'Edited',
+}
+
 function createMessage(
   websocket: WebSocket,
   currUserFromSS: string,
@@ -46,9 +53,12 @@ function createMessage(
 
   msgElem.innerHTML = `<pre>${msg.text}</pre>`;
 
-  const isDelivered = msg.status.isDelivered ? 'Delivered' : 'Sent';
-  const isRead = msg.status.isReaded ? 'Read' : '';
-  const iEdited = msg.status.isEdited ? 'Edited' : '';
+  const isDelivered = msg.status.isDelivered
+    ? MessageStatus.Delivered
+    : MessageStatus.Sent;
+
+  const isRead = msg.status.isReaded ? MessageStatus.Read : '';
+  const iEdited = msg.status.isEdited ? MessageStatus.Edited : '';
 
   const msgDelivered = createElem({
     tagName: 'div',

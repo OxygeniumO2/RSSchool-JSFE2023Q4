@@ -2,6 +2,11 @@ import createElem from '../../../../utils/create-elem';
 import { UserServerResp } from '../../../../web-socket/web-socket-interfaces';
 import { sendRequestToGetMessagesFromUser } from './send-request-get-messages-from-user';
 
+enum UserStatus {
+  Online = 'online',
+  Offline = 'offline',
+}
+
 function addUsers(
   websocket: WebSocket,
   users: UserServerResp[],
@@ -12,7 +17,7 @@ function addUsers(
     if (currUserFromSS && currUserFromSS !== user.login) {
       const statusResp = user.isLogined;
 
-      const status = statusResp ? 'online' : 'offline';
+      const status = statusResp ? UserStatus.Online : UserStatus.Offline;
 
       const userContainer = createElem({
         tagName: 'div',
