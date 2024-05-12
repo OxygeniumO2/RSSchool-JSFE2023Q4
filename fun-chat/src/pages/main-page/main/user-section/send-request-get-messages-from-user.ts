@@ -14,12 +14,16 @@ interface Message {
   to: string;
 }
 
+enum IdRequest {
+  Message = 'message',
+}
+
 type AllMessages = Message[];
 
 function sendRequestToGetMessagesFromUser(
   websocket: WebSocket,
   currUserName: string,
-  msgFrom: string = 'message',
+  msgFrom: string = IdRequest.Message,
 ) {
   const requestGetMessages: GetAllMessagesClientResp = {
     id: `${msgFrom}`,
