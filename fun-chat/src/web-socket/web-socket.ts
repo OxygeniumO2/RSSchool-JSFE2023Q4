@@ -2,6 +2,7 @@ import APP_CONTAINER from '../app-container/app-container';
 import createReconnectModal from '../modal-lost-connect/modal';
 // eslint-disable-next-line import/no-cycle
 import {
+  PagePath,
   aboutPageRouteHandler,
   loginPageRouteHandler,
   mainPageRouteHandler,
@@ -32,14 +33,14 @@ function createWebSocket(): WebSocket {
 
         clearTimeout(reconnectTimeout);
 
-        if (window.location.pathname === '/about') {
+        if (window.location.pathname === PagePath.About) {
           aboutPageRouteHandler(socket);
         } else {
           mainPageRouteHandler(socket);
         }
       } else {
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-        window.location.pathname === '/about'
+        window.location.pathname === PagePath.About
           ? aboutPageRouteHandler(socket)
           : loginPageRouteHandler(socket);
 
