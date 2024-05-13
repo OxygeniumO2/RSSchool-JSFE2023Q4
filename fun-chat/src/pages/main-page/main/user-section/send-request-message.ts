@@ -1,3 +1,4 @@
+import IdRequest from '../../../../utils/websocket-custom-id-request';
 import WebSocketMessageTypes from '../../../../utils/websocket-msg-types';
 
 interface SendMessageToUserData {
@@ -17,7 +18,7 @@ function sendRequestMessageToUser(
   textMessage: string,
 ) {
   const data: SendMessageToUserData = {
-    id: 'send-msg',
+    id: IdRequest.SendMsg,
     type: WebSocketMessageTypes.MsgSend,
     payload: {
       message: {
