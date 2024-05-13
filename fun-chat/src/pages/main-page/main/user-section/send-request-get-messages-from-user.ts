@@ -25,7 +25,7 @@ function getMessages(
   currUserName: string,
   msgFrom: string = IdRequest.Message,
 ) {
-  const requestGetMessages: GetAllMessagesClientResp = {
+  const getMessagesPayload: GetAllMessagesClientResp = {
     id: msgFrom,
     type: WebSocketMessageTypes.MsgFromUser,
     payload: {
@@ -34,7 +34,7 @@ function getMessages(
       },
     },
   };
-  websocket.send(JSON.stringify(requestGetMessages));
+  websocket.send(JSON.stringify(getMessagesPayload));
 }
 
 export { getMessages, Message, AllMessages };
