@@ -1,5 +1,6 @@
 import './chat-section.css';
 import createElem from '../../../../utils/create-elem';
+import { FormActionType } from '../user-section/user-section';
 
 interface ChatSectionData {
   section: HTMLElement;
@@ -44,7 +45,7 @@ function createChatSection(): ChatSectionData {
   const chatSendMessageForm = createElem({
     tagName: 'form',
     classNames: ['send__message__form', '_hidden'],
-    attributes: [['action-type', 'send']],
+    attributes: [['action-type', FormActionType.Send]],
   }) as HTMLFormElement;
 
   const chatMessageTextInput = createElem({

@@ -116,4 +116,4 @@ function createMessage(
   return msgContainer;
 }
 
-export default createMessage;
+export { createMessage, MessageStatus };

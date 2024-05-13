@@ -1,6 +1,6 @@
 import './main.css';
 import createElem from '../../../utils/create-elem';
-import createUserSection from './user-section/user-section';
+import { createUserSection } from './user-section/user-section';
 import {
   ChatSectionData,
   createChatSection,

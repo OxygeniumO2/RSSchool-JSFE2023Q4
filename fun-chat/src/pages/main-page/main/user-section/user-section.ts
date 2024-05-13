@@ -2,7 +2,7 @@ import './user-section.css';
 import createElem from '../../../../utils/create-elem';
 import { ChatSectionDataChildren } from '../chat-section/chat-section';
 import SessionStorageKeys from '../../../../utils/session-storage-keys';
-import createMessage from './create-message';
+import { MessageStatus, createMessage } from './create-message';
 import { UserStatus, addUsers } from './append-users-to-userlist';
 import { UserServerResp } from '../../../../web-socket/web-socket-interfaces';
 import removeAllChildren from '../../../../utils/remove-all-children';
@@ -15,9 +15,19 @@ import handleUnreadMessages from '../chat-section/chat-window-new-messages-handl
 import updateUnreadMessagesInterface from './messages-unread-update';
 import editMessage from './send-request-modify-message';
 import WebSocketMessageTypes from '../../../../utils/websocket-msg-types';
+import IdRequest from '../../../../utils/websocket-custom-id-request';
 
 let currUserFromSS = sessionStorage.getItem(SessionStorageKeys.login);
 let userSendMessageTo: string;
+
+enum DialogPrompt {
+  CHOOSE_USER = 'Choose user to dialogue',
+  START_DIALOGUE = 'Start your dialogue',
+}
+
+enum FormActionType {
+  Send = 'send',
+}
 
 function createUserSection(
   websocket: WebSocket,
@@ -54,7 +64,7 @@ function createUserSection(
   const chooseUserElem = createElem({
     tagName: 'div',
     classNames: ['start__dialogue'],
-    textContent: 'Choose user to dialogue',
+    textContent: DialogPrompt.CHOOSE_USER,
   });
 
   let line = createNewMessagesLineElem();
@@ -64,7 +74,7 @@ function createUserSection(
   const startDialogueElem = createElem({
     tagName: 'div',
     classNames: ['start__dialogue'],
-    textContent: 'Start your dialogue',
+    textContent: DialogPrompt.START_DIALOGUE,
   });
 
   websocket.addEventListener('message', (event) => {
@@ -113,7 +123,7 @@ function createUserSection(
 
     if (
       message.type === WebSocketMessageTypes.MsgSend &&
-      message.id === 'send-msg'
+      message.id === IdRequest.SendMsg
     ) {
       const msgData: Message = message.payload.message;
 
@@ -306,7 +316,7 @@ function createUserSection(
         if (elem.id === message.payload.message.id) {
           const msgStatus = elem.querySelector('.message__status');
 
-          msgStatus!.textContent = 'Read';
+          msgStatus!.textContent = MessageStatus.Read;
         }
       });
     }
@@ -321,8 +331,8 @@ function createUserSection(
         if (msg.id === message.payload.message.id) {
           const msgInfoStatus = msg.querySelector('.message__status');
           const newStatus =
-            msgInfoStatus?.textContent !== 'Read'
-              ? 'Delivered'
+            msgInfoStatus?.textContent !== MessageStatus.Read
+              ? MessageStatus.Delivered
               : msgInfoStatus.textContent;
           msgInfoStatus!.textContent = newStatus;
         }
@@ -341,7 +351,7 @@ function createUserSection(
           const msgInfoModified = msg.querySelector(
             '.message__status__modified',
           );
-          msgInfoModified!.textContent = 'Edited';
+          msgInfoModified!.textContent = MessageStatus.Edited;
 
           const currMsg = msg.querySelector('.message')?.children[0];
           currMsg!.innerHTML = `<pre>${message.payload.message.text}</pre>`;
@@ -351,7 +361,7 @@ function createUserSection(
 
     if (
       message.type === WebSocketMessageTypes.MsgEdit &&
-      message.id === 'modify-msg'
+      message.id === IdRequest.ModifyMsg
     ) {
       const allMessages = Array.from(messagesToWindowChatElem.children);
       const msgToModify = allMessages.find(
@@ -387,7 +397,7 @@ function createUserSection(
 
   userList.addEventListener('click', (event) => {
     const currUser = event.target as HTMLElement;
-    chatSendMessageForm.setAttribute('action-type', 'send');
+    chatSendMessageForm.setAttribute('action-type', FormActionType.Send);
 
     if (
       currUser &&
@@ -437,7 +447,7 @@ function createUserSection(
 
     const formActionType = chatSendMessageForm.getAttribute('action-type');
 
-    if (formActionType === 'send') {
+    if (formActionType === FormActionType.Send) {
       sendMessage(websocket, userSendMessageTo, inputValue);
     } else {
       const msgIdToModify = chatSendMessageForm.getAttribute(
@@ -450,11 +460,11 @@ function createUserSection(
       allMsgs.forEach((msg) => {
         if (msg.id === msgIdToModify) {
           const modifyElem = msg.querySelector('.message__status__modified');
-          modifyElem!.textContent = 'Edited';
+          modifyElem!.textContent = MessageStatus.Edited;
         }
       });
 
-      chatSendMessageForm.setAttribute('action-type', 'send');
+      chatSendMessageForm.setAttribute('action-type', FormActionType.Send);
     }
 
     inputElem.value = '';
@@ -501,4 +511,4 @@ function createUserSection(
   return userSection;
 }
 
-export default createUserSection;
+export { createUserSection, FormActionType };
