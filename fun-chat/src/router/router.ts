@@ -11,67 +11,57 @@ import SessionStorageKeys from '../utils/session-storage-keys';
 // eslint-disable-next-line import/no-cycle
 import createWebSocket from '../web-socket/web-socket';
 
-enum PagePath {
-  About = '/about',
-  Login = '/login',
-  Main = '/main',
+enum Routes {
+  ROOT = '/',
+  LOGIN = '/login',
+  MAIN = '/main',
+  ABOUT = '/about',
 }
-
-type Routes = {
-  '/': string;
-  '/login': (websocket: WebSocket) => void;
-  '/main': (websocket: WebSocket) => void;
-  '/about': (websocket: WebSocket) => void;
-};
 
 function loginPageRouteHandler(websocket: WebSocket) {
   const loginContainer = createLoginPage(websocket);
-  window.history.pushState({}, 'Login', PagePath.Login);
+  window.history.pushState({}, 'Login', Routes.LOGIN);
   renderPage(APP_CONTAINER, loginContainer);
 }
 
 async function mainPageRouteHandler(websocket: WebSocket) {
   const mainContainer = createMainPage(websocket);
-  window.history.pushState({}, 'Main', PagePath.Main);
+  window.history.pushState({}, 'Main', Routes.MAIN);
   renderPage(APP_CONTAINER, mainContainer);
 }
 
 function aboutPageRouteHandler(websocket: WebSocket) {
   const aboutContainer = createAboutPage(websocket);
-  window.history.pushState({}, 'About', PagePath.About);
+  window.history.pushState({}, 'About', Routes.ABOUT);
   renderPage(APP_CONTAINER, aboutContainer);
 }
 
-const ROUTES: Routes = {
-  '/': '/',
-  '/login': loginPageRouteHandler,
-  '/main': mainPageRouteHandler,
-  '/about': aboutPageRouteHandler,
+const routesHandlersMap: Partial<
+  Record<Routes, (websocket: WebSocket) => void>
+> = {
+  [Routes.LOGIN]: loginPageRouteHandler,
+  [Routes.MAIN]: mainPageRouteHandler,
+  [Routes.ABOUT]: aboutPageRouteHandler,
 };
 
 function router() {
-  let path = window.location.pathname as keyof Routes;
+  let path = window.location.pathname as Routes;
 
-  if (path === '/') {
-    path = PagePath.Login;
+  if (path === Routes.ROOT) {
+    path = Routes.LOGIN;
   }
-
-  let websocket: WebSocket;
 
   const userFromSS = sessionStorage.getItem(SessionStorageKeys.login);
 
-  path = userFromSS ? PagePath.Main : PagePath.Login;
+  path = userFromSS ? Routes.MAIN : Routes.LOGIN;
 
-  if (window.location.pathname === PagePath.About) {
-    path = PagePath.About;
+  if (window.location.pathname === Routes.ABOUT) {
+    path = Routes.ABOUT;
   }
 
-  const routeHandler = ROUTES[path];
+  const routeHandler = routesHandlersMap[path];
 
-  if (routeHandler) {
-    websocket = createWebSocket();
-    routeHandler(websocket);
-  }
+  routeHandler && routeHandler(createWebSocket());
 }
 
 export {
@@ -79,5 +69,5 @@ export {
   aboutPageRouteHandler,
   loginPageRouteHandler,
   mainPageRouteHandler,
-  PagePath,
+  Routes,
 };
