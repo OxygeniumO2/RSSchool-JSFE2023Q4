@@ -86,7 +86,6 @@ function createMessage(
   msgContainer.append(userNameDateContainer, msgElem, msgInfoStatusContainer);
 
   if (userText === MessageSender.You) {
-    // msgInfoStatusContainer.append(msgStatus);
     msgInfoStatusContainer.append(msgDelivered);
 
     msgContainer.classList.add(`_${userText}`);

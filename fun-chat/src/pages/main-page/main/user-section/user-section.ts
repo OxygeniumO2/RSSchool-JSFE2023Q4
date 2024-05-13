@@ -98,12 +98,6 @@ function createUserSection(
         onlineUsersList,
         currUserFromSS as string,
       );
-
-      // onlineUsers.forEach((user) => {
-      //   if (currUserFromSS !== user.login) {
-      //     sendRequestToGetMessagesFromUser(websocket, user.login);  Maybe it's better to send requests after full build of users
-      //   }
-      // });
     }
 
     if (message.type === WebSocketMessageTypes.UserInactive) {
@@ -115,12 +109,6 @@ function createUserSection(
         offlineUsersList,
         currUserFromSS as string,
       );
-
-      // offlineUsers.forEach((user) => {
-      //   if (currUserFromSS !== user.login) {
-      //     sendRequestToGetMessagesFromUser(websocket, user.login);  Maybe it's better to send requests after full build of users
-      //   }
-      // });
     }
 
     if (
@@ -322,11 +310,6 @@ function createUserSection(
         }
       });
     }
-
-    // if (message.type === 'MSG_READ') {
-    //   line.remove();
-    //   line = createNewMessagesLineElem(); // MAYBE BETTER TO REMOVE LINE INSTANTLY WITHOUT WAITING SERVER RESPONSE
-    // }
 
     if (
       message.type === WebSocketMessageTypes.MsgDeliver &&

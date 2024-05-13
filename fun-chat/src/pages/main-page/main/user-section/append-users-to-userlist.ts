@@ -39,7 +39,7 @@ function addUsers(
 
       userList.append(userContainer);
 
-      getMessages(websocket, user.login); // Maybe it's better to send requests after full build of users
+      getMessages(websocket, user.login);
     }
   });
 }
