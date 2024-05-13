@@ -1,3 +1,4 @@
+import IdRequest from '../../../../utils/websocket-custom-id-request';
 import WebSocketMessageTypes from '../../../../utils/websocket-msg-types';
 import { GetAllMessagesClientResp } from '../../../../web-socket/web-socket-interfaces';
 
@@ -12,10 +13,6 @@ interface Message {
   };
   text: string;
   to: string;
-}
-
-enum IdRequest {
-  Message = 'message',
 }
 
 type AllMessages = Message[];
