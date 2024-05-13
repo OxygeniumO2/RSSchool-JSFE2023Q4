@@ -1,8 +1,9 @@
+import IdRequest from '../../../../utils/websocket-custom-id-request';
 import WebSocketMessageTypes from '../../../../utils/websocket-msg-types';
 
 function editMessage(websocket: WebSocket, msgId: string, newTextMsg: string) {
   const requestData = {
-    id: 'modify-msg',
+    id: IdRequest.ModifyMsg,
     type: WebSocketMessageTypes.MsgEdit,
     payload: {
       message: {
