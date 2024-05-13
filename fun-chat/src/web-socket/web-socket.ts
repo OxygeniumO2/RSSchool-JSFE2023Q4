@@ -12,11 +12,12 @@ import IdRequest from '../utils/websocket-custom-id-request';
 import WebSocketMessageTypes from '../utils/websocket-msg-types';
 import { UserAuthClient, UserLogoutClient } from './web-socket-interfaces';
 
+const WEBSOCKET_URL = 'ws://localhost:4000';
 let isReconnectModalOpen = false;
 let reconnectTimeout: number | undefined;
 
 function createWebSocket(): WebSocket {
-  const socket = new WebSocket('ws://localhost:4000');
+  const socket = new WebSocket(WEBSOCKET_URL);
 
   const appContainerLastChild = APP_CONTAINER.lastChild as HTMLElement;
 
