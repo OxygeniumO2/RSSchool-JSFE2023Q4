@@ -1,8 +1,9 @@
 import IdRequest from '../../../../utils/websocket-custom-id-request';
 import WebSocketMessageTypes from '../../../../utils/websocket-msg-types';
+import { ReadMessage } from '../../../../web-socket/web-socket-interfaces';
 
 function sendRequestMessageRead(websocket: WebSocket, idMsg: string) {
-  const requestData = {
+  const requestData: ReadMessage = {
     id: IdRequest.Read,
     type: WebSocketMessageTypes.MsgRead,
     payload: {

@@ -1,6 +1,11 @@
-interface UserAuthClient {
+import WebSocketMessageTypes from '../utils/websocket-msg-types';
+
+interface BaseResponse {
   id: string;
-  type: 'USER_LOGIN';
+  type: WebSocketMessageTypes;
+}
+
+interface UserAuthClient extends BaseResponse {
   payload: {
     user: {
       login: string;
@@ -9,9 +14,7 @@ interface UserAuthClient {
   };
 }
 
-interface UserLogoutClient {
-  id: string;
-  type: 'USER_LOGOUT';
+interface UserLogoutClient extends BaseResponse {
   payload: {
     user: {
       login: string;
@@ -20,15 +23,11 @@ interface UserLogoutClient {
   };
 }
 
-interface GetAllOnlineUsersClientResp {
-  id: string;
-  type: 'USER_ACTIVE';
+interface GetAllOnlineUsersClientResp extends BaseResponse {
   payload: null;
 }
 
-interface GetAllOfflineUsersClientResp {
-  id: string;
-  type: 'USER_INACTIVE';
+interface GetAllOfflineUsersClientResp extends BaseResponse {
   payload: null;
 }
 
@@ -37,12 +36,36 @@ interface UserServerResp {
   isLogined: boolean;
 }
 
-interface GetAllMessagesClientResp {
-  id: string;
-  type: 'MSG_FROM_USER';
+interface GetAllMessagesClientResp extends BaseResponse {
   payload: {
     user: {
       login: string;
+    };
+  };
+}
+
+interface SendMessageToUserData extends BaseResponse {
+  payload: {
+    message: {
+      to: string;
+      text: string;
+    };
+  };
+}
+
+interface EditMessage extends BaseResponse {
+  payload: {
+    message: {
+      id: string;
+      text: string;
+    };
+  };
+}
+
+interface ReadMessage extends BaseResponse {
+  payload: {
+    message: {
+      id: string;
     };
   };
 }
@@ -54,4 +77,7 @@ export {
   GetAllOfflineUsersClientResp,
   GetAllMessagesClientResp,
   UserServerResp,
+  SendMessageToUserData,
+  EditMessage,
+  ReadMessage,
 };

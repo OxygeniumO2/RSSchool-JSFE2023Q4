@@ -7,6 +7,8 @@ import {
   mainPageRouteHandler,
 } from '../router/router';
 import SessionStorageKeys from '../utils/session-storage-keys';
+import IdRequest from '../utils/websocket-custom-id-request';
+import WebSocketMessageTypes from '../utils/websocket-msg-types';
 import { UserAuthClient, UserLogoutClient } from './web-socket-interfaces';
 
 let isReconnectModalOpen = false;
@@ -55,7 +57,7 @@ function createWebSocket(): WebSocket {
 
       const userData: UserAuthClient = {
         id: randomId,
-        type: 'USER_LOGIN',
+        type: WebSocketMessageTypes.UserLogin,
         payload: {
           user: {
             login: userLogin,
@@ -88,8 +90,8 @@ function createWebSocket(): WebSocket {
 
     if (userFromSS && userPassFromSS) {
       const logoutUserData: UserLogoutClient = {
-        id: 'logout',
-        type: 'USER_LOGOUT',
+        id: IdRequest.Logout,
+        type: WebSocketMessageTypes.UserLogout,
         payload: {
           user: {
             login: userFromSS,
