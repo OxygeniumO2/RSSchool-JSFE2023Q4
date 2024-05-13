@@ -7,7 +7,7 @@ import {
 } from '../../router/router';
 import SessionStorageKeys from '../../utils/session-storage-keys';
 import sendRespToGetOnlineUsers from '../main-page/main/user-section/send-request-get-online-users';
-import sendRespToGetOfflineUsers from '../main-page/main/user-section/send-request-get-offline-users';
+import getOfflineUsers from '../main-page/main/user-section/send-request-get-offline-users';
 
 function createAboutPage(websocket: WebSocket): HTMLElement {
   const aboutPageContainer = createElem({
@@ -41,7 +41,7 @@ function createAboutPage(websocket: WebSocket): HTMLElement {
 
     if (userFromSS) {
       sendRespToGetOnlineUsers(websocket);
-      sendRespToGetOfflineUsers(websocket);
+      getOfflineUsers(websocket);
       mainPageRouteHandler(websocket);
     } else {
       loginPageRouteHandler(websocket);

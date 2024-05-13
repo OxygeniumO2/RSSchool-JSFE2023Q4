@@ -8,7 +8,7 @@ import { UserServerResp } from '../../../../web-socket/web-socket-interfaces';
 import removeAllChildren from '../../../../utils/remove-all-children';
 import { Message, getMessages } from './send-request-get-messages-from-user';
 import sendRequestToGetOnlineUsers from './send-request-get-online-users';
-import sendRequestToGetOfflineUsers from './send-request-get-offline-users';
+import getOfflineUsers from './send-request-get-offline-users';
 import sendRequestMessageToUser from './send-request-message';
 import createNewMessagesLineElem from '../chat-section/new-messages-line';
 import handleUnreadMessages from '../chat-section/chat-window-new-messages-handler';
@@ -76,7 +76,7 @@ function createUserSection(
       message.type === WebSocketMessageTypes.UserExternalLogout
     ) {
       sendRequestToGetOnlineUsers(websocket);
-      sendRequestToGetOfflineUsers(websocket);
+      getOfflineUsers(websocket);
 
       if (message.payload.user.login === userName.textContent) {
         const newUserStatus = message.payload.user.isLogined
