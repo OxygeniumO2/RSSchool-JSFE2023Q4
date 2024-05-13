@@ -1,5 +1,5 @@
 import collectMessagesToRead from '../user-section/collect-messages-to-read';
-import sendRequestMessageRead from '../user-section/send-request-messages-read';
+import readMessage from '../user-section/send-request-messages-read';
 import createNewMessagesLineElem from './new-messages-line';
 
 function handleUnreadMessages(
@@ -27,7 +27,7 @@ function handleUnreadMessages(
   });
 
   messagesToRead.forEach((item) => {
-    sendRequestMessageRead(websocket, item.id);
+    readMessage(websocket, item.id);
   });
 }
 
