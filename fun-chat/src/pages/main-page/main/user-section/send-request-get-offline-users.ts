@@ -1,9 +1,10 @@
+import IdRequest from '../../../../utils/websocket-custom-id-request';
 import WebSocketMessageTypes from '../../../../utils/websocket-msg-types';
 import { GetAllOfflineUsersClientResp } from '../../../../web-socket/web-socket-interfaces';
 
 function getOfflineUsers(websocket: WebSocket) {
   const messageData: GetAllOfflineUsersClientResp = {
-    id: 'offline',
+    id: IdRequest.Offline,
     type: WebSocketMessageTypes.UserInactive,
     payload: null,
   };
