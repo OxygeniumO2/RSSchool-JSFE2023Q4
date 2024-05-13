@@ -1,9 +1,10 @@
+import IdRequest from '../../../../utils/websocket-custom-id-request';
 import WebSocketMessageTypes from '../../../../utils/websocket-msg-types';
 import { GetAllOnlineUsersClientResp } from '../../../../web-socket/web-socket-interfaces';
 
 function getOnlineUsers(websocket: WebSocket) {
   const messageData: GetAllOnlineUsersClientResp = {
-    id: 'online',
+    id: IdRequest.Online,
     type: WebSocketMessageTypes.UserActive,
     payload: null,
   };

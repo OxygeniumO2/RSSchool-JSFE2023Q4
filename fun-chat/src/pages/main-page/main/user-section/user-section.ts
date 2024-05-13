@@ -3,7 +3,7 @@ import createElem from '../../../../utils/create-elem';
 import { ChatSectionDataChildren } from '../chat-section/chat-section';
 import SessionStorageKeys from '../../../../utils/session-storage-keys';
 import createMessage from './create-message';
-import addUsers, { UserStatus } from './append-users-to-userlist';
+import { UserStatus, addUsers } from './append-users-to-userlist';
 import { UserServerResp } from '../../../../web-socket/web-socket-interfaces';
 import removeAllChildren from '../../../../utils/remove-all-children';
 import { Message, getMessages } from './send-request-get-messages-from-user';

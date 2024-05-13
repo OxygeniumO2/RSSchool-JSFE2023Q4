@@ -2,7 +2,7 @@ import createElem from '../../../../utils/create-elem';
 import { UserServerResp } from '../../../../web-socket/web-socket-interfaces';
 import { getMessages } from './send-request-get-messages-from-user';
 
-export enum UserStatus {
+enum UserStatus {
   Online = 'online',
   Offline = 'offline',
 }
@@ -44,4 +44,4 @@ function addUsers(
   });
 }
 
-export default addUsers;
+export { addUsers, UserStatus };
