@@ -13,7 +13,7 @@ import WebSocketMessageTypes from '../utils/websocket-msg-types';
 import { UserAuthClient, UserLogoutClient } from './web-socket-interfaces';
 
 let isReconnectModalOpen = false;
-let reconnectTimeout: NodeJS.Timeout | undefined;
+let reconnectTimeout: number | undefined;
 
 function createWebSocket(): WebSocket {
   const socket = new WebSocket('ws://localhost:4000');
@@ -79,7 +79,7 @@ function createWebSocket(): WebSocket {
         APP_CONTAINER.append(modalReconnect);
         isReconnectModalOpen = true;
       }
-      reconnectTimeout = setTimeout(() => {
+      reconnectTimeout = window.setTimeout(() => {
         createWebSocket();
       }, 2000);
     }
