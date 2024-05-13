@@ -3,7 +3,7 @@ import createElem from '../../../../utils/create-elem';
 import { ChatSectionDataChildren } from '../chat-section/chat-section';
 import SessionStorageKeys from '../../../../utils/session-storage-keys';
 import createMessage from './create-message';
-import addUsers from './append-users-to-userlist';
+import addUsers, { UserStatus } from './append-users-to-userlist';
 import { UserServerResp } from '../../../../web-socket/web-socket-interfaces';
 import removeAllChildren from '../../../../utils/remove-all-children';
 import { Message, getMessages } from './send-request-get-messages-from-user';
@@ -80,8 +80,8 @@ function createUserSection(
 
       if (message.payload.user.login === userName.textContent) {
         const newUserStatus = message.payload.user.isLogined
-          ? 'online'
-          : 'offline';
+          ? UserStatus.Online
+          : UserStatus.Offline;
 
         userStatus.textContent = newUserStatus;
         userStatus.classList.remove('_online', '_offline');
@@ -417,8 +417,8 @@ function createUserSection(
       userSendMessageTo = currUserName;
 
       const currUserStatus: string = currUser.classList.contains('_online')
-        ? 'online'
-        : 'offline';
+        ? UserStatus.Online
+        : UserStatus.Offline;
 
       userStatus.textContent = `${currUserStatus}`;
 

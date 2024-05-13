@@ -2,7 +2,7 @@ import createElem from '../../../../utils/create-elem';
 import { UserServerResp } from '../../../../web-socket/web-socket-interfaces';
 import { getMessages } from './send-request-get-messages-from-user';
 
-enum UserStatus {
+export enum UserStatus {
   Online = 'online',
   Offline = 'offline',
 }
