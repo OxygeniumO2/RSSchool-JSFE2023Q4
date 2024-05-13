@@ -9,7 +9,7 @@ import removeAllChildren from '../../../../utils/remove-all-children';
 import { Message, getMessages } from './send-request-get-messages-from-user';
 import getOnlineUsers from './send-request-get-online-users';
 import getOfflineUsers from './send-request-get-offline-users';
-import sendRequestMessageToUser from './send-request-message';
+import sendMessage from './send-request-message';
 import createNewMessagesLineElem from '../chat-section/new-messages-line';
 import handleUnreadMessages from '../chat-section/chat-window-new-messages-handler';
 import updateUnreadMessagesInterface from './messages-unread-update';
@@ -455,7 +455,7 @@ function createUserSection(
     const formActionType = chatSendMessageForm.getAttribute('action-type');
 
     if (formActionType === 'send') {
-      sendRequestMessageToUser(websocket, userSendMessageTo, inputValue);
+      sendMessage(websocket, userSendMessageTo, inputValue);
     } else {
       const msgIdToModify = chatSendMessageForm.getAttribute(
         'currMsgId',

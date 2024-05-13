@@ -12,11 +12,7 @@ interface SendMessageToUserData {
   };
 }
 
-function sendRequestMessageToUser(
-  websocket: WebSocket,
-  user: string,
-  textMessage: string,
-) {
+function sendMessage(websocket: WebSocket, user: string, textMessage: string) {
   const data: SendMessageToUserData = {
     id: IdRequest.SendMsg,
     type: WebSocketMessageTypes.MsgSend,
@@ -31,4 +27,4 @@ function sendRequestMessageToUser(
   websocket.send(JSON.stringify(data));
 }
 
-export default sendRequestMessageToUser;
+export default sendMessage;
