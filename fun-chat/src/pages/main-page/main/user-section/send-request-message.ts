@@ -2,7 +2,7 @@ import WebSocketMessageTypes from '../../../../utils/websocket-msg-types';
 
 interface SendMessageToUserData {
   id: string;
-  type: 'MSG_SEND';
+  type: WebSocketMessageTypes.MsgSend;
   payload: {
     message: {
       to: string;
