@@ -22,12 +22,11 @@ function createWebSocket(): WebSocket {
   const appContainerLastChild = APP_CONTAINER.lastChild as HTMLElement;
 
   socket.addEventListener('open', () => {
+    const userFromSS = sessionStorage.getItem(SessionStorageKeys.login);
+    const userPassFromSS = sessionStorage.getItem(SessionStorageKeys.password);
+
     if (isReconnectModalOpen) {
       APP_CONTAINER.removeChild(appContainerLastChild);
-      const userFromSS = sessionStorage.getItem(SessionStorageKeys.login);
-      const userPassFromSS = sessionStorage.getItem(
-        SessionStorageKeys.password,
-      );
 
       if (userFromSS && userPassFromSS) {
         isReconnectModalOpen = false;
@@ -48,9 +47,6 @@ function createWebSocket(): WebSocket {
         clearTimeout(reconnectTimeout);
       }
     }
-
-    const userFromSS = sessionStorage.getItem(SessionStorageKeys.login);
-    const userPassFromSS = sessionStorage.getItem(SessionStorageKeys.password);
 
     if (userFromSS && userPassFromSS) {
       const randomId = crypto.randomUUID();
