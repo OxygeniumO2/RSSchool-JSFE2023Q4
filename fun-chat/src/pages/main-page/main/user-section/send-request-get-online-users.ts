@@ -1,7 +1,7 @@
 import WebSocketMessageTypes from '../../../../utils/websocket-msg-types';
 import { GetAllOnlineUsersClientResp } from '../../../../web-socket/web-socket-interfaces';
 
-function sendRequestToGetOnlineUsers(websocket: WebSocket) {
+function getOnlineUsers(websocket: WebSocket) {
   const messageData: GetAllOnlineUsersClientResp = {
     id: 'online',
     type: WebSocketMessageTypes.UserActive,
@@ -11,4 +11,4 @@ function sendRequestToGetOnlineUsers(websocket: WebSocket) {
   websocket.send(JSON.stringify(messageData));
 }
 
-export default sendRequestToGetOnlineUsers;
+export default getOnlineUsers;

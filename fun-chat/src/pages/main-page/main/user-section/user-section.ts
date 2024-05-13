@@ -7,7 +7,7 @@ import addUsers from './append-users-to-userlist';
 import { UserServerResp } from '../../../../web-socket/web-socket-interfaces';
 import removeAllChildren from '../../../../utils/remove-all-children';
 import { Message, getMessages } from './send-request-get-messages-from-user';
-import sendRequestToGetOnlineUsers from './send-request-get-online-users';
+import getOnlineUsers from './send-request-get-online-users';
 import getOfflineUsers from './send-request-get-offline-users';
 import sendRequestMessageToUser from './send-request-message';
 import createNewMessagesLineElem from '../chat-section/new-messages-line';
@@ -75,7 +75,7 @@ function createUserSection(
       message.type === WebSocketMessageTypes.UserLogin ||
       message.type === WebSocketMessageTypes.UserExternalLogout
     ) {
-      sendRequestToGetOnlineUsers(websocket);
+      getOnlineUsers(websocket);
       getOfflineUsers(websocket);
 
       if (message.payload.user.login === userName.textContent) {

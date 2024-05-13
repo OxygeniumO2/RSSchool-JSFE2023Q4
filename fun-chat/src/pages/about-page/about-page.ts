@@ -6,7 +6,7 @@ import {
   mainPageRouteHandler,
 } from '../../router/router';
 import SessionStorageKeys from '../../utils/session-storage-keys';
-import sendRespToGetOnlineUsers from '../main-page/main/user-section/send-request-get-online-users';
+import getOnlineUsers from '../main-page/main/user-section/send-request-get-online-users';
 import getOfflineUsers from '../main-page/main/user-section/send-request-get-offline-users';
 
 function createAboutPage(websocket: WebSocket): HTMLElement {
@@ -40,7 +40,7 @@ function createAboutPage(websocket: WebSocket): HTMLElement {
     const userFromSS = sessionStorage.getItem(SessionStorageKeys.login);
 
     if (userFromSS) {
-      sendRespToGetOnlineUsers(websocket);
+      getOnlineUsers(websocket);
       getOfflineUsers(websocket);
       mainPageRouteHandler(websocket);
     } else {
