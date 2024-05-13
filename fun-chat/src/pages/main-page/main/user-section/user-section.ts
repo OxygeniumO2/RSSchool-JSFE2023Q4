@@ -13,7 +13,7 @@ import sendMessage from './send-request-message';
 import createNewMessagesLineElem from '../chat-section/new-messages-line';
 import handleUnreadMessages from '../chat-section/chat-window-new-messages-handler';
 import updateUnreadMessagesInterface from './messages-unread-update';
-import sendRequestToModifyMessage from './send-request-modify-message';
+import editMessage from './send-request-modify-message';
 import WebSocketMessageTypes from '../../../../utils/websocket-msg-types';
 
 let currUserFromSS = sessionStorage.getItem(SessionStorageKeys.login);
@@ -460,7 +460,7 @@ function createUserSection(
       const msgIdToModify = chatSendMessageForm.getAttribute(
         'currMsgId',
       ) as string;
-      sendRequestToModifyMessage(websocket, msgIdToModify, inputValue);
+      editMessage(websocket, msgIdToModify, inputValue);
 
       const allMsgs = Array.from(messagesToWindowChatElem.children);
 

@@ -1,10 +1,6 @@
 import WebSocketMessageTypes from '../../../../utils/websocket-msg-types';
 
-function sendRequestToModifyMessage(
-  websocket: WebSocket,
-  msgId: string,
-  newTextMsg: string,
-) {
+function editMessage(websocket: WebSocket, msgId: string, newTextMsg: string) {
   const requestData = {
     id: 'modify-msg',
     type: WebSocketMessageTypes.MsgEdit,
@@ -19,4 +15,4 @@ function sendRequestToModifyMessage(
   websocket.send(JSON.stringify(requestData));
 }
 
-export default sendRequestToModifyMessage;
+export default editMessage;
